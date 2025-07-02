@@ -1,0 +1,38 @@
+---
+title: "This Website"
+subtitle: "was made with Rescript"
+date: "2025-07-02"
+tags: ["rescript", "react", "web-development", "next-js", "tailwindcss"]
+---
+
+# Design Philosophies
+
+I've always wanted to make a blog for a while. I must've waited ~1-2 years to actually start working on this. Although I would like to say the reason is to make sure it's perfect, it really didn't take too long to set up.
+
+## File-based Routing
+
+Next.js uses a file-based routing system where:
+- `pages/blog/[slug].js`
+
+```js
+export async function getStaticPaths() {
+	const blogsDirectory = path.join(process.cwd(), "blogs");
+	let paths = [];
+
+	if (fs.existsSync(blogsDirectory)) {
+		const filenames = fs.readdirSync(blogsDirectory);
+		paths = filenames
+			.filter((name) => name.endsWith(".mdx"))
+			.map((name) => ({
+				params: {
+					slug: name.replace(/\.mdx$/, ""),
+				},
+			}));
+	}
+
+	return {
+		paths,
+		fallback: false,
+	};
+}
+```

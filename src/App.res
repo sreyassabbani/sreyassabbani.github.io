@@ -8,6 +8,13 @@ module PageComponent = {
   type t = React.component<pageProps>
 }
 
+let nodeEnv = %raw(`typeof process !== "undefined" && process.env && process.env.NODE_ENV ? process.env.NODE_ENV : "development"`)
+
+let url = switch nodeEnv {
+| "production" => "https://sreyassabbani.github.io/sreyassabbani"
+| _ => "http://localhost:3000"
+}
+
 type props = {
   @as("Component")
   component: PageComponent.t,

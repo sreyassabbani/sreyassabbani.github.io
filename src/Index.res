@@ -14,7 +14,7 @@ let default = () =>
     <section className="flex flex-col md:flex-row mb-20">
       <figure className="w-full md:w-1/4 flex flex-col justify-center items-center">
         <img
-          src="/static/profile-pic.png"
+          src={App.url ++ "/static/profile-pic.png"}
           alt="Photo of me"
           className="rounded-full w-32 h-32 object-cover"
         />

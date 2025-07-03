@@ -5,6 +5,7 @@ import matter from "gray-matter";
 import { serialize } from "next-mdx-remote/serialize";
 import { MDXClient } from "next-mdx-remote-client/csr";
 import CodeBlock from "./Codeblock.client";
+import Link from "next/link";
 
 // Enhanced MDX components with theme integration
 export default function BlogPost({ mdxSource, post }) {
@@ -53,12 +54,26 @@ export default function BlogPost({ mdxSource, post }) {
 			/>
 		),
 		li: (props) => <li className="mb-1" {...props} />,
-		a: (props) => (
-			<a
-				className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline"
-				{...props}
-			/>
-		),
+		a: ({ href, children, ...rest }) => {
+			if (!href) return <a {...rest}>{children}</a>;
+
+			const isExternal = /^https?:\/\//.test(href);
+
+			return isExternal ? (
+				<a
+					href={href}
+					{...rest}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					{children}
+				</a>
+			) : (
+				<Link href={href} {...rest}>
+					{children}
+				</Link>
+			);
+		},
 		table: (props) => (
 			<div className="overflow-x-auto my-4">
 				<table

@@ -1,8 +1,10 @@
+"use client";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { Search } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function BlogIndex({ posts }) {
 	const [search, setSearch] = useState("");
@@ -18,6 +20,8 @@ export default function BlogIndex({ posts }) {
 			tags.includes(query)
 		);
 	});
+	// console.log(filteredPosts);
+	// return "";
 
 	return (
 		<div className="py-10 flex flex-row gap-30 relative">
@@ -66,13 +70,13 @@ export default function BlogIndex({ posts }) {
 							<div className="pointer-events-none absolute inset-0 bg-secondary/20 -mx-4 -mt-8 rounded-md opacity-0 group-hover:opacity-100 transition-opacity z-10" />
 							<div className="grow">
 								<h2 className="text-2xl font-bold">
-									<a
+									<Link
 										href={`/blog/${post.slug}`}
 										className="transition-colors"
 									>
 										<span className="absolute inset-0"></span>
 										{post.frontmatter.title}
-									</a>
+									</Link>
 								</h2>
 								<p className="mb-2">
 									{post.frontmatter.subtitle}
@@ -88,9 +92,9 @@ export default function BlogIndex({ posts }) {
 									))}
 								</div>
 
-								<a className="text-primary font-semibold">
+								<p className="text-primary font-semibold">
 									Read more →
-								</a>
+								</p>
 							</div>
 							<div className="text-muted-foreground mb-4 flex flex-col items-end">
 								<span>{post.frontmatter.date}</span>

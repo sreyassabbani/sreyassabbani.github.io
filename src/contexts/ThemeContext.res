@@ -22,12 +22,6 @@ type contextValue = {
 let context = React.createContext(None)
 
 module Provider = {
-  let makeProps = (~value, ~children, ()) =>
-    {
-      "value": Some(value),
-      "children": children,
-    }
-
   let make = React.Context.provider(context)
 }
 
@@ -58,7 +52,6 @@ let codeThemeFromString = str =>
 
 // Local storage operations
 module Storage = {
-  @val external localStorage: 'a = "localStorage"
 
   let getItem: string => option<string> = %raw(`
     function(key) {

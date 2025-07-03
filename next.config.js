@@ -5,6 +5,7 @@ const transpileModules = ["rescript"].concat(rescript["bs-dependencies"]);
 
 const config = {
 	pageExtensions: ["jsx", "js"],
+  output: "export",
 	env: {
 		ENV: process.env.NODE_ENV,
 	},

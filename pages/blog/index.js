@@ -119,17 +119,17 @@ export default function BlogIndex({ posts }) {
 }
 
 export async function getStaticProps() {
-	const blogsDirectory = path.join(process.cwd(), "blogs");
+	const blogDirectory = path.join(process.cwd(), "blog");
 
 	let posts = [];
 
-	if (fs.existsSync(blogsDirectory)) {
-		const filenames = fs.readdirSync(blogsDirectory);
+	if (fs.existsSync(blogDirectory)) {
+		const filenames = fs.readdirSync(blogDirectory);
 
 		posts = filenames
 			.filter((name) => name.endsWith(".mdx"))
 			.map((name) => {
-				const filePath = path.join(blogsDirectory, name);
+				const filePath = path.join(blogDirectory, name);
 				const fileContent = fs.readFileSync(filePath, "utf8");
 				const { data } = matter(fileContent);
 				const slug = name.replace(/\.mdx$/, "");

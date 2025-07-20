@@ -8,8 +8,8 @@ const repo = "sreyassabbani";
 const config = {
 	pageExtensions: ["jsx", "js"],
 	output: "export",
-	basePath: process.env.NODE_ENV == "production" ? `/${repo}` : "",
-	assetPrefix: process.env.NODE_ENV == "production" ? `/${repo}` : "",
+	// basePath: process.env.NODE_ENV == "production" ? `/${repo}` : "",
+	// assetPrefix: process.env.NODE_ENV == "production" ? `/${repo}` : "",
 	env: {
 		ENV: process.env.NODE_ENV,
 	},

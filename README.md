@@ -1,9 +1,3 @@
-## Hi there!
-- I work on fun projects.
-- Check out
-  - [Ray Tracing](https://github.com/sreyassabbani/ray-tracing-rs), a ray/path tracer written in Rust.
+# My Website
 
-I also work on web projects
-
-### Other Links
-- [My website](https://sreyassabbani.github.io/sreyassabbani/)
+Currently, this website is hosted with GitHub Pages on [https://sreyassabbani.github.io](https://sreyassabbani.github.io), but I'm thinking of changing the domain to [https://sreyas.is]() when I get some money 💰💰

@@ -42,7 +42,7 @@ let make = (
   let canonicalUrl = Belt.Option.getWithDefault(canonical, ogUrlFinal)
   
   React.createElement(head, {
-    "children": [
+    "children": React.array([
       // Basic meta tags
       <title key="title"> {React.string(pageTitle)} </title>,
       <meta key="description" name="description" content=pageDescription />,
@@ -78,6 +78,6 @@ let make = (
       // Additional meta tags for better SEO
       <meta key="theme-color" name="theme-color" content="#6180B0" />,
       <meta key="msapplication-TileColor" name="msapplication-TileColor" content="#6180B0" />,
-    ]->Belt.Array.map(React.createElement)
+    ])
   })
 }

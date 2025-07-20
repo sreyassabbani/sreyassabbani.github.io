@@ -1,7 +1,8 @@
 import 'styles/main.css'
+import Head from 'next/head'
 
 // Note:
-// Just renaming $$default to ResApp alone
+// Just renaming $default to ResApp alone
 // doesn't help FastRefresh to detect the
 // React component, since an alias isn't attached
 // to the original React component function name.
@@ -15,5 +16,12 @@ import ResApp from "src/App.res.mjs"
 // If you don't do this, your Fast-Refresh will
 // not work!
 export default function App(props) {
-  return <ResApp {...props}/>;
+  return (
+    <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <ResApp {...props}/>
+    </>
+  );
 }

@@ -206,7 +206,7 @@ export default function BlogPost({ mdxSource, post }) {
 }
 
 export async function getStaticPaths() {
-	const blogsDirectory = path.join(process.cwd(), "blogs");
+	const blogsDirectory = path.join(process.cwd(), "blog");
 	let paths = [];
 
 	if (fs.existsSync(blogsDirectory)) {
@@ -228,7 +228,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
 	const { slug } = params;
-	const blogsDirectory = path.join(process.cwd(), "blogs");
+	const blogsDirectory = path.join(process.cwd(), "blog");
 	const filePath = path.join(blogsDirectory, `${slug}.mdx`);
 
 	if (!fs.existsSync(filePath)) {

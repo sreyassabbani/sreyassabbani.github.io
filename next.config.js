@@ -3,13 +3,13 @@ import fs from "fs";
 const rescript = JSON.parse(fs.readFileSync("./rescript.json"));
 const transpileModules = ["rescript"].concat(rescript["bs-dependencies"]);
 
-const repo = "sreyassabbani";
+const repo = "sreyassabbani.github.io";
 
 const config = {
 	pageExtensions: ["jsx", "js"],
 	output: "export",
-	// basePath: process.env.NODE_ENV == "production" ? `/${repo}` : "",
-	// assetPrefix: process.env.NODE_ENV == "production" ? `/${repo}` : "",
+	basePath: "",
+	assetPrefix: "",
 	env: {
 		ENV: process.env.NODE_ENV,
 	},

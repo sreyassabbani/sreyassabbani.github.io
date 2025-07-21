@@ -23,11 +23,11 @@ module Router = {
     "query": Js.Dict.t<string>,
     "asPath": string,
     "route": string,
-    "push": (. string) => unit,
-    "replace": (. string) => unit,
-    "back": (. unit) => unit,
+    "push": string => unit,
+    "replace": string => unit,
+    "back": unit => unit,
   }
-  
+
   @module("next/router")
   external useRouter: unit => router = "useRouter"
 }
@@ -40,26 +40,21 @@ module GetServerSideProps = {
 
 // GetStaticProps
 module GetStaticProps = {
-  type context<'params> = {
-    "params": 'params,
-  }
-  
-  type result<'props> = 
+  type context<'params> = {"params": 'params}
+
+  type result<'props> =
     | Props({"props": 'props})
     | NotFound({"notFound": bool})
     | Redirect({"redirect": {"destination": string, "permanent": bool}})
-  
+
   type t<'props, 'params> = context<'params> => Promise.t<result<'props>>
 }
 
 // GetStaticPaths
 module GetStaticPaths = {
   type path<'params> = {"params": 'params}
-  
-  type result<'params> = {
-    "paths": array<path<'params>>,
-    "fallback": bool,
-  }
-  
+
+  type result<'params> = {"paths": array<path<'params>>, "fallback": bool}
+
   type t<'params> = unit => Promise.t<result<'params>>
 }

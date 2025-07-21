@@ -9,12 +9,13 @@ module P = {
   }
 }
 
-let default = () =>
+let default = () => <>
+  <SEO title="Home" />
   <main className="pt-10">
     <section className="flex flex-col md:flex-row mb-20">
       <figure className="w-full md:w-1/4 flex flex-col justify-center items-center">
         <img
-          src={App.url ++ "/static/profile-pic.png"}
+          src={Setup.url ++ "/static/profile-pic.png"}
           alt="Photo of me"
           className="rounded-full w-32 h-32 object-cover"
         />
@@ -48,3 +49,4 @@ let default = () =>
       </P>
     </section>
   </main>
+</>

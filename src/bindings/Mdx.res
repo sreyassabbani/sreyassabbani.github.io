@@ -9,5 +9,5 @@ module Components = {
 }
 
 // MDX Remote component binding
-@module("next-mdx-remote") 
-external mdxRemote: ({"source": string, "options": 'a}) => React.element = "MDXRemote"
+@module("next-mdx-remote")
+external mdxRemote: {"source": string, "options": 'a} => React.element = "MDXRemote"

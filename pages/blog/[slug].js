@@ -6,6 +6,7 @@ import { serialize } from "next-mdx-remote/serialize";
 import { MDXClient } from "next-mdx-remote-client/csr";
 import CodeBlock from "./Codeblock.client";
 import Link from "next/link";
+import { make as SEO } from "src/components/SEO.res.mjs";
 
 // Enhanced MDX components with theme integration
 export default function BlogPost({ mdxSource, post }) {
@@ -153,55 +154,58 @@ export default function BlogPost({ mdxSource, post }) {
 	};
 
 	return (
-		<div className="max-w-4xl mx-auto px-4 py-8">
-			<article>
-				<header className="mb-8">
-					<div className="flex justify-between items-start mb-6">
-						<h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
-							{post.frontmatter.title}
-						</h1>
-					</div>
+		<>
+			<SEO title={`${post.frontmatter.title}`} />
+			<div className="max-w-4xl mx-auto px-4 py-8">
+				<article>
+					<header className="mb-8">
+						<div className="flex justify-between items-start mb-6">
+							<h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
+								{post.frontmatter.title}
+							</h1>
+						</div>
 
-					<div className="flex flex-wrap gap-4 text-gray-600 dark:text-gray-400 mb-6">
-						<span>By Sreyas Sabbani</span>
-						<span>•</span>
-						<span>{post.frontmatter.date}</span>
-						{post.frontmatter.readTime && (
-							<>
-								<span>•</span>
-								<span>
-									{post.frontmatter.readTime} min read
-								</span>
-							</>
-						)}
-					</div>
-
-					{post.frontmatter.tags &&
-						post.frontmatter.tags.length > 0 && (
-							<div className="flex flex-wrap gap-2 mb-6">
-								{post.frontmatter.tags.map((tag) => (
-									<span
-										key={tag}
-										className="bg-muted text-muted-foreground px-2 py-1 rounded text-sm"
-									>
-										{tag}
+						<div className="flex flex-wrap gap-4 text-gray-600 dark:text-gray-400 mb-6">
+							<span>By Sreyas Sabbani</span>
+							<span>•</span>
+							<span>{post.frontmatter.date}</span>
+							{post.frontmatter.readTime && (
+								<>
+									<span>•</span>
+									<span>
+										{post.frontmatter.readTime} min read
 									</span>
-								))}
-							</div>
+								</>
+							)}
+						</div>
+
+						{post.frontmatter.tags &&
+							post.frontmatter.tags.length > 0 && (
+								<div className="flex flex-wrap gap-2 mb-6">
+									{post.frontmatter.tags.map((tag) => (
+										<span
+											key={tag}
+											className="bg-muted text-muted-foreground px-2 py-1 rounded text-sm"
+										>
+											{tag}
+										</span>
+									))}
+								</div>
+							)}
+
+						{post.frontmatter.excerpt && (
+							<p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+								{post.frontmatter.excerpt}
+							</p>
 						)}
+					</header>
 
-					{post.frontmatter.excerpt && (
-						<p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
-							{post.frontmatter.excerpt}
-						</p>
-					)}
-				</header>
-
-				<div className="prose prose-lg max-w-none dark:prose-invert">
-					<MDXClient {...mdxSource} components={components} />
-				</div>
-			</article>
-		</div>
+					<div className="prose prose-lg max-w-none dark:prose-invert">
+						<MDXClient {...mdxSource} components={components} />
+					</div>
+				</article>
+			</div>
+		</>
 	);
 }
 

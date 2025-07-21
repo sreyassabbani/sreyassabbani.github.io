@@ -77,8 +77,7 @@ module ThemeToggle = {
 let make = () => {
   let {state, actions} = useTheme()
 
-  <footer
-    className="mt-16 border-t border-border pt-8 pb-4 bg-background">
+  <footer className="mt-16 border-t border-border pt-8 pb-4 bg-background">
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
       <div className="text-sm text-muted-foreground">
         {React.string("© 2025 Sreyas Sabbani. Built with Next.js & ReScript.")}

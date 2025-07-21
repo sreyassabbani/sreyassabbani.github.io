@@ -6,18 +6,15 @@ type frontmatter = {
   tags: array<string>,
 }
 
+// TODO
+type mdxSource;
+
 type blogPost = {
   slug: string,
   frontmatter: frontmatter,
   content: string,
-  compiledSource: string,
 }
 
-// MDX compilation result
-type mdxSource = {
-  compiledSource: string,
-  frontmatter: frontmatter,
-}
 
 // Blog listing type
 type blogListing = {

@@ -1,15 +1,13 @@
 "use client";
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
 import { serialize } from "next-mdx-remote/serialize";
 import { MDXClient } from "next-mdx-remote-client/csr";
 import CodeBlock from "./Codeblock.client";
 import Link from "next/link";
 import { make as SEO } from "src/components/SEO.res.mjs";
+import { getAllBlogSlugs, getBlogPost } from "src/blog/BlogUtils.res.mjs";
 
 // Enhanced MDX components with theme integration
-export default function BlogPost({ mdxSource, post }) {
+export default function BlogPost({ post }) {
 	const components = {
 		// Typography components
 		p: (props) => (
@@ -106,7 +104,7 @@ export default function BlogPost({ mdxSource, post }) {
 		pre: ({ children, ...props }) => {
 			// Extract code block props if available
 			const codeElement = children?.props;
-			console.log("pre");
+			// console.log("pre");
 			if (codeElement && typeof codeElement.children === "string") {
 				return (
 					<CodeBlock
@@ -201,7 +199,7 @@ export default function BlogPost({ mdxSource, post }) {
 					</header>
 
 					<div className="prose prose-lg max-w-none dark:prose-invert">
-						<MDXClient {...mdxSource} components={components} />
+						<MDXClient {...post.mdxSource} components={components} />
 					</div>
 				</article>
 			</div>
@@ -210,19 +208,9 @@ export default function BlogPost({ mdxSource, post }) {
 }
 
 export async function getStaticPaths() {
-	const blogsDirectory = path.join(process.cwd(), "blog");
-	let paths = [];
-
-	if (fs.existsSync(blogsDirectory)) {
-		const filenames = fs.readdirSync(blogsDirectory);
-		paths = filenames
-			.filter((name) => name.endsWith(".mdx"))
-			.map((name) => ({
-				params: {
-					slug: name.replace(/\.mdx$/, ""),
-				},
-			}));
-	}
+  const paths = getAllBlogSlugs().map((slug) => ({
+    params: { slug },
+  }));
 
 	return {
 		paths,
@@ -232,33 +220,19 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
 	const { slug } = params;
-	const blogsDirectory = path.join(process.cwd(), "blog");
-	const filePath = path.join(blogsDirectory, `${slug}.mdx`);
 
-	if (!fs.existsSync(filePath)) {
-		return {
-			notFound: true,
-		};
-	}
-
-	const fileContent = fs.readFileSync(filePath, "utf8");
-	const { data, content } = matter(fileContent);
-
-	const mdxSource = await serialize(content, {
-		mdxOptions: {
-			remarkPlugins: [],
-			rehypePlugins: [],
-		},
-	});
+  const post = getBlogPost(slug);
 
 	return {
 		props: {
 			post: {
-				slug,
-				frontmatter: data,
-				content,
-			},
-			mdxSource,
+        ...post,
+        mdxSource: await serialize(post.content, {
+          mdxOptions: {
+            remarkPlugins: [], rehypePlugins: []
+          },
+        }),
+      },
 		},
 	};
 }

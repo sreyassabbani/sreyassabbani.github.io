@@ -1,11 +1,9 @@
 "use client";
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 import { make as SEO } from "src/components/SEO.res.mjs";
+import { getAllBlogPosts, getAllBlogSlugs } from "src/blog/BlogUtils.res.mjs";
 
 export default function BlogIndex({ posts }) {
 	const [search, setSearch] = useState("");
@@ -126,31 +124,10 @@ export default function BlogIndex({ posts }) {
 }
 
 export async function getStaticProps() {
-	const blogDirectory = path.join(process.cwd(), "blog");
 
-	let posts = [];
+	const posts = getAllBlogPosts();
 
-	if (fs.existsSync(blogDirectory)) {
-		const filenames = fs.readdirSync(blogDirectory);
-
-		posts = filenames
-			.filter((name) => name.endsWith(".mdx"))
-			.map((name) => {
-				const filePath = path.join(blogDirectory, name);
-				const fileContent = fs.readFileSync(filePath, "utf8");
-				const { data } = matter(fileContent);
-				const slug = name.replace(/\.mdx$/, "");
-
-				return {
-					slug,
-					frontmatter: data,
-				};
-			})
-			.sort(
-				(a, b) =>
-					new Date(b.frontmatter.date) - new Date(a.frontmatter.date)
-			);
-	}
+  const paths = getAllBlogSlugs();
 
 	return {
 		props: {

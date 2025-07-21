@@ -1,5 +1,5 @@
 // Node.js filesystem bindings
-@module("fs") 
+@module("fs")
 external readFileSync: (string, string) => string = "readFileSync"
 
 @module("fs")

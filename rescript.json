@@ -9,7 +9,9 @@
     "@rescript/core"
   ],
   "bsc-flags": [
-    "-open RescriptCore"
+    "-open RescriptCore",
+    "-open Belt",
+    "-open Js"
   ],
   "sources": [
     {

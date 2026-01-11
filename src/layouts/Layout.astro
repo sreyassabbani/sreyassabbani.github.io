@@ -5,9 +5,9 @@ import Navigation from "../components/Navigation.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 
 const {
-  title = SITE_TITLE,
-  description = SITE_DESCRIPTION,
-  variant = "default",
+    title = SITE_TITLE,
+    description = SITE_DESCRIPTION,
+    variant = "default",
 } = Astro.props;
 
 const isHome = variant === "home";
@@ -27,7 +27,6 @@ const isHome = variant === "home";
       ]}
     >
       <div
-        transition:name="page-shell"
         class:list={[
           "page-shell w-full max-w-2xl flex flex-col",
           isHome

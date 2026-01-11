@@ -1,17 +1,21 @@
 ---
 interface Props {
-	date: Date;
+    date: Date;
 }
 
 const { date } = Astro.props;
+
+function getFixedWidthDate(date: Date) {
+    const year = date.getFullYear();
+    // Months are 0-indexed, so add 1
+    const month = date.toLocaleString("default", { month: "short" });
+    const day = date.getDate().toString().padStart(2, "0");
+
+    // Format the date as 'MM DD, YYYY' to ensure fixed width
+    return `${month} ${day}, ${year}`;
+}
 ---
 
 <time datetime={date.toISOString()}>
-	{
-		date.toLocaleDateString('en-us', {
-			year: 'numeric',
-			month: 'short',
-			day: 'numeric',
-		})
-	}
+  {getFixedWidthDate(date)}
 </time>

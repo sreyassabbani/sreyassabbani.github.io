@@ -1,0 +1,48 @@
+---
+// CopyCodeButton - Adds copy buttons to all code blocks
+---
+
+<script>
+    function initCopyButtons() {
+        const codeBlocks = document.querySelectorAll("pre.astro-code");
+
+        codeBlocks.forEach((block) => {
+            // Skip if already has copy button
+            if (block.querySelector(".copy-button")) return;
+
+            // Create copy button
+            const button = document.createElement("button");
+            button.className = "copy-button";
+            button.textContent = "Copy";
+            button.setAttribute("aria-label", "Copy code to clipboard");
+
+            button.addEventListener("click", async () => {
+                const code = block.querySelector("code");
+                if (!code) return;
+
+                try {
+                    await navigator.clipboard.writeText(code.textContent || "");
+                    button.textContent = "Copied!";
+                    button.classList.add("copied");
+
+                    setTimeout(() => {
+                        button.textContent = "Copy";
+                        button.classList.remove("copied");
+                    }, 2000);
+                } catch (err) {
+                    console.error("Failed to copy:", err);
+                    button.textContent = "Error";
+                }
+            });
+
+            (block as HTMLElement).style.position = "relative";
+            block.appendChild(button);
+        });
+    }
+
+    // Run on page load
+    document.addEventListener("DOMContentLoaded", initCopyButtons);
+
+    // Run on Astro page transitions (if using View Transitions)
+    document.addEventListener("astro:page-load", initCopyButtons);
+</script>

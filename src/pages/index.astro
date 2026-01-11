@@ -1,7 +1,7 @@
 ---
 import ProfileImage from "../../public/pfp.png";
-import Layout from "../layouts/Layout.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout
@@ -14,7 +14,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
       <img
         src={ProfileImage.src}
         alt="Photo of me"
-        class="rounded-full w-28 h-28 object-cover"
+        class="rounded-full w-28 h-28 object-cover photo-overlay"
       />
       <figcaption class="mt-2 text-center text-[color:var(--muted-foreground)]">
         me

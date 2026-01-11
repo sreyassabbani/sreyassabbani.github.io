@@ -147,6 +147,7 @@
 
 /* Base typography */
 @layer base {
+
     *,
     *::before,
     *::after {
@@ -205,14 +206,12 @@
 
     /* Light mode: darker blue overlay */
     :root .photo-overlay {
-        filter: grayscale(100%) sepia(40%) hue-rotate(190deg) saturate(180%)
-            brightness(0.85);
+        filter: grayscale(100%) sepia(40%) hue-rotate(190deg) saturate(180%) brightness(0.85);
     }
 
     /* Dark mode: lighter blue overlay */
     .dark .photo-overlay {
-        filter: grayscale(100%) sepia(30%) hue-rotate(180deg) saturate(150%)
-            brightness(1.1);
+        filter: grayscale(100%) sepia(30%) hue-rotate(180deg) saturate(150%) brightness(1.1);
     }
 }
 
@@ -366,11 +365,10 @@
 }
 
 /* ============================================
-   CODE BLOCKS WITH COPY BUTTON
+   CODE BLOCKS
    ============================================ */
 
-/* Code block container */
-.prose pre,
+/* Base code block styling */
 pre.astro-code {
     position: relative;
     margin: 1.5em 0;
@@ -380,16 +378,6 @@ pre.astro-code {
     font-family: var(--font-mono);
     font-size: 0.875rem;
     line-height: 1.6;
-    border: 1px solid var(--border);
-}
-
-/* Override Shiki backgrounds to use theme colors - synced with dual themes */
-pre.astro-code {
-    background-color: var(--shiki-light-bg);
-}
-
-.dark pre.astro-code {
-    background-color: var(--shiki-dark-bg);
 }
 
 pre.astro-code code {
@@ -399,12 +387,40 @@ pre.astro-code code {
     color: inherit;
 }
 
-/* Code block wrapper for copy button */
+/* ============================================
+   SHIKI DUAL THEME
+   
+   How Shiki dual themes work:
+   - Light theme colors are the DEFAULT inline styles
+   - Dark theme colors are in --shiki-dark and --shiki-dark-bg CSS variables
+   
+   So we only need to override for dark mode!
+   ============================================ */
+
+/* Light mode: just set background, let inline styles handle syntax colors */
+pre.astro-code {
+    background-color: var(--shiki-light-bg, var(--muted)) !important;
+    border: 1px solid var(--border);
+}
+
+/* Dark mode: override to use dark theme variables */
+.dark pre.astro-code {
+    background-color: var(--shiki-dark-bg) !important;
+    border: 1px solid var(--border);
+}
+
+.dark pre.astro-code span {
+    color: var(--shiki-dark) !important;
+}
+
+/* ============================================
+   COPY BUTTON
+   ============================================ */
+
 .code-block-wrapper {
     position: relative;
 }
 
-/* Copy button styling */
 .copy-button {
     position: absolute;
     top: 0.75rem;
@@ -444,25 +460,7 @@ pre:hover .copy-button,
     margin: 1.5em 0;
 }
 
-/* ============================================
-   SHIKI DUAL THEME SWITCHING
-   Astro outputs both light/dark styles inline,
-   we toggle visibility based on .dark class
-   ============================================ */
-
-/* By default (light mode), let Shiki use its inline styles for syntax highlighting.
-   We only override the container background. */
-pre.astro-code {
-    background-color: var(--shiki-light-bg);
+/* Prose pre wrapper */
+.prose pre {
+    margin: 1.5em 0;
 }
-
-/* Dark mode: show dark theme colors using variables provided by Shiki themes */
-.dark pre.astro-code {
-    background-color: var(--shiki-dark-bg);
-}
-
-.dark pre.astro-code span {
-    color: var(--shiki-dark);
-}
-
-/* Ensure proper code block backgrounds - handled above, so we can remove redundant overrides */

@@ -5,12 +5,83 @@ pubDate: "Jul 08 2022"
 heroImage: "../../assets/blog-placeholder-3.jpg"
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+Hi
 
-Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc. Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra massa massa ultricies mi.
+```rs
+use clippy_utils::diagnostics::span_lint_and_help;
+use clippy_utils::fulfill_or_allowed;
+use clippy_utils::ty::{implements_trait, is_copy};
+use rustc_hir::{self as hir, HirId, Item};
+use rustc_lint::LateContext;
+use rustc_middle::ty::{self, GenericArgKind, Ty};
 
-Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
+use super::EXPL_IMPL_CLONE_ON_COPY;
 
-Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id cursus metus aliquam eleifend mi.
+/// Implementation of the `EXPL_IMPL_CLONE_ON_COPY` lint.
+pub(super) fn check<'tcx>(
+    cx: &LateContext<'tcx>,
+    item: &Item<'_>,
+    trait_ref: &hir::TraitRef<'_>,
+    ty: Ty<'tcx>,
+    adt_hir_id: HirId,
+) {
+    let clone_id = match cx.tcx.lang_items().clone_trait() {
+        Some(id) if trait_ref.trait_def_id() == Some(id) => id,
+        _ => return,
+    };
+    let Some(copy_id) = cx.tcx.lang_items().copy_trait() else {
+        return;
+    };
+    let (ty_adt, ty_subs) = match *ty.kind() {
+        // Unions can't derive clone.
+        ty::Adt(adt, subs) if !adt.is_union() => (adt, subs),
+        _ => return,
+    };
+    // If the current self type doesn't implement Copy (due to generic constraints), search to see if
+    // there's a Copy impl for any instance of the adt.
+    if !is_copy(cx, ty) {
+        if ty_subs.non_erasable_generics().next().is_some() {
+            let has_copy_impl = cx.tcx.local_trait_impls(copy_id).iter().any(|&id| {
+                matches!(cx.tcx.type_of(id).instantiate_identity().kind(), ty::Adt(adt, _)
+                                        if ty_adt.did() == adt.did())
+            });
+            if !has_copy_impl {
+                return;
+            }
+        } else {
+            return;
+        }
+    }
+    // Derive constrains all generic types to requiring Clone. Check if any type is not constrained for
+    // this impl.
+    if ty_subs.types().any(|ty| !implements_trait(cx, ty, clone_id, &[])) {
+        return;
+    }
+    // `#[repr(packed)]` structs with type/const parameters can't derive `Clone`.
+    // https://github.com/rust-lang/rust-clippy/issues/10188
+    if ty_adt.repr().packed()
+        && ty_subs
+            .iter()
+            .any(|arg| matches!(arg.kind(), GenericArgKind::Type(_) | GenericArgKind::Const(_)))
+    {
+        return;
+    }
+    // The presence of `unsafe` fields prevents deriving `Clone` automatically
+    if ty_adt.all_fields().any(|f| f.safety.is_unsafe()) {
+        return;
+    }
 
-Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
+    if fulfill_or_allowed(cx, EXPL_IMPL_CLONE_ON_COPY, [adt_hir_id]) {
+        return;
+    }
+
+    span_lint_and_help(
+        cx,
+        EXPL_IMPL_CLONE_ON_COPY,
+        item.span,
+        "you are implementing `Clone` explicitly on a `Copy` type",
+        None,
+        "consider deriving `Clone` or removing `Copy`",
+    );
+}
+```

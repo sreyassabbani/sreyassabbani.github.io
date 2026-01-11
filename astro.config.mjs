@@ -18,7 +18,6 @@ export default defineConfig({
         syntaxHighlight: "shiki",
         shikiConfig: {
             themes: {
-                // Catppuccin themes for consistent aesthetic
                 light: "catppuccin-latte",
                 dark: "catppuccin-frappe",
             },

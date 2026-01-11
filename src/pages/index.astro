@@ -1,0 +1,39 @@
+---
+import ProfileImage from "../../public/pfp.png";
+import Layout from "../layouts/Layout.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+---
+
+<Layout
+  title={`${SITE_TITLE} — Home`}
+  description={SITE_DESCRIPTION}
+  variant="home"
+>
+  <section class="flex flex-col md:flex-row gap-8">
+    <figure class="w-full md:w-1/4 flex flex-col justify-center items-center">
+      <img
+        src={ProfileImage.src}
+        alt="Photo of me"
+        class="rounded-full w-28 h-28 object-cover"
+      />
+      <figcaption class="mt-2 text-center text-[color:var(--muted-foreground)]">
+        me
+      </figcaption>
+    </figure>
+    <div class="w-full md:w-3/4">
+      <h4
+        class="text-xl font-bold mb-2 text-[color:var(--foreground)] text-left"
+      >
+        hi there!
+      </h4>
+      <p class="mb-6 text-[color:var(--muted-foreground)] text-left">
+        I'm a math, physics, and CS enthusiast.
+      </p>
+
+      <p class="mb-6 text-[color:var(--muted-foreground)] text-left">
+        I enjoy learning and tinkering with things; this website has daily
+        struggles, occasional insights, and even some jokes I find funny 😄
+      </p>
+    </div>
+  </section>
+</Layout>

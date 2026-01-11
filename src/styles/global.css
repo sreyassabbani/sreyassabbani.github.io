@@ -147,7 +147,6 @@
 
 /* Base typography */
 @layer base {
-
     *,
     *::before,
     *::after {
@@ -206,12 +205,14 @@
 
     /* Light mode: darker blue overlay */
     :root .photo-overlay {
-        filter: grayscale(100%) sepia(40%) hue-rotate(190deg) saturate(180%) brightness(0.85);
+        filter: grayscale(100%) sepia(40%) hue-rotate(190deg) saturate(180%)
+            brightness(0.85);
     }
 
     /* Dark mode: lighter blue overlay */
     .dark .photo-overlay {
-        filter: grayscale(100%) sepia(30%) hue-rotate(180deg) saturate(150%) brightness(1.1);
+        filter: grayscale(100%) sepia(30%) hue-rotate(180deg) saturate(150%)
+            brightness(1.1);
     }
 }
 

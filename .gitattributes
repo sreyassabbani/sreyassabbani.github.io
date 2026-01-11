@@ -1,0 +1,2 @@
+# submodule doesn't count?
+src/content/blog/*.md linguist-detectable=false

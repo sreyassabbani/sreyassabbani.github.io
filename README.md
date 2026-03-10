@@ -43,6 +43,8 @@ The deploy workflow checks out two separate repos:
 
 Then it builds from `site/`. The build step sets `BLOG_CONTENT_DIR=../blog`, so the `prebuild` hook syncs the checked out blog repo into `site/src/content/blog` automatically.
 
+Blog pushes can trigger this deploy workflow directly through a `repository_dispatch` event. To enable that, add a `SITE_REPO_DISPATCH_TOKEN` secret in the `blog` repo with permission to dispatch workflows in `sreyassabbani/sreyassabbani.github.io`.
+
 ## Why this setup is cleaner than submodules
 
 - No submodule init/update workflow.

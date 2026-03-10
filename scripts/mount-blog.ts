@@ -41,7 +41,7 @@ async function ensureMountedBlog() {
     if (sourceExists) {
         await cp(sourcePath, mountPath, {
             recursive: true,
-            filter: (entry) => !entry.endsWith(`${path.sep}.git`),
+            filter: (entry) => !entry.split(path.sep).includes(".git"),
         });
         console.log(
             `[mount-blog] synced ${path.relative(root, sourcePath)} -> src/content/blog`,

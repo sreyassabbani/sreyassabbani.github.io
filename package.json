@@ -3,14 +3,16 @@
     "type": "module",
     "version": "0.0.1",
     "scripts": {
-        "dev": "astro dev",
-        "build": "astro build",
-        "preview": "astro preview",
-        "astro": "astro",
-        "fmt": "biome format --write .",
-        "lint": "biome lint .",
-        "check": "biome check --write .",
-        "ci": "bun run lint && bun run fmt"
+        "predev": "\"$npm_execpath\" --bun ./scripts/mount-blog.ts",
+        "prebuild": "\"$npm_execpath\" --bun ./scripts/mount-blog.ts",
+        "dev": "\"$npm_execpath\" --bun ./node_modules/.bin/astro dev",
+        "build": "\"$npm_execpath\" --bun ./node_modules/.bin/astro build",
+        "preview": "\"$npm_execpath\" --bun ./node_modules/.bin/astro preview",
+        "astro": "\"$npm_execpath\" --bun ./node_modules/.bin/astro",
+        "fmt": "\"$npm_execpath\" --bun ./node_modules/.bin/biome format --write .",
+        "lint": "\"$npm_execpath\" --bun ./node_modules/.bin/biome lint .",
+        "check": "\"$npm_execpath\" --bun ./node_modules/.bin/biome check --write .",
+        "ci": "\"$npm_execpath\" run lint && \"$npm_execpath\" run fmt"
     },
     "dependencies": {
         "@astrojs/mdx": "^4.3.12",

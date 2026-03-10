@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # direnv
 .direnv
+
+# mounted external content repo
+src/content/blog

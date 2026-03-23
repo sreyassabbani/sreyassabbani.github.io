@@ -4,6 +4,7 @@ import path from "node:path";
 
 const root = process.cwd();
 const mountPath = path.resolve(root, "src/content/blog");
+const ignoredPathSegments = new Set([".git", ".github"]);
 
 async function pathExists(targetPath: string) {
     try {
@@ -41,7 +42,10 @@ async function ensureMountedBlog() {
     if (sourceExists) {
         await cp(sourcePath, mountPath, {
             recursive: true,
-            filter: (entry) => !entry.split(path.sep).includes(".git"),
+            filter: (entry) =>
+                !entry
+                    .split(path.sep)
+                    .some((segment) => ignoredPathSegments.has(segment)),
         });
         console.log(
             `[mount-blog] synced ${path.relative(root, sourcePath)} -> src/content/blog`,

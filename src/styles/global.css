@@ -187,8 +187,12 @@
 }
 
 @layer components {
+    .blog-prose {
+        line-height: 1.72 !important;
+    }
+
     .blog-prose p {
-        margin: 0 0 1rem;
+        margin: 0 0 1rem !important;
     }
 
     .blog-prose :not(pre) > code::before,
@@ -198,10 +202,12 @@
 
     .blog-prose :not(pre) > code {
         @apply rounded-md border border-border/70 bg-muted/75 px-1.5 py-0.5 font-mono text-[0.88em] font-normal text-primary;
+        color: oklch(0.58 0.12 247.5) !important;
+        font-weight: 400 !important;
     }
 
     .dark .blog-prose :not(pre) > code {
-        color: oklch(0.75 0.08 260);
+        color: oklch(0.76 0.085 247.5) !important;
     }
 
     .blog-prose pre {
@@ -209,21 +215,34 @@
     }
 
     .blog-prose pre.astro-code {
-        @apply relative overflow-x-auto rounded-xl border px-4 py-3 font-mono text-[0.9rem] leading-[1.4];
+        @apply relative overflow-x-auto rounded-xl border px-4 py-3 font-mono text-[0.9rem] leading-[1.3];
         border-color: color-mix(in oklab, var(--border) 82%, transparent);
         background-color: var(--shiki-light-bg, var(--muted)) !important;
+        white-space: pre !important;
+        overflow-wrap: normal !important;
+        word-break: normal !important;
+        font-variant-ligatures: none;
     }
 
     .blog-prose pre.astro-code code {
         @apply block min-w-full border-0 bg-transparent p-0 font-normal text-inherit shadow-none;
+        line-height: inherit;
+    }
+
+    .blog-prose pre.astro-code span {
+        font-style: normal !important;
+        font-weight: 400 !important;
+        text-decoration: none !important;
+        letter-spacing: normal;
     }
 
     .blog-prose pre.astro-code .line {
         display: block;
+        line-height: 1.3;
     }
 
     .blog-prose pre.astro-code .line:empty {
-        min-height: 0.8em;
+        min-height: 0.45em;
     }
 
     .dark .blog-prose pre.astro-code {
@@ -233,13 +252,10 @@
 
     .dark .blog-prose pre.astro-code span {
         color: var(--shiki-dark, inherit) !important;
-        font-style: var(--shiki-dark-font-style, inherit) !important;
-        font-weight: var(--shiki-dark-font-weight, inherit) !important;
-        text-decoration: var(--shiki-dark-text-decoration, inherit) !important;
     }
 
     .blog-prose blockquote {
-        @apply my-6 rounded-r-lg px-4 py-3 text-[0.98em] text-muted-foreground;
+        @apply my-5 rounded-r-lg px-3.5 py-2.5 text-[0.98em] text-muted-foreground;
         border-inline-start: 2px solid
             color-mix(in oklab, var(--primary) 42%, var(--border));
         background:
@@ -258,6 +274,14 @@
 
     .blog-prose blockquote > :last-child {
         margin-bottom: 0;
+    }
+
+    .blog-prose blockquote p {
+        margin: 0;
+    }
+
+    .blog-prose blockquote p + p {
+        margin-top: 0.75rem;
     }
 
     .blog-prose table {
@@ -296,20 +320,20 @@
     .blog-prose ul {
         list-style: disc;
         list-style-position: outside;
-        margin-block: 0.9rem;
+        margin-block: 0.9rem !important;
         padding-inline-start: 1.5rem;
     }
 
     .blog-prose ol {
         list-style: decimal;
         list-style-position: outside;
-        margin-block: 0.9rem;
+        margin-block: 0.9rem !important;
         padding-inline-start: 1.5rem;
     }
 
     .blog-prose li {
         display: list-item;
-        margin-block: 0.3rem;
+        margin-block: 0.3rem !important;
     }
 
     .blog-prose li::marker {

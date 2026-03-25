@@ -1,4 +1,4 @@
-import { cp, lstat, mkdir, rm } from "node:fs/promises";
+import { cp, lstat, mkdir, readdir, rm } from "node:fs/promises";
 import { homedir } from "node:os";
 import path from "node:path";
 
@@ -32,11 +32,50 @@ async function resolveSourcePath() {
     return sourceCandidates[0] ?? path.join(homedir(), "blog");
 }
 
-async function ensureMountedBlog() {
+async function directoryHasEntries(targetPath: string) {
+    try {
+        const entries = await readdir(targetPath);
+        return entries.length > 0;
+    } catch {
+        return false;
+    }
+}
+
+type EnsureMountedBlogOptions = {
+    backupExisting?: boolean;
+    backupRoot?: string;
+    logPrefix?: string;
+};
+
+export async function ensureMountedBlog(
+    options: EnsureMountedBlogOptions = {},
+) {
+    const {
+        backupExisting = false,
+        backupRoot = path.resolve(root, ".blog-sync-backups"),
+        logPrefix = "[mount-blog]",
+    } = options;
     const sourcePath = await resolveSourcePath();
     const sourceExists = await pathExists(sourcePath);
+    const mountExists = await pathExists(mountPath);
 
     await mkdir(path.dirname(mountPath), { recursive: true });
+
+    if (
+        backupExisting &&
+        mountExists &&
+        (await directoryHasEntries(mountPath))
+    ) {
+        const stamp = new Date().toISOString().replaceAll(":", "-");
+        const backupPath = path.join(backupRoot, stamp);
+
+        await mkdir(backupRoot, { recursive: true });
+        await cp(mountPath, backupPath, { recursive: true });
+        console.log(
+            `${logPrefix} backed up existing src/content/blog -> ${path.relative(root, backupPath)}`,
+        );
+    }
+
     await rm(mountPath, { force: true, recursive: true });
 
     if (sourceExists) {
@@ -48,14 +87,14 @@ async function ensureMountedBlog() {
                     .some((segment) => ignoredPathSegments.has(segment)),
         });
         console.log(
-            `[mount-blog] synced ${path.relative(root, sourcePath)} -> src/content/blog`,
+            `${logPrefix} synced ${path.relative(root, sourcePath)} -> src/content/blog`,
         );
         return;
     }
 
     await mkdir(mountPath, { recursive: true });
     console.warn(
-        `[mount-blog] no blog repo found at ${sourcePath}; using empty src/content/blog`,
+        `${logPrefix} no blog repo found at ${sourcePath}; using empty src/content/blog`,
     );
 }
 

@@ -3,6 +3,9 @@
     "type": "module",
     "version": "0.0.1",
     "scripts": {
+        "prepare": "\"$npm_execpath\" --bun ./node_modules/.bin/simple-git-hooks",
+        "blog:sync": "\"$npm_execpath\" --bun ./scripts/mount-blog.ts",
+        "precommit": "\"$npm_execpath\" --bun ./scripts/pre-commit.ts",
         "predev": "\"$npm_execpath\" --bun ./scripts/mount-blog.ts",
         "prebuild": "\"$npm_execpath\" --bun ./scripts/mount-blog.ts",
         "dev": "\"$npm_execpath\" --bun ./node_modules/.bin/astro dev",
@@ -20,7 +23,6 @@
         "@astrojs/react": "^4.4.2",
         "@astrojs/rss": "^4.0.14",
         "@astrojs/sitemap": "^3.6.0",
-        "@fontsource-variable/geist": "^5.2.8",
         "@fontsource/dela-gothic-one": "^5.2.7",
         "@fontsource/eb-garamond": "^5.2.7",
         "@fontsource/inter": "^5.2.8",
@@ -42,7 +44,6 @@
         "react-dom": "^19.2.1",
         "rehype-katex": "^7.0.0",
         "remark-math": "^6.0.0",
-        "shadcn": "^4.1.0",
         "sharp": "^0.34.5",
         "tailwind-merge": "^3.5.0",
         "tailwindcss": "4.2.2",
@@ -56,7 +57,11 @@
         "@types/node": "^25.5.0",
         "prettier": "^3.8.1",
         "prettier-plugin-astro": "^0.14.1",
+        "simple-git-hooks": "^2.13.1",
         "typescript": "5.9.3",
         "typescript-language-server": "^5.1.3"
+    },
+    "simple-git-hooks": {
+        "pre-commit": "bun run precommit"
     }
 }

@@ -28,3 +28,6 @@ pnpm-debug.log*
 
 # mounted external content repo
 src/content/blog
+
+# local backups for generated blog sync
+.blog-sync-backups/

@@ -3,41 +3,46 @@ import ThemeToggle from "./ThemeToggle.tsx";
 ---
 
 <nav
-  class="relative w-full p-2 pb-10 h-12 flex border-b border-[color:var(--border)] justify-between items-center text-sm text-[color:var(--foreground)]"
+  class="relative flex h-14 w-full items-center justify-between border-b border-border px-2 pb-10 text-sm text-foreground"
 >
-  <a href="/" class="flex items-center w-1/3">
+  <a href="/" class="flex w-1/3 items-center no-underline hover:text-foreground">
     <span
-      class="text-4xl ml-2 align-middle font-semibold"
-      style="font-family: var(--font-brand);"
+      class="ml-2 align-middle text-4xl font-semibold tracking-[-0.04em] font-brand"
     >
       <span>sreyas</span><span class="text-[color:var(--primary)]">.is</span>
     </span>
   </a>
 
-  <div class="flex w-2/3 justify-end space-x-6">
-    <a href="/blog" class="flex items-center justify-center relative group">
+  <div class="flex w-2/3 items-center justify-end gap-6">
+    <a
+      href="/blog"
+      class="group relative flex items-center justify-center text-foreground no-underline transition-colors duration-200 hover:text-primary"
+    >
       Blog
       <span
-        class="absolute left-0 -bottom-1 w-full h-0.5 bg-[color:var(--primary)] scale-x-0 group-hover:scale-x-100 origin-left -translate-y-2"
+        class="absolute left-0 -bottom-1 h-0.5 w-full origin-left -translate-y-2 scale-x-0 bg-primary transition-transform duration-300 ease-out group-hover:scale-x-100"
       ></span>
     </a>
-    <a href="/projects" class="flex items-center justify-center relative group">
+    <a
+      href="/projects"
+      class="group relative flex items-center justify-center text-foreground no-underline transition-colors duration-200 hover:text-primary"
+    >
       Projects
       <span
-        class="absolute left-0 -bottom-1 w-full h-0.5 bg-[color:var(--primary)] scale-x-0 group-hover:scale-x-100 origin-left -translate-y-2"
+        class="absolute left-0 -bottom-1 h-0.5 w-full origin-left -translate-y-2 scale-x-0 bg-primary transition-transform duration-300 ease-out group-hover:scale-x-100"
       ></span>
     </a>
 
-    <div class="flex rounded gap-4 p-2 relative group">
+    <div class="flex items-center gap-4 rounded-full px-3 py-2">
       <a
-        class="font-bold flex items-center justify-center"
+        class="flex items-center justify-center font-bold text-foreground transition-colors duration-200 hover:text-primary"
         target="_blank"
         rel="noopener noreferrer"
         href="https://github.com/sreyassabbani"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="inline h-5 w-5 align-middle fill-[color:var(--foreground)] hover:fill-[color:var(--primary)]"
+          class="inline size-5 align-middle fill-current"
           width="24"
           height="24"
           viewBox="0 0 24 24"
@@ -48,14 +53,14 @@ import ThemeToggle from "./ThemeToggle.tsx";
         </svg>
       </a>
       <a
-        class="font-bold flex items-center justify-center"
+        class="flex items-center justify-center font-bold text-foreground transition-colors duration-200 hover:text-primary"
         target="_blank"
         rel="noopener noreferrer"
         href="https://www.linkedin.com/in/sreyassabbani"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="inline h-5 w-5 align-middle fill-[color:var(--foreground)] hover:fill-[color:var(--primary)]"
+          class="inline size-5 align-middle fill-current"
           width="24"
           height="24"
           viewBox="0 0 24 24"
@@ -66,14 +71,14 @@ import ThemeToggle from "./ThemeToggle.tsx";
         </svg>
       </a>
       <a
-        class="font-bold flex items-center justify-center"
+        class="flex items-center justify-center font-bold text-foreground transition-colors duration-200 hover:text-primary"
         target="_blank"
         rel="noopener noreferrer"
         href="https://www.linkedin.com/in/sreyassabbani"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="inline h-7 w-7 align-middle fill-[color:var(--foreground)] hover:fill-[color:var(--primary)]"
+          class="inline size-7 align-middle fill-current"
           width="24"
           height="24"
           viewBox="0 0 24 24"
@@ -84,23 +89,7 @@ import ThemeToggle from "./ThemeToggle.tsx";
           ></path>
         </svg>
       </a>
-      <span
-        class="absolute -top-4 left-1/2 -translate-x-1/2 text-[color:var(--primary)] font-semibold px-2 py-1 rounded text-xs opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 flex justify-center items-center min-w-max"
-      >
-        Links!
-      </span>
     </div>
   </div>
   <ThemeToggle className="absolute -bottom-4 -right-1 w-8 h-8" client:idle />
 </nav>
-
-<style>
-  nav a {
-    text-decoration: none;
-    color: var(--foreground);
-  }
-  nav a:hover {
-    text-decoration: none;
-    color: var(--primary);
-  }
-</style>

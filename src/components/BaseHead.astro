@@ -9,9 +9,9 @@ import FallbackImage from "../assets/blog-placeholder-1.jpg";
 import { SITE_TITLE } from "../consts";
 
 interface Props {
-  title: string;
-  description: string;
-  image?: ImageMetadata;
+    title: string;
+    description: string;
+    image?: ImageMetadata;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -22,7 +22,8 @@ const { title, description, image = FallbackImage } = Astro.props;
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="theme-color" content="#ffffff" />
+<meta name="theme-color" content="#eff1f5" />
+<meta name="color-scheme" content="light dark" />
 <link rel="icon" type="image/png" href="/favicon.png" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
@@ -75,11 +76,25 @@ const { title, description, image = FallbackImage } = Astro.props;
 <!-- Inline theme initialization to prevent flash -->
 <script is:inline>
   (function () {
+    const applyTheme = (isDark) => {
+      const root = document.documentElement;
+      root.classList.toggle("dark", isDark);
+      root.style.colorScheme = isDark ? "dark" : "light";
+
+      const themeColorMeta = document.querySelector(
+        'meta[name="theme-color"]',
+      );
+
+      if (themeColorMeta instanceof HTMLMetaElement) {
+        themeColorMeta.content = isDark ? "#232634" : "#eff1f5";
+      }
+    };
+
     const saved = localStorage.getItem("theme");
     const prefersDark = window.matchMedia(
       "(prefers-color-scheme: dark)",
     ).matches;
     const isDark = saved === "dark" || (saved === null && prefersDark);
-    document.documentElement.classList.toggle("dark", isDark);
+    applyTheme(isDark);
   })();
 </script>

@@ -39,8 +39,17 @@ bun run dev
 - `.helix/languages.toml` points `.astro`, `.ts`, `.tsx`, `.js`, and `.jsx` files at the right language servers without needing global installs.
 - `tsconfig.json` enables `@astrojs/ts-plugin`, which is what teaches TypeScript-aware editors how to understand `.astro` imports outside VS Code.
 - `bun run typecheck` runs `astro check`, which covers both `.astro` files and normal TypeScript files.
+- `bun run blog:sync` refreshes the generated `src/content/blog` mount from `~/blog` or `BLOG_CONTENT_DIR`.
 
 If you launch Helix from Nushell, make sure your Nushell config loads `direnv` first so the flake shell environment reaches `hx`.
+
+## Pre-commit sync
+
+This repo now installs a versioned `pre-commit` hook through `simple-git-hooks`.
+
+- Every site-repo commit re-syncs `src/content/blog` from the real blog source.
+- Before overwriting the generated mount, it writes a timestamped backup to `.blog-sync-backups/`.
+- `~/blog` is still the source of truth. `src/content/blog` stays generated and gitignored.
 
 ## Deploy pattern
 

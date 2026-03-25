@@ -1,8 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
-import Layout from "../../layouts/Layout.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import Layout from "../../layouts/Layout.astro";
 
 const posts = (await getCollection("blog")).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -11,16 +11,19 @@ const posts = (await getCollection("blog")).sort(
 
 <Layout title={`${SITE_TITLE} — Blog`} description={SITE_DESCRIPTION}>
   <section class="mt-6">
-    <ul>
+    <ul class="space-y-5">
       {
         posts.map((post) => (
-          <li class="mb-6">
-            <a href={`/blog/${post.id}/`}>
-              <h4 class="title">
-                <span class="date font-mono text-primary">
+          <li>
+            <a
+              href={`/blog/${post.id}/`}
+              class="group inline-flex flex-col gap-1 no-underline"
+            >
+              <h4 class="font-heading text-md font-semibold text-foreground transition-colors duration-200 group-hover:text-primary">
+                <span class="font-mono text-primary">
                   <FormattedDate date={post.data.pubDate} />
                 </span>
-                <span class="ml-2 underline decoration-dotted underline-offset-4 hover:decoration-solid">
+                <span class="ml-2 underline decoration-dashed underline-offset-4 transition-[text-decoration-style] duration-200 group-hover:decoration-solid">
                   {post.data.title}
                 </span>
               </h4>

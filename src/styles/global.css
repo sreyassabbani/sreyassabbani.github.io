@@ -3,8 +3,7 @@
 @import "@fontsource/iosevka";
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -48,10 +47,9 @@
     --animate-accordion-down: accordion-down 0.2s ease-out;
     --animate-accordion-up: accordion-up 0.2s ease-out;
 
-    /* Fonts: Literata for body & headings, Space Grotesk for brand only, Iosevka for code */
-    --font-sans: 'Geist Variable', sans-serif;
+    --font-sans: "Literata", Georgia, serif;
     --font-mono: "Iosevka", ui-monospace, monospace;
-    --font-heading: var(--font-sans);
+    --font-heading: "Literata", Georgia, serif;
     --font-brand: "Space Grotesk", system-ui, sans-serif;
 
     @keyframes accordion-down {
@@ -73,43 +71,28 @@
             height: 0;
         }
     }
-
-    --radius-2xl: calc(var(--radius) * 1.8);
-
-    --radius-3xl: calc(var(--radius) * 2.2);
-
-    --radius-4xl: calc(var(--radius) * 2.6)
 }
 
 :root {
-    /* Catppuccin Latte */
-    --background: oklch(1 0 0);
-    /* base */
-    --foreground: oklch(0.145 0 0);
-    /* text */
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    /* blue */
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    /* mantle */
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    /* subtext1 */
-    --accent: oklch(0.97 0 0);
-    /* crust */
-    --accent-foreground: oklch(0.205 0 0);
-    /* sapph */
-    --destructive: oklch(0.577 0.245 27.325);
-    /* red */
+    --background: oklch(0.971 0.007 266.19);
+    --foreground: oklch(0.398 0.038 259.64);
+    --card: oklch(0.971 0.007 266.19);
+    --card-foreground: oklch(0.398 0.038 259.64);
+    --popover: oklch(0.971 0.007 266.19);
+    --popover-foreground: oklch(0.398 0.038 259.64);
+    --primary: oklch(0.551 0.165 259.61);
+    --primary-foreground: oklch(0.971 0.007 266.19);
+    --secondary: oklch(0.934 0.015 256.4);
+    --secondary-foreground: oklch(0.398 0.038 259.64);
+    --muted: oklch(0.934 0.015 256.4);
+    --muted-foreground: oklch(0.569 0.015 259.64);
+    --accent: oklch(0.887 0.02 256.4);
+    --accent-foreground: oklch(0.488 0.162 259.64);
+    --destructive: oklch(0.603 0.169 31.05);
     --destructive-foreground: oklch(0.971 0.007 266.19);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
+    --border: oklch(0.887 0.02 256.4);
+    --input: oklch(0.887 0.02 256.4);
+    --ring: oklch(0.551 0.165 259.61);
     --radius: 0.625rem;
     --sidebar: oklch(0.985 0 0);
     --sidebar-foreground: oklch(0.145 0 0);
@@ -119,38 +102,33 @@
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
 }
 
 .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
+    --background: oklch(0.188 0.016 261.27);
+    --foreground: oklch(0.838 0.028 256.4);
+    --card: oklch(0.188 0.016 261.27);
+    --card-foreground: oklch(0.838 0.028 256.4);
+    --popover: oklch(0.188 0.016 261.27);
+    --popover-foreground: oklch(0.838 0.028 256.4);
+    --primary: oklch(0.704 0.108 243.61);
+    --primary-foreground: oklch(0.188 0.016 261.27);
+    --secondary: oklch(0.252 0.026 261.16);
+    --secondary-foreground: oklch(0.838 0.028 256.4);
+    --muted: oklch(0.252 0.026 261.16);
+    --muted-foreground: oklch(0.65 0.022 256.24);
+    --accent: oklch(0.252 0.026 261.16);
+    --accent-foreground: oklch(0.838 0.028 256.4);
+    --destructive: oklch(0.677 0.165 24.32);
     --destructive-foreground: oklch(0.188 0.016 261.27);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
+    --border: oklch(0.252 0.026 261.16);
+    --input: oklch(0.252 0.026 261.16);
+    --ring: oklch(0.704 0.108 243.61);
+    --chart-1: oklch(0.488 0.243 264.376);
+    --chart-2: oklch(0.696 0.17 162.48);
+    --chart-3: oklch(0.769 0.188 70.08);
+    --chart-4: oklch(0.627 0.265 303.9);
+    --chart-5: oklch(0.645 0.246 16.439);
     --sidebar: oklch(0.205 0 0);
     --sidebar-foreground: oklch(0.985 0 0);
     --sidebar-primary: oklch(0.488 0.243 264.376);
@@ -169,10 +147,22 @@
         box-sizing: border-box;
     }
 
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    html {
+        font-family: var(--font-sans);
+        scroll-behavior: smooth;
+        color-scheme: light;
+    }
+
+    html.dark {
+        color-scheme: dark;
+    }
+
     body {
-        margin: 0;
-        min-height: 100vh;
-        @apply font-sans antialiased bg-background text-foreground;
+        @apply min-h-screen bg-background text-foreground font-sans antialiased;
         line-height: 1.6;
     }
 
@@ -194,330 +184,97 @@
     samp {
         font-family: var(--font-mono);
     }
-
-    /* Disable all transitions */
-    * {
-        transition: none;
-        animation: none;
-    @apply border-border outline-ring/50;
-    }
-  html {
-    @apply font-sans;}
 }
 
-@layer utilities {
-    .step {
-        counter-increment: step;
+@layer components {
+    .blog-prose code::before,
+    .blog-prose code::after {
+        content: none;
     }
 
-    .step:before {
-        @apply absolute w-9 h-9 bg-muted rounded-full font-mono font-medium text-center text-base inline-flex items-center justify-center -indent-px border-4 border-background;
-        @apply ml-[-50px] mt-[-4px];
-        content: counter(step);
+    .blog-prose :not(pre) > code {
+        @apply rounded-md border border-border/70 bg-muted/75 px-1.5 py-0.5 font-mono text-[0.88em] font-normal text-primary;
     }
 
-    /* Photo overlay: grayscale with blue tint */
-    .photo-overlay {
-        filter: grayscale(100%) sepia(30%) hue-rotate(180deg) saturate(200%);
-        opacity: 0.9;
+    .dark .blog-prose :not(pre) > code {
+        color: oklch(0.75 0.08 260);
     }
 
-    /* Light mode: darker blue overlay */
-    :root .photo-overlay {
-        filter: grayscale(100%) sepia(40%) hue-rotate(190deg) saturate(180%)
-            brightness(0.85);
+    .blog-prose pre {
+        @apply my-6 border-0 bg-transparent p-0 shadow-none;
     }
 
-    /* Dark mode: lighter blue overlay */
-    .dark .photo-overlay {
-        filter: grayscale(100%) sepia(30%) hue-rotate(180deg) saturate(150%)
-            brightness(1.1);
+    .blog-prose pre.astro-code {
+        @apply relative overflow-x-auto rounded-xl border px-4 py-3.5 font-mono text-[0.92rem] leading-[1.65];
+        border-color: color-mix(in oklab, var(--border) 82%, transparent);
+        background-color: var(--shiki-light-bg, var(--muted)) !important;
     }
-}
 
-/* ============================================
-   PROSE / BLOG CONTENT STYLING
-   ============================================ */
+    .blog-prose pre.astro-code code {
+        @apply block min-w-full border-0 bg-transparent p-0 font-normal text-inherit shadow-none;
+    }
 
-.prose {
-    color: var(--foreground);
-    font-size: 1.05rem;
-    line-height: 1.75;
-}
+    .blog-prose pre.astro-code .line {
+        display: block;
+        min-height: 1.65em;
+    }
 
-.prose h1,
-.prose h2,
-.prose h3,
-.prose h4,
-.prose h5,
-.prose h6 {
-    font-family: var(--font-heading);
-    color: oklch(0.315 0.036 261.27);
-    /* darker for better hierarchy */
-    margin-top: 2em;
-    margin-bottom: 0.75em;
-}
+    .blog-prose pre.astro-code .line:empty::before {
+        content: " ";
+    }
 
-.dark .prose h1,
-.dark .prose h2,
-.dark .prose h3,
-.dark .prose h4,
-.dark .prose h5,
-.dark .prose h6 {
-    color: var(--foreground);
-}
+    .dark .blog-prose pre.astro-code {
+        background-color: var(--shiki-dark-bg, var(--secondary)) !important;
+        color: var(--shiki-dark, var(--foreground)) !important;
+    }
 
-.prose h1 {
-    font-size: 2.25rem;
-    font-weight: 700;
-}
+    .dark .blog-prose pre.astro-code span {
+        color: var(--shiki-dark, inherit) !important;
+        font-style: var(--shiki-dark-font-style, inherit) !important;
+        font-weight: var(--shiki-dark-font-weight, inherit) !important;
+        text-decoration: var(--shiki-dark-text-decoration, inherit) !important;
+    }
 
-.prose h2 {
-    font-size: 1.75rem;
-    font-weight: 600;
-    padding-bottom: 0.3em;
-    border-bottom: 1px solid var(--border);
-}
+    .blog-prose blockquote {
+        @apply my-6 rounded-r-lg px-4 py-3 text-[0.98em] text-muted-foreground;
+        border-inline-start: 2px solid
+            color-mix(in oklab, var(--primary) 42%, var(--border));
+        background:
+            color-mix(in oklab, var(--secondary) 68%, var(--background));
+    }
 
-.prose h3 {
-    font-size: 1.4rem;
-    font-weight: 600;
-}
+    .blog-prose blockquote > :first-child {
+        margin-top: 0;
+    }
 
-.prose h4 {
-    font-size: 1.15rem;
-    font-weight: 600;
-}
+    .blog-prose blockquote > :last-child {
+        margin-bottom: 0;
+    }
 
-.prose p {
-    margin-bottom: 1.25em;
-}
+    .blog-prose table {
+        @apply my-6 w-full border-separate border-spacing-0 rounded-2xl border text-[0.93rem];
+        border-color: color-mix(in oklab, var(--border) 78%, transparent);
+        background:
+            color-mix(in oklab, var(--card) 97%, var(--secondary));
+    }
 
-.prose a {
-    color: var(--primary);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-}
+    .blog-prose thead th {
+        @apply border-b px-[0.88em] py-[0.68em] text-left font-heading font-semibold text-foreground;
+        border-color: color-mix(in oklab, var(--border) 72%, transparent);
+        background:
+            color-mix(in oklab, var(--secondary) 78%, var(--card));
+    }
 
-.prose a:hover {
-    color: var(--accent-foreground);
-}
+    .blog-prose tbody td {
+        @apply px-[0.88em] py-[0.72em] text-left align-top;
+    }
 
-.prose strong {
-    font-weight: 600;
-    color: var(--foreground);
-}
+    .blog-prose tbody tr + tr td {
+        border-top: 1px solid
+            color-mix(in oklab, var(--border) 62%, transparent);
+    }
 
-.prose em {
-    font-style: italic;
-}
-
-.prose ul,
-.prose ol {
-    margin: 1em 0;
-    padding-left: 1.5em;
-}
-
-.prose ul {
-    list-style: disc outside;
-}
-
-.prose ol {
-    list-style: decimal outside;
-}
-
-.prose li {
-    display: list-item;
-    margin-bottom: 0.5em;
-}
-
-.prose li::marker {
-    color: var(--muted-foreground);
-}
-
-.prose blockquote {
-    border-left: 2px solid var(--primary);
-    margin: 1.25em 0;
-    color: var(--muted-foreground);
-    background-color: color-mix(
-        in oklab,
-        var(--secondary) 78%,
-        var(--background)
-    );
-    box-shadow: inset 0 0 0 1px
-        color-mix(in oklab, var(--border) 55%, transparent);
-    padding: 0.7em 0 0.7em 1em;
-    border-radius: 0 0.4rem 0.4rem 0;
-}
-
-.prose blockquote > :first-child {
-    margin-top: 0;
-}
-
-.prose blockquote > :last-child {
-    margin-bottom: 0;
-}
-
-.prose hr {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 2em 0;
-}
-
-/* Tables */
-.prose table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    margin: 1.25em 0;
-    font-size: 0.94rem;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 0.8rem;
-    overflow: hidden;
-}
-
-.prose th,
-.prose td {
-    padding: 0.7em 0.9em;
-    text-align: left;
-    border: none;
-    border-bottom: 1px solid var(--border);
-}
-
-.prose th + th,
-.prose td + td {
-    border-left: 1px solid var(--border);
-}
-
-.prose th {
-    background: var(--secondary);
-    font-weight: 600;
-    font-family: var(--font-heading);
-}
-
-.prose tr:nth-child(even) {
-    background: color-mix(in oklab, var(--secondary) 60%, transparent);
-}
-
-.prose tr:last-child td {
-    border-bottom: none;
-}
-
-/* Inline code */
-.prose code:not(pre code) {
-    background-color: var(--muted);
-    color: oklch(0.551 0.165 259.61);
-    /* blue */
-    padding: 0.2rem 0.4rem;
-    border-radius: 0.35rem;
-    font-size: 0.9em;
-    font-family: var(--font-mono);
-    border: 1px solid var(--border);
-}
-
-.dark .prose code:not(pre code) {
-    color: oklch(0.75 0.08 260);
-    /* lighter blue for dark */
-}
-
-/* ============================================
-   CODE BLOCKS
-   ============================================ */
-
-/* Base code block styling */
-pre.astro-code {
-    position: relative;
-    margin: 1.5em 0;
-    padding: 1rem 1.2rem;
-    border-radius: 0.75rem;
-    overflow-x: auto;
-    font-family: var(--font-mono);
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-
-pre.astro-code code {
-    background: transparent;
-    padding: 0;
-    font-size: inherit;
-    color: inherit;
-}
-
-/* ============================================
-   SHIKI DUAL THEME
-
-   How Shiki dual themes work:
-   - Light theme colors are the DEFAULT inline styles
-   - Dark theme colors are in --shiki-dark and --shiki-dark-bg CSS variables
-
-   So we only need to override for dark mode!
-   ============================================ */
-
-/* Light mode: just set background, let inline styles handle syntax colors */
-pre.astro-code {
-    background-color: var(--shiki-light-bg, var(--muted)) !important;
-    border: 1px solid var(--border);
-}
-
-/* Dark mode: override to use dark theme variables */
-.dark pre.astro-code {
-    background-color: var(--shiki-dark-bg) !important;
-    border: 1px solid var(--border);
-}
-
-.dark pre.astro-code span {
-    color: var(--shiki-dark) !important;
-}
-
-/* ============================================
-   COPY BUTTON
-   ============================================ */
-
-.code-block-wrapper {
-    position: relative;
-}
-
-.copy-button {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    padding: 0.4rem 0.6rem;
-    background: var(--muted);
-    border: 1px solid var(--border);
-    border-radius: 0.4rem;
-    color: var(--muted-foreground);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    cursor: pointer;
-    opacity: 0;
-    z-index: 10;
-}
-
-pre:hover .copy-button,
-.code-block-wrapper:hover .copy-button {
-    opacity: 1;
-}
-
-.copy-button:hover {
-    background: var(--accent);
-    color: var(--accent-foreground);
-}
-
-.copy-button.copied {
-    background: var(--primary);
-    color: var(--primary-foreground);
-}
-
-/* Images in prose */
-.prose img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 0.75rem;
-    margin: 1.5em 0;
-}
-
-/* Prose pre wrapper */
-.prose pre {
-    margin: 1.5em 0;
+    .blog-prose kbd {
+        @apply rounded-md border border-border/70 bg-muted/80 px-1.5 py-0.5 font-mono text-[0.82em] font-normal text-foreground;
+    }
 }

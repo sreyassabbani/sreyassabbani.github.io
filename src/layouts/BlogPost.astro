@@ -1,11 +1,14 @@
 ---
 import { Image } from "astro:assets";
-import type { MarkdownHeading } from "astro";
 import type { CollectionEntry } from "astro:content";
+import type { MarkdownHeading } from "astro";
 import BaseHead from "../components/BaseHead.astro";
 import CopyCodeButton from "../components/CopyCodeButton.astro";
 import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
+import { Button } from "../components/ui/button";
+import { Separator } from "../components/ui/separator";
+import { cn } from "../lib/utils";
 
 type Props = CollectionEntry<"blog">["data"] & {
     headings: MarkdownHeading[];
@@ -49,246 +52,172 @@ const tocEntries =
     tocGroups.length > 0
         ? tocGroups
         : [{ heading: { slug: "top", text: "Top" }, children: [] }];
+
+const railClass = cn(
+    "group/tocrail",
+    "fixed",
+    "inset-y-0",
+    "left-0",
+    "z-20",
+    "hidden",
+    "w-56",
+    "min-[1100px]:block",
+);
+
+const railPanelClass = [
+    "pointer-events-none",
+    "absolute",
+    "left-0",
+    "top-1/2",
+    "max-h-[calc(100vh-2rem)]",
+    "w-[13.25rem]",
+    "-translate-x-[86%]",
+    "-translate-y-1/2",
+    "overflow-y-auto",
+    "rounded-r-[0.95rem]",
+    "border-y",
+    "border-r",
+    "border-border",
+    "bg-[color:color-mix(in_oklab,var(--card)_94%,var(--secondary))]",
+    "px-[0.7rem]",
+    "py-3",
+    "opacity-0",
+    "transition-[transform,opacity]",
+    "duration-[520ms]",
+    "ease-[cubic-bezier(0.22,1,0.36,1)]",
+    "group-hover/tocrail:pointer-events-auto",
+    "group-hover/tocrail:translate-x-0",
+    "group-hover/tocrail:opacity-100",
+    "group-hover/tocrail:duration-[340ms]",
+    "group-data-[open=true]/tocrail:pointer-events-auto",
+    "group-data-[open=true]/tocrail:translate-x-0",
+    "group-data-[open=true]/tocrail:opacity-100",
+    "group-data-[open=true]/tocrail:duration-[340ms]",
+);
+
+const tocGroupLinkClass = [
+    "block",
+    "rounded-[0.55rem]",
+    "px-[0.35rem]",
+    "py-[0.2rem]",
+    "text-[0.76rem]",
+    "leading-[1.4]",
+    "text-muted-foreground",
+    "no-underline",
+    "transition-colors",
+    "duration-200",
+    "hover:bg-secondary/75",
+    "hover:text-foreground",
+    "data-[active=true]:bg-secondary/90",
+    "data-[active=true]:text-foreground",
+);
+
+const tocChildListClass = [
+    "ml-[0.55rem]",
+    "mt-0",
+    "max-h-0",
+    "overflow-hidden",
+    "border-l",
+    "border-transparent",
+    "pl-[0.55rem]",
+    "opacity-0",
+    "transition-[max-height,opacity,border-color,margin-top]",
+    "duration-[360ms]",
+    "ease-[cubic-bezier(0.22,1,0.36,1)]",
+    "group-data-[open=true]/tocgroup:mt-[0.16rem]",
+    "group-data-[open=true]/tocgroup:max-h-48",
+    "group-data-[open=true]/tocgroup:border-border",
+    "group-data-[open=true]/tocgroup:opacity-100",
+);
+
+const tocChildLinkClass = [
+    "block",
+    "rounded-[0.55rem]",
+    "px-[0.35rem]",
+    "py-[0.2rem]",
+    "text-[0.7rem]",
+    "leading-[1.35]",
+    "text-muted-foreground",
+    "no-underline",
+    "transition-colors",
+    "duration-200",
+    "hover:bg-secondary/75",
+    "hover:text-foreground",
+    "data-[active=true]:bg-secondary/90",
+    "data-[active=true]:text-foreground",
+);
+
+const proseClass = [
+    "blog-prose",
+    "prose",
+    "prose-neutral",
+    "dark:prose-invert",
+    "max-w-none",
+    "text-[1.05rem]",
+    "leading-8",
+    "text-foreground",
+    "prose-p:my-0",
+    "prose-p:mb-5",
+    "prose-headings:font-heading",
+    "prose-headings:font-semibold",
+    "prose-headings:tracking-[-0.02em]",
+    "prose-headings:text-[color:oklch(0.315_0.036_261.27)]",
+    "dark:prose-headings:text-foreground",
+    "prose-h2:mt-10",
+    "prose-h2:mb-4",
+    "prose-h2:border-b",
+    "prose-h2:border-border",
+    "prose-h2:pb-1.5",
+    "prose-h2:text-[1.75rem]",
+    "prose-h3:mt-8",
+    "prose-h3:mb-3",
+    "prose-h3:text-[1.4rem]",
+    "prose-h4:mt-6",
+    "prose-h4:mb-3",
+    "prose-h4:text-[1.15rem]",
+    "prose-a:text-primary",
+    "prose-a:underline",
+    "prose-a:underline-offset-[3px]",
+    "[&_a:hover]:text-accent-foreground",
+    "prose-strong:text-foreground",
+    "prose-strong:font-semibold",
+    "prose-ul:my-4",
+    "prose-ul:list-disc",
+    "prose-ul:pl-6",
+    "prose-ol:my-4",
+    "prose-ol:list-decimal",
+    "prose-ol:pl-6",
+    "prose-li:my-2",
+    "prose-li:marker:text-muted-foreground",
+    "prose-hr:my-8",
+    "prose-hr:border-border",
+    "[&_h2[id]]:scroll-mt-6",
+    "[&_h3[id]]:scroll-mt-6",
+    "[&_h4[id]]:scroll-mt-6",
+    "[&_h5[id]]:scroll-mt-6",
+    "[&_h6[id]]:scroll-mt-6",
+    "[&_img]:my-6",
+    "[&_img]:rounded-xl",
+);
 ---
 
 <html lang="en">
     <head>
         <BaseHead title={title} description={description} />
-        <style>
-            .post-shell {
-                width: min(100%, 48rem);
-                margin: 0 auto;
-                padding: 1.5rem 1.5rem 3rem;
-            }
-
-            .post-shell footer {
-                width: min(100%, 46rem);
-                margin: 6.4rem auto 0;
-                padding-top: 1.55rem;
-                border-top: 1px solid var(--border);
-                color: color-mix(in oklab, var(--foreground) 42%, var(--background));
-                font-size: 0.82rem;
-                text-align: center;
-            }
-
-            .post-topbar,
-            .post-header,
-            .post-hero,
-            .post-prose {
-                width: min(100%, 46rem);
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .post-topbar {
-                margin-bottom: 1.4rem;
-            }
-
-            .post-back {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.45rem;
-                color: var(--muted-foreground);
-                text-decoration: none;
-                font-size: 0.88rem;
-            }
-
-            .post-back:hover {
-                color: var(--foreground);
-            }
-
-            .post-hero {
-                margin-bottom: 1.5rem;
-                border: 1px solid var(--border);
-                border-radius: 1rem;
-                overflow: hidden;
-                background: var(--card);
-            }
-
-            .post-hero img {
-                display: block;
-                width: 100%;
-                height: auto;
-            }
-
-            .post-header {
-                margin-bottom: 3rem;
-                text-align: center;
-            }
-
-            .post-date {
-                margin: 0;
-                font-size: 0.9rem;
-                color: var(--muted-foreground);
-            }
-
-            .post-updated {
-                margin: 0.32rem 0 0;
-                font-size: 0.82rem;
-                color: var(--muted-foreground);
-            }
-
-            .post-title {
-                margin: 0.9rem 0 0;
-                font-size: clamp(2.1rem, 1.55rem + 1.55vw, 3rem);
-                line-height: 1.02;
-                letter-spacing: -0.04em;
-                text-wrap: balance;
-            }
-
-            .post-description {
-                margin: 0.95rem auto 0;
-                max-width: 35rem;
-                font-size: 1rem;
-                line-height: 1.72;
-                color: var(--muted-foreground);
-                text-wrap: pretty;
-            }
-
-            .post-divider {
-                width: min(15rem, 34%);
-                margin: 1.3rem auto 0;
-                border: 0;
-                border-top: 1px solid var(--border);
-            }
-
-            .post-prose :is(h2, h3, h4, h5, h6)[id] {
-                scroll-margin-top: 1.5rem;
-            }
-
-            .toc-rail {
-                display: none;
-            }
-
-            @media (min-width: 1100px) {
-                .toc-rail {
-                    position: fixed;
-                    inset: 0 auto 0 0;
-                    display: block;
-                    width: 14rem;
-                    z-index: 20;
-                }
-
-                .toc-hitbox {
-                    position: absolute;
-                    inset: 0 auto 0 0;
-                    width: 1.8rem;
-                    pointer-events: auto;
-                }
-
-                .toc-panel {
-                    position: absolute;
-                    top: 50%;
-                    left: 0;
-                    width: 13.25rem;
-                    max-height: calc(100vh - 2rem);
-                    overflow-y: auto;
-                    padding: 0.75rem 0.7rem;
-                    border-right: 1px solid var(--border);
-                    border-top: 1px solid var(--border);
-                    border-bottom: 1px solid var(--border);
-                    border-radius: 0 0.95rem 0.95rem 0;
-                    background: color-mix(
-                        in oklab,
-                        var(--card) 94%,
-                        var(--secondary)
-                    );
-                    transform: translate(-86%, -50%);
-                    opacity: 0;
-                    pointer-events: none;
-                    transition: transform 0.52s cubic-bezier(0.22, 1, 0.36, 1),
-                        opacity 0.44s ease;
-                }
-
-                .toc-rail:hover .toc-panel,
-                .toc-rail[data-open="true"] .toc-panel {
-                    transform: translate(0, -50%);
-                    opacity: 1;
-                    pointer-events: auto;
-                    transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
-                        opacity 0.28s ease;
-                }
-            }
-
-            .toc-list,
-            .toc-children {
-                list-style: none;
-                margin: 0;
-                padding: 0;
-            }
-
-            .toc-group + .toc-group {
-                margin-top: 0.16rem;
-            }
-
-            .toc-group-link,
-            .toc-child-link {
-                display: block;
-                padding: 0.2rem 0.35rem;
-                border-radius: 0.55rem;
-                color: var(--muted-foreground);
-                text-decoration: none;
-            }
-
-            .toc-group-link {
-                font-size: 0.76rem;
-                line-height: 1.4;
-            }
-
-            .toc-child-link {
-                font-size: 0.7rem;
-                line-height: 1.35;
-            }
-
-            .toc-group-link:hover,
-            .toc-child-link:hover {
-                color: var(--foreground);
-                background: color-mix(in oklab, var(--secondary) 76%, transparent);
-            }
-
-            .toc-group-link[data-active="true"],
-            .toc-child-link[data-active="true"] {
-                color: var(--foreground);
-                background: color-mix(in oklab, var(--secondary) 92%, transparent);
-            }
-
-            .toc-children {
-                max-height: 0;
-                opacity: 0;
-                overflow: hidden;
-                margin-left: 0.55rem;
-                padding-left: 0.55rem;
-                border-left: 1px solid transparent;
-                transition: max-height 0.36s cubic-bezier(0.22, 1, 0.36, 1),
-                    opacity 0.28s ease, border-color 0.28s ease,
-                    margin-top 0.28s ease;
-            }
-
-            .toc-group[data-open="true"] .toc-children {
-                max-height: 12rem;
-                opacity: 1;
-                margin-top: 0.16rem;
-                border-left-color: var(--border);
-            }
-
-            .toc-children li + li {
-                margin-top: 0.08rem;
-            }
-        </style>
     </head>
 
-    <body
-        id="top"
-        class="bg-[color:var(--background)] text-[color:var(--foreground)]"
-    >
-        <aside class="toc-rail" data-toc-rail aria-label="Post sections">
-            <div class="toc-hitbox" aria-hidden="true"></div>
-            <div class="toc-panel">
+    <body id="top" class="bg-background text-foreground">
+        <aside class={railClass} data-toc-rail aria-label="Post sections">
+            <div
+                class="pointer-events-auto absolute inset-y-0 left-0 w-[1.8rem]"
+                aria-hidden="true"
+            ></div>
+            <div class={railPanelClass}>
                 <nav>
-                    <ul class="toc-list">
+                    <ul class="m-0 list-none p-0">
                         {tocEntries.map((group) => (
                             <li
-                                class="toc-group"
+                                class="group/tocgroup mt-[0.16rem] first:mt-0"
                                 data-toc-group={group.heading.slug}
                                 data-has-children={
                                     group.children.length > 0
@@ -297,20 +226,20 @@ const tocEntries =
                                 }
                             >
                                 <a
-                                    class="toc-group-link"
+                                    class={tocGroupLinkClass}
                                     href={`#${group.heading.slug}`}
                                     data-toc-link={group.heading.slug}
                                 >
                                     {group.heading.text}
                                 </a>
                                 <ul
-                                    class="toc-children"
+                                    class={tocChildListClass}
                                     data-toc-children={group.heading.slug}
                                 >
                                     {group.children.map((child) => (
-                                        <li>
+                                        <li class="mt-[0.08rem] first:mt-0">
                                             <a
-                                                class="toc-child-link"
+                                                class={tocChildLinkClass}
                                                 href={`#${child.slug}`}
                                                 data-toc-link={child.slug}
                                                 data-parent-slug={group.heading.slug}
@@ -327,16 +256,23 @@ const tocEntries =
             </div>
         </aside>
 
-        <div class="post-shell">
+        <div class="mx-auto w-full max-w-[48rem] px-6 pb-12 pt-6">
             <main>
-                <div class="post-topbar">
-                    <a class="post-back" href="/blog">Back</a>
+                <div class="mx-auto mb-6 w-full max-w-[46rem]">
+                    <Button
+                        asChild
+                        variant="ghost"
+                        size="sm"
+                        className="h-auto rounded-full px-0 py-0 text-[0.88rem] font-normal text-muted-foreground shadow-none hover:bg-transparent hover:text-foreground"
+                    >
+                        <a href="/blog">Back</a>
+                    </Button>
                 </div>
 
                 <article>
                     {
                         heroImage && (
-                            <figure class="post-hero">
+                            <figure class="mx-auto mb-6 w-full max-w-[46rem] overflow-hidden rounded-2xl border border-border bg-card">
                                 <Image
                                     width={1020}
                                     height={510}
@@ -347,33 +283,39 @@ const tocEntries =
                         )
                     }
 
-                    <header class="post-header">
-                        <p class="post-date">
+                    <header class="mx-auto mb-12 w-full max-w-[46rem] text-center">
+                        <p class="m-0 text-[0.9rem] text-muted-foreground">
                             <FormattedDate date={pubDate} />
                         </p>
                         {
                             updatedDate && (
-                                <p class="post-updated">
+                                <p class="mt-[0.32rem] text-[0.82rem] text-muted-foreground">
                                     Updated <FormattedDate date={updatedDate} />
                                 </p>
                             )
                         }
-                        <h1 class="post-title">{title}</h1>
+                        <h1 class="mt-4 font-heading text-[clamp(2.1rem,1.55rem+1.55vw,3rem)] leading-[1.02] tracking-[-0.04em] text-balance">
+                            {title}
+                        </h1>
                         {
                             description && (
-                                <p class="post-description">{description}</p>
+                                <p class="mx-auto mt-4 max-w-[35rem] text-pretty text-base leading-[1.72] text-muted-foreground">
+                                    {description}
+                                </p>
                             )
                         }
-                        <hr class="post-divider" />
+                        <Separator className="mx-auto mt-5 w-[min(15rem,34%)]" />
                     </header>
 
-                    <div class="prose post-prose">
+                    <div class={`mx-auto w-full max-w-[46rem] ${proseClass}`}>
                         <slot />
                     </div>
                 </article>
             </main>
 
-            <Footer />
+            <div class="mx-auto mt-[6.4rem] w-full max-w-[46rem] border-t border-border pt-6 text-center text-[0.82rem] text-[color:color-mix(in_oklab,var(--foreground)_42%,var(--background))]">
+                <Footer />
+            </div>
         </div>
 
         <CopyCodeButton />

@@ -187,9 +187,9 @@
 }
 
 @layer components {
-    .blog-prose code::before,
-    .blog-prose code::after {
-        content: none;
+    .blog-prose :not(pre) > code::before,
+    .blog-prose :not(pre) > code::after {
+        content: none !important;
     }
 
     .blog-prose :not(pre) > code {
@@ -205,7 +205,7 @@
     }
 
     .blog-prose pre.astro-code {
-        @apply relative overflow-x-auto rounded-xl border px-4 py-3.5 font-mono text-[0.92rem] leading-[1.65];
+        @apply relative overflow-x-auto rounded-xl border px-4 py-3.5 font-mono text-[0.9rem] leading-[1.45];
         border-color: color-mix(in oklab, var(--border) 82%, transparent);
         background-color: var(--shiki-light-bg, var(--muted)) !important;
     }
@@ -216,11 +216,10 @@
 
     .blog-prose pre.astro-code .line {
         display: block;
-        min-height: 1.65em;
     }
 
-    .blog-prose pre.astro-code .line:empty::before {
-        content: " ";
+    .blog-prose pre.astro-code .line:empty {
+        min-height: 1.45em;
     }
 
     .dark .blog-prose pre.astro-code {
@@ -241,6 +240,12 @@
             color-mix(in oklab, var(--primary) 42%, var(--border));
         background:
             color-mix(in oklab, var(--secondary) 68%, var(--background));
+        quotes: none;
+    }
+
+    .blog-prose blockquote p:first-of-type::before,
+    .blog-prose blockquote p:last-of-type::after {
+        content: none !important;
     }
 
     .blog-prose blockquote > :first-child {
@@ -275,6 +280,26 @@
     }
 
     .blog-prose kbd {
-        @apply rounded-md border border-border/70 bg-muted/80 px-1.5 py-0.5 font-mono text-[0.82em] font-normal text-foreground;
+        @apply pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border border-border/70 bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground align-middle opacity-100;
+    }
+
+    .blog-prose ul {
+        list-style: disc;
+        list-style-position: outside;
+        padding-inline-start: 1.5rem;
+    }
+
+    .blog-prose ol {
+        list-style: decimal;
+        list-style-position: outside;
+        padding-inline-start: 1.5rem;
+    }
+
+    .blog-prose li {
+        display: list-item;
+    }
+
+    .blog-prose li::marker {
+        color: var(--muted-foreground);
     }
 }

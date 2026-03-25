@@ -291,26 +291,63 @@
     }
 
     .blog-prose table {
-        @apply my-6 w-full border-separate border-spacing-0 rounded-2xl border text-[0.93rem];
-        border-color: color-mix(in oklab, var(--border) 78%, transparent);
-        background:
-            color-mix(in oklab, var(--card) 97%, var(--secondary));
+        @apply my-5 border-separate border-spacing-0 text-[0.92rem];
+        display: inline-table;
+        vertical-align: top;
+        width: fit-content;
+        min-width: min(100%, 28rem);
+        max-width: 100%;
+        border: 0;
+        background: transparent;
     }
 
     .blog-prose thead th {
-        @apply border-b px-[0.88em] py-[0.68em] text-left font-heading font-semibold text-foreground;
+        @apply border-b px-[0.9em] py-[0.62em] text-left font-sans text-[0.82rem] font-medium text-muted-foreground;
         border-color: color-mix(in oklab, var(--border) 72%, transparent);
-        background:
-            color-mix(in oklab, var(--secondary) 78%, var(--card));
+        background: transparent;
     }
 
     .blog-prose tbody td {
-        @apply px-[0.88em] py-[0.72em] text-left align-top;
+        @apply px-[0.9em] py-[0.78em] text-left align-top;
     }
 
     .blog-prose tbody tr + tr td {
         border-top: 1px solid
             color-mix(in oklab, var(--border) 62%, transparent);
+    }
+
+    .blog-prose thead th:first-child {
+        padding-left: 0;
+    }
+
+    .blog-prose thead th:last-child {
+        padding-right: 0;
+    }
+
+    .blog-prose tbody td:first-child {
+        padding-left: 0;
+    }
+
+    .blog-prose tbody td:last-child {
+        padding-right: 0;
+    }
+
+    .blog-prose tbody tr:last-child td {
+        border-bottom: 0;
+    }
+
+    .blog-prose tbody tr:nth-child(even) td {
+        background: transparent;
+    }
+
+    @media (max-width: 48rem) {
+        .blog-prose table {
+            display: block;
+            width: 100%;
+            min-width: 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
     }
 
     .blog-prose kbd::before,

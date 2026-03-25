@@ -27,9 +27,20 @@ That keeps Astro's content collection setup unchanged while avoiding submodules 
 git clone git@github.com:sreyassabbani/blog ~/blog
 git clone git@github.com:sreyassabbani/sreyas.is ~/site
 cd ~/site
+direnv allow
 bun install
 bun run dev
 ```
+
+## Helix / Nix / direnv
+
+- `flake.nix` now provides `bun`, `node`, and `nu`.
+- The Nix shell prepends `node_modules/.bin` to `PATH`, so repo-local tools like `astro-ls` and `typescript-language-server` are visible to Helix.
+- `.helix/languages.toml` points `.astro`, `.ts`, `.tsx`, `.js`, and `.jsx` files at the right language servers without needing global installs.
+- `tsconfig.json` enables `@astrojs/ts-plugin`, which is what teaches TypeScript-aware editors how to understand `.astro` imports outside VS Code.
+- `bun run typecheck` runs `astro check`, which covers both `.astro` files and normal TypeScript files.
+
+If you launch Helix from Nushell, make sure your Nushell config loads `direnv` first so the flake shell environment reaches `hx`.
 
 ## Deploy pattern
 

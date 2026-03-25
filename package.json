@@ -9,10 +9,11 @@
         "build": "\"$npm_execpath\" --bun ./node_modules/.bin/astro build",
         "preview": "\"$npm_execpath\" --bun ./node_modules/.bin/astro preview",
         "astro": "\"$npm_execpath\" --bun ./node_modules/.bin/astro",
+        "typecheck": "\"$npm_execpath\" --bun ./node_modules/.bin/astro check",
         "fmt": "\"$npm_execpath\" --bun ./node_modules/.bin/biome format --write .",
         "lint": "\"$npm_execpath\" --bun ./node_modules/.bin/biome lint .",
         "check": "\"$npm_execpath\" --bun ./node_modules/.bin/biome check --write .",
-        "ci": "\"$npm_execpath\" run lint && \"$npm_execpath\" run fmt"
+        "ci": "\"$npm_execpath\" run lint && \"$npm_execpath\" run fmt && \"$npm_execpath\" run typecheck"
     },
     "dependencies": {
         "@astrojs/mdx": "^4.3.12",
@@ -40,6 +41,14 @@
         "tailwindcss": "^4.1.17"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.3.11"
+        "@astrojs/check": "^0.9.8",
+        "@astrojs/language-server": "^2.16.6",
+        "@astrojs/ts-plugin": "^1.10.7",
+        "@biomejs/biome": "^2.3.11",
+        "@types/node": "^25.5.0",
+        "prettier": "^3.8.1",
+        "prettier-plugin-astro": "^0.14.1",
+        "typescript": "5.9.3",
+        "typescript-language-server": "^5.1.3"
     }
 }

@@ -1,0 +1,35 @@
+[language-server.astro-ls-local]
+command = "bun"
+args = ["--bun", "./node_modules/.bin/astro-ls", "--stdio"]
+
+[language-server.astro-ls-local.config.typescript]
+tsdk = "./node_modules/typescript/lib"
+
+[language-server.typescript-language-server-local]
+command = "bun"
+args = ["--bun", "./node_modules/.bin/typescript-language-server", "--stdio"]
+
+[[language]]
+name = "astro"
+roots = ["astro.config.ts", "astro.config.mjs", "package.json"]
+language-servers = ["astro-ls-local"]
+
+[[language]]
+name = "typescript"
+roots = ["tsconfig.json", "package.json"]
+language-servers = ["typescript-language-server-local"]
+
+[[language]]
+name = "tsx"
+roots = ["tsconfig.json", "package.json"]
+language-servers = ["typescript-language-server-local"]
+
+[[language]]
+name = "javascript"
+roots = ["package.json"]
+language-servers = ["typescript-language-server-local"]
+
+[[language]]
+name = "jsx"
+roots = ["package.json"]
+language-servers = ["typescript-language-server-local"]

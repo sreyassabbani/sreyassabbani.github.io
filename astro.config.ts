@@ -1,5 +1,3 @@
-// @ts-check
-
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
@@ -8,7 +6,6 @@ import { defineConfig } from "astro/config";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 
-// https://astro.build/config
 export default defineConfig({
     site: "https://sreyassabbani.github.io",
     integrations: [mdx(), react(), sitemap()],
@@ -24,7 +21,6 @@ export default defineConfig({
             wrap: true,
         },
     },
-
     vite: {
         plugins: [tailwindcss()],
         ssr: {

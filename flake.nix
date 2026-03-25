@@ -4,19 +4,41 @@
   outputs =
     { self, nixpkgs, ... }:
     let
-      system = "aarch64-darwin";
-      pkgs = nixpkgs.legacyPackages.${system};
+      systems = [
+        "aarch64-darwin"
+        "x86_64-darwin"
+        "aarch64-linux"
+        "x86_64-linux"
+      ];
+      forAllSystems =
+        f:
+        builtins.listToAttrs (
+          map (system: {
+            name = system;
+            value = f system;
+          }) systems
+        );
     in
     {
-      devShells.${system}.default = pkgs.mkShell {
-        packages = with pkgs; [
-          nodejs_24
-          bun
-        ];
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = pkgs.mkShell {
+            packages = with pkgs; [
+              nodejs_24
+              bun
+              nushell
+            ];
 
-        shellHook = ''
-          echo "[shellHook] Nix dev shell activated"
-        '';
-      };
+            shellHook = ''
+              export PATH="$PWD/node_modules/.bin:$PATH"
+              echo "[shellHook] Nix dev shell activated"
+            '';
+          };
+        }
+      );
     };
 }

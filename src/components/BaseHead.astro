@@ -90,10 +90,17 @@ const { title, description, image = FallbackImage } = Astro.props;
       }
     };
 
-    const saved = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)",
-    ).matches;
+    const getStoredTheme = () => {
+      try {
+        return localStorage.getItem("theme");
+      } catch {
+        return null;
+      }
+    };
+
+    const saved = getStoredTheme();
+    const prefersDark =
+      window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
     const isDark = saved === "dark" || (saved === null && prefersDark);
     applyTheme(isDark);
   })();

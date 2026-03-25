@@ -215,7 +215,7 @@
     }
 
     .blog-prose pre.astro-code {
-        @apply relative overflow-x-auto rounded-xl border px-4 py-3 font-mono text-[0.9rem] leading-[1.28];
+        @apply relative overflow-x-auto rounded-xl border px-4 py-3 font-mono text-[0.9rem] leading-normal;
         border-color: color-mix(in oklab, var(--border) 82%, transparent);
         background-color: var(--shiki-light-bg, var(--muted)) !important;
         white-space: pre !important;
@@ -239,12 +239,12 @@
 
     .blog-prose pre.astro-code .line {
         display: block;
-        line-height: 1.28;
+        line-height: 1.5;
         white-space: pre;
     }
 
     .blog-prose pre.astro-code .line:empty {
-        min-height: 0.4em;
+        min-height: 0.5em;
     }
 
     .blog-prose pre.astro-code .line:last-child:empty {

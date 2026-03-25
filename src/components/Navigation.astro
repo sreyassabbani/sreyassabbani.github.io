@@ -1,5 +1,5 @@
 ---
-import ThemeToggle from "./ThemeToggle.tsx";
+import ThemeToggle from "./ThemeToggle.astro";
 ---
 
 <nav
@@ -91,5 +91,5 @@ import ThemeToggle from "./ThemeToggle.tsx";
       </a>
     </div>
   </div>
-  <ThemeToggle className="absolute -bottom-4 -right-1 w-8 h-8" client:idle />
+  <ThemeToggle className="absolute -bottom-4 -right-1 z-10 h-8 w-8" />
 </nav>

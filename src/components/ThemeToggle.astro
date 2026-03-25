@@ -1,0 +1,136 @@
+---
+import { cn } from "@/lib/utils";
+
+interface Props {
+    className?: string;
+}
+
+const { className = "" } = Astro.props;
+
+const buttonClass = cn(
+    "group/button inline-flex size-7 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-none outline-none transition-[transform,colors] duration-300 ease-out hover:scale-110 hover:bg-secondary focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
+    className,
+);
+---
+
+<button
+    type="button"
+    aria-label="Toggle theme"
+    aria-pressed="false"
+    class={buttonClass}
+    data-theme-toggle
+>
+    <svg
+        data-theme-icon="moon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="size-4"
+        aria-hidden="true"
+    >
+        <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path>
+    </svg>
+    <svg
+        data-theme-icon="sun"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="hidden size-4"
+        aria-hidden="true"
+    >
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="m4.93 4.93 1.41 1.41"></path>
+        <path d="m17.66 17.66 1.41 1.41"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="m6.34 17.66-1.41 1.41"></path>
+        <path d="m19.07 4.93-1.41 1.41"></path>
+    </svg>
+</button>
+
+<script is:inline>
+    (() => {
+        const STORAGE_KEY = "theme";
+        const LIGHT_THEME_COLOR = "#eff1f5";
+        const DARK_THEME_COLOR = "#232634";
+
+        const applyTheme = (isDark) => {
+            const root = document.documentElement;
+            root.classList.toggle("dark", isDark);
+            root.style.colorScheme = isDark ? "dark" : "light";
+
+            const themeColorMeta = document.querySelector(
+                'meta[name="theme-color"]',
+            );
+
+            if (themeColorMeta instanceof HTMLMetaElement) {
+                themeColorMeta.content = isDark
+                    ? DARK_THEME_COLOR
+                    : LIGHT_THEME_COLOR;
+            }
+        };
+
+        const syncToggleUi = () => {
+            const isDark = document.documentElement.classList.contains("dark");
+
+            document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+                if (!(button instanceof HTMLButtonElement)) return;
+
+                button.setAttribute("aria-pressed", String(isDark));
+
+                const moon = button.querySelector('[data-theme-icon="moon"]');
+                const sun = button.querySelector('[data-theme-icon="sun"]');
+
+                moon?.classList.toggle("hidden", isDark);
+                sun?.classList.toggle("hidden", !isDark);
+            });
+        };
+
+        const bindToggle = (button) => {
+            if (!(button instanceof HTMLButtonElement)) return;
+            if (button.dataset.themeToggleBound === "true") return;
+
+            button.dataset.themeToggleBound = "true";
+            button.addEventListener("click", () => {
+                const nextIsDark =
+                    !document.documentElement.classList.contains("dark");
+
+                applyTheme(nextIsDark);
+                localStorage.setItem(
+                    STORAGE_KEY,
+                    nextIsDark ? "dark" : "light",
+                );
+                syncToggleUi();
+            });
+        };
+
+        const initThemeToggle = () => {
+            document.querySelectorAll("[data-theme-toggle]").forEach(bindToggle);
+            syncToggleUi();
+        };
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initThemeToggle, {
+                once: true,
+            });
+        } else {
+            initThemeToggle();
+        }
+
+        document.addEventListener("astro:page-load", initThemeToggle);
+    })();
+</script>

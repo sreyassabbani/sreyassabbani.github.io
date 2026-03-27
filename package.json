@@ -5,10 +5,10 @@
     "scripts": {
         "prepare": "\"$npm_execpath\" --bun ./node_modules/.bin/simple-git-hooks",
         "blog:sync": "\"$npm_execpath\" --bun ./scripts/mount-blog.ts",
+        "blog:watch": "\"$npm_execpath\" --bun ./scripts/watch-blog.ts",
         "precommit": "\"$npm_execpath\" --bun ./scripts/pre-commit.ts",
-        "predev": "\"$npm_execpath\" --bun ./scripts/mount-blog.ts",
         "prebuild": "\"$npm_execpath\" --bun ./scripts/mount-blog.ts",
-        "dev": "\"$npm_execpath\" --bun ./node_modules/.bin/astro dev",
+        "dev": "\"$npm_execpath\" --bun ./scripts/dev.ts",
         "build": "\"$npm_execpath\" --bun ./node_modules/.bin/astro build",
         "preview": "\"$npm_execpath\" --bun ./node_modules/.bin/astro preview",
         "astro": "\"$npm_execpath\" --bun ./node_modules/.bin/astro",

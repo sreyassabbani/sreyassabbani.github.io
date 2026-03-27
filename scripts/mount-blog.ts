@@ -1,12 +1,13 @@
+import { spawnSync } from "node:child_process";
 import { cp, lstat, mkdir, readdir, rm } from "node:fs/promises";
 import { homedir } from "node:os";
 import path from "node:path";
 
 const root = process.cwd();
-const mountPath = path.resolve(root, "src/content/blog");
-const ignoredPathSegments = new Set([".git", ".github"]);
+export const mountPath = path.resolve(root, "src/content/blog");
+export const ignoredPathSegments = new Set([".git", ".github"]);
 
-async function pathExists(targetPath: string) {
+export async function pathExists(targetPath: string) {
   try {
     await lstat(targetPath);
     return true;
@@ -15,7 +16,7 @@ async function pathExists(targetPath: string) {
   }
 }
 
-async function resolveSourcePath() {
+export async function resolveSourcePath() {
   const configuredSource = process.env.BLOG_CONTENT_DIR?.trim();
   const sourceCandidates = [
     configuredSource ? path.resolve(root, configuredSource) : undefined,
@@ -39,6 +40,49 @@ async function directoryHasEntries(targetPath: string) {
   } catch {
     return false;
   }
+}
+
+function isIgnoredRelativePath(relativePath: string) {
+  return relativePath
+    .split(path.sep)
+    .some((segment) => ignoredPathSegments.has(segment));
+}
+
+function listTrackedSourceFiles(sourcePath: string) {
+  const result = spawnSync("git", ["-C", sourcePath, "ls-files", "-z"], {
+    encoding: "utf8",
+  });
+
+  if (result.status !== 0) {
+    const errorOutput = result.stderr.trim();
+    throw new Error(
+      errorOutput || `failed to list tracked files in ${sourcePath}`,
+    );
+  }
+
+  return result.stdout
+    .split("\0")
+    .filter(Boolean)
+    .filter((relativePath) => !isIgnoredRelativePath(relativePath));
+}
+
+async function copyTrackedSourceFiles(sourcePath: string) {
+  const trackedFiles = listTrackedSourceFiles(sourcePath);
+
+  for (const relativePath of trackedFiles) {
+    const sourceFilePath = path.join(sourcePath, relativePath);
+
+    if (!(await pathExists(sourceFilePath))) {
+      continue;
+    }
+
+    const mountFilePath = path.join(mountPath, relativePath);
+
+    await mkdir(path.dirname(mountFilePath), { recursive: true });
+    await cp(sourceFilePath, mountFilePath, { force: true });
+  }
+
+  return trackedFiles.length;
 }
 
 type EnsureMountedBlogOptions = {
@@ -79,15 +123,10 @@ export async function ensureMountedBlog(
   await rm(mountPath, { force: true, recursive: true });
 
   if (sourceExists) {
-    await cp(sourcePath, mountPath, {
-      recursive: true,
-      filter: (entry) =>
-        !entry
-          .split(path.sep)
-          .some((segment) => ignoredPathSegments.has(segment)),
-    });
+    await mkdir(mountPath, { recursive: true });
+    const trackedFileCount = await copyTrackedSourceFiles(sourcePath);
     console.log(
-      `${logPrefix} synced ${path.relative(root, sourcePath)} -> src/content/blog`,
+      `${logPrefix} synced ${trackedFileCount} tracked files from ${path.relative(root, sourcePath)} -> src/content/blog`,
     );
     return;
   }
@@ -98,4 +137,6 @@ export async function ensureMountedBlog(
   );
 }
 
-await ensureMountedBlog();
+if (import.meta.main) {
+  await ensureMountedBlog();
+}

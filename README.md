@@ -11,11 +11,12 @@ workspace/
 ```
 
 `src/content/blog` is not committed. It is generated automatically before `bun run dev` and `bun run build`.
+Only files tracked by git in the blog repo are synced into the site repo; untracked drafts, scratch files, and repo metadata stay out of `src/content/blog`.
 
 ## How mounting works
 
 - If `BLOG_CONTENT_DIR` is set, the site copies content from that path.
-- Otherwise it looks for `~/blog`.
+- Otherwise it looks for `~/workflow/blog`.
 - If that does not exist, it falls back to a sibling repo at `../blog`.
 - If neither exists, it creates an empty `src/content/blog` directory so the site still builds.
 
@@ -24,13 +25,15 @@ That keeps Astro's content collection setup unchanged while avoiding submodules 
 ## Local development
 
 ```bash
-git clone git@github.com:sreyassabbani/blog ~/blog
-git clone git@github.com:sreyassabbani/sreyas.is ~/site
-cd ~/site
+git clone git@github.com:sreyassabbani/blog ~/workflow/blog
+git clone git@github.com:sreyassabbani/sreyas.is ~/workflow/sreyas.is
+cd ~/workflow/sreyas.is
 direnv allow
 bun install
 bun run dev
 ```
+
+While `bun run dev` is running, the site now watches `~/workflow/blog` (or `BLOG_CONTENT_DIR`) and re-syncs `src/content/blog` automatically whenever the blog repo changes.
 
 ## Helix / Nix / direnv
 
@@ -39,7 +42,8 @@ bun run dev
 - `.helix/languages.toml` points `.astro`, `.ts`, `.tsx`, `.js`, and `.jsx` files at the right language servers without needing global installs.
 - `tsconfig.json` enables `@astrojs/ts-plugin`, which is what teaches TypeScript-aware editors how to understand `.astro` imports outside VS Code.
 - `bun run typecheck` runs `astro check`, which covers both `.astro` files and normal TypeScript files.
-- `bun run blog:sync` refreshes the generated `src/content/blog` mount from `~/blog` or `BLOG_CONTENT_DIR`.
+- `bun run blog:sync` refreshes the generated `src/content/blog` mount from `~/workflow/blog` or `BLOG_CONTENT_DIR`.
+- `bun run blog:watch` keeps the generated mount in sync continuously while you work.
 
 If you launch Helix from Nushell, make sure your Nushell config loads `direnv` first so the flake shell environment reaches `hx`.
 
@@ -49,7 +53,7 @@ This repo now installs a versioned `pre-commit` hook through `simple-git-hooks`.
 
 - Every site-repo commit re-syncs `src/content/blog` from the real blog source.
 - Before overwriting the generated mount, it writes a timestamped backup to `.blog-sync-backups/`.
-- `~/blog` is still the source of truth. `src/content/blog` stays generated and gitignored.
+- `~/workflow/blog` is still the source of truth. `src/content/blog` stays generated and gitignored.
 
 ## Deploy pattern
 

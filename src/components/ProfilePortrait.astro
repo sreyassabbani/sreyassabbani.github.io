@@ -1,0 +1,37 @@
+---
+import ProfileImage from "../../public/pfp.png";
+import { cn } from "@/lib/utils";
+
+interface Props {
+    alt?: string;
+    caption?: string;
+    className?: string;
+    imageClassName?: string;
+    size?: "sm" | "lg";
+}
+
+const {
+    alt = "Photo of Sreyas Sabbani",
+    caption = "me",
+    className = "",
+    imageClassName = "",
+    size = "sm",
+} = Astro.props;
+
+const sizeClass = size === "lg" ? "size-36 md:size-40" : "size-28 md:size-32";
+---
+
+<figure class={cn("flex flex-col items-center gap-2", className)}>
+    <img
+        src={ProfileImage.src}
+        alt={alt}
+        class={cn(
+            "rounded-full object-cover grayscale contrast-105 dark:brightness-110",
+            sizeClass,
+            imageClassName,
+        )}
+    />
+    <figcaption class="text-center text-sm text-muted-foreground">
+        {caption}
+    </figcaption>
+</figure>

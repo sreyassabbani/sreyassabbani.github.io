@@ -10,7 +10,7 @@ const { className = "" } = Astro.props;
 
 const buttonClass = cn(
     buttonVariants({ variant: "outline", size: "icon-sm" }),
-    "rounded-full bg-card text-foreground shadow-none transition-[transform,colors] duration-300 ease-out hover:scale-110 hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+    "rounded-full bg-card text-foreground shadow-none transition-colors duration-200 hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
     className,
 );
 ---

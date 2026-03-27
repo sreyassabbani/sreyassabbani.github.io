@@ -1,6 +1,6 @@
 ---
-import ProfileImage from "../../public/pfp.png";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import ProfilePortrait from "../components/ProfilePortrait.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
@@ -9,28 +9,17 @@ import Layout from "../layouts/Layout.astro";
   description={SITE_DESCRIPTION}
   variant="home"
 >
-  <section class="flex flex-col md:flex-row gap-8">
-    <figure class="w-full md:w-1/4 flex flex-col justify-center items-center">
-      <img
-        src={ProfileImage.src}
-        alt="Photo of me"
-        class="size-28 rounded-full object-cover opacity-90 [filter:grayscale(100%)_sepia(40%)_hue-rotate(190deg)_saturate(180%)_brightness(0.85)] dark:[filter:grayscale(100%)_sepia(30%)_hue-rotate(180deg)_saturate(150%)_brightness(1.1)]"
-      />
-      <figcaption class="mt-2 text-center text-[color:var(--muted-foreground)]">
-        me
-      </figcaption>
-    </figure>
-    <div class="w-full md:w-3/4">
-      <h4
-        class="text-xl font-bold mb-2 text-[color:var(--foreground)] text-left"
-      >
+  <section class="flex flex-col gap-8 md:flex-row md:items-center">
+    <ProfilePortrait className="w-full md:w-1/4" />
+    <div class="w-full space-y-4 text-left md:w-3/4">
+      <h1 class="font-heading text-2xl font-semibold text-foreground">
         hi there!
-      </h4>
-      <p class="mb-6 text-[color:var(--muted-foreground)] text-left">
+      </h1>
+      <p class="text-muted-foreground">
         I'm a math, physics, and CS enthusiast.
       </p>
 
-      <p class="mb-6 text-[color:var(--muted-foreground)] text-left">
+      <p class="text-muted-foreground">
         I enjoy learning and tinkering with things; this website has daily
         struggles, occasional insights, and even some jokes I find funny 😄
       </p>

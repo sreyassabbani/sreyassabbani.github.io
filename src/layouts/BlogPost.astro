@@ -61,7 +61,7 @@ const railClass = cn(
     "z-20",
     "hidden",
     "w-56",
-    "min-[1100px]:block",
+    "xl:block",
 );
 
 const railPanelClass = cn(
@@ -70,61 +70,59 @@ const railPanelClass = cn(
     "left-0",
     "top-1/2",
     "max-h-[calc(100vh-2rem)]",
-    "w-[13.25rem]",
-    "-translate-x-[86%]",
+    "w-52",
+    "-translate-x-40",
     "-translate-y-1/2",
     "overflow-y-auto",
-    "rounded-r-[0.95rem]",
+    "rounded-r-xl",
     "border-y",
     "border-r",
     "border-border",
-    "bg-[color:color-mix(in_oklab,var(--card)_94%,var(--secondary))]",
-    "px-[0.7rem]",
+    "bg-card/95",
+    "px-3",
     "py-3",
     "opacity-0",
-    "transition-[transform,opacity]",
-    "duration-[520ms]",
-    "ease-[cubic-bezier(0.22,1,0.36,1)]",
+    "transition-all",
+    "duration-300",
+    "ease-out",
     "group-hover/tocrail:pointer-events-auto",
     "group-hover/tocrail:translate-x-0",
     "group-hover/tocrail:opacity-100",
-    "group-hover/tocrail:duration-[340ms]",
     "group-data-[open=true]/tocrail:pointer-events-auto",
     "group-data-[open=true]/tocrail:translate-x-0",
     "group-data-[open=true]/tocrail:opacity-100",
-    "group-data-[open=true]/tocrail:duration-[340ms]",
 );
 
 const tocGroupLinkClass = cn(
     "block",
-    "rounded-[0.55rem]",
-    "px-[0.35rem]",
-    "py-[0.2rem]",
-    "text-[0.76rem]",
-    "leading-[1.4]",
+    "rounded-md",
+    "px-1.5",
+    "py-0.5",
+    "text-xs",
+    "leading-5",
     "text-muted-foreground",
     "no-underline",
     "transition-colors",
     "duration-200",
-    "hover:bg-secondary/75",
+    "hover:bg-secondary/60",
     "hover:text-foreground",
-    "data-[active=true]:bg-secondary/90",
+    "data-[active=true]:bg-secondary",
     "data-[active=true]:text-foreground",
 );
 
 const tocChildListClass = cn(
-    "ml-[0.55rem]",
+    "ml-2",
     "mt-0",
     "max-h-0",
     "overflow-hidden",
     "border-l",
     "border-transparent",
-    "pl-[0.55rem]",
+    "pl-2",
     "opacity-0",
-    "transition-[max-height,opacity,border-color,margin-top]",
-    "duration-[360ms]",
-    "ease-[cubic-bezier(0.22,1,0.36,1)]",
-    "group-data-[open=true]/tocgroup:mt-[0.16rem]",
+    "transition-all",
+    "duration-300",
+    "ease-out",
+    "group-data-[open=true]/tocgroup:mt-1",
     "group-data-[open=true]/tocgroup:max-h-48",
     "group-data-[open=true]/tocgroup:border-border",
     "group-data-[open=true]/tocgroup:opacity-100",
@@ -132,18 +130,18 @@ const tocChildListClass = cn(
 
 const tocChildLinkClass = cn(
     "block",
-    "rounded-[0.55rem]",
-    "px-[0.35rem]",
-    "py-[0.2rem]",
-    "text-[0.7rem]",
-    "leading-[1.35]",
+    "rounded-md",
+    "px-1.5",
+    "py-0.5",
+    "text-xs",
+    "leading-5",
     "text-muted-foreground",
     "no-underline",
     "transition-colors",
     "duration-200",
-    "hover:bg-secondary/75",
+    "hover:bg-secondary/60",
     "hover:text-foreground",
-    "data-[active=true]:bg-secondary/90",
+    "data-[active=true]:bg-secondary",
     "data-[active=true]:text-foreground",
 );
 
@@ -153,31 +151,30 @@ const proseClass = cn(
     "prose-neutral",
     "dark:prose-invert",
     "max-w-none",
-    "text-[1.05rem]",
+    "text-base",
     "leading-8",
     "text-foreground",
     "prose-p:my-0",
-    "prose-p:mb-5",
+    "prose-p:mb-4",
     "prose-headings:font-heading",
     "prose-headings:font-semibold",
-    "prose-headings:tracking-[-0.02em]",
-    "prose-headings:text-[color:oklch(0.315_0.036_261.27)]",
-    "dark:prose-headings:text-foreground",
+    "prose-headings:tracking-tight",
+    "prose-headings:text-foreground",
     "prose-h2:mt-10",
     "prose-h2:mb-4",
     "prose-h2:border-b",
     "prose-h2:border-border",
-    "prose-h2:pb-1.5",
-    "prose-h2:text-[1.75rem]",
+    "prose-h2:pb-2",
+    "prose-h2:text-3xl",
     "prose-h3:mt-8",
     "prose-h3:mb-3",
-    "prose-h3:text-[1.4rem]",
+    "prose-h3:text-2xl",
     "prose-h4:mt-6",
     "prose-h4:mb-3",
-    "prose-h4:text-[1.15rem]",
+    "prose-h4:text-xl",
     "prose-a:text-primary",
     "prose-a:underline",
-    "prose-a:underline-offset-[3px]",
+    "prose-a:underline-offset-4",
     "[&_a:hover]:text-accent-foreground",
     "prose-strong:text-foreground",
     "prose-strong:font-semibold",
@@ -189,29 +186,8 @@ const proseClass = cn(
     "prose-ol:list-decimal",
     "prose-ol:list-outside",
     "prose-ol:pl-6",
-    "prose-li:my-[0.18rem]",
+    "prose-li:my-0.5",
     "prose-li:marker:text-muted-foreground",
-    "[&_li>p]:my-0",
-    "[&_li+li]:mt-[0.18rem]",
-    "[&_kbd]:pointer-events-none",
-    "[&_kbd]:inline-flex",
-    "[&_kbd]:h-5",
-    "[&_kbd]:w-fit",
-    "[&_kbd]:min-w-5",
-    "[&_kbd]:select-none",
-    "[&_kbd]:items-center",
-    "[&_kbd]:justify-center",
-    "[&_kbd]:gap-1",
-    "[&_kbd]:rounded-sm",
-    "[&_kbd]:bg-muted",
-    "[&_kbd]:px-1",
-    "[&_kbd]:font-sans",
-    "[&_kbd]:text-xs",
-    "[&_kbd]:font-medium",
-    "[&_kbd]:text-muted-foreground",
-    "[&_kbd]:align-middle",
-    "[&_kbd]:opacity-100",
-    "[&_kbd]:shadow-none",
     "prose-hr:my-8",
     "prose-hr:border-border",
     "[&_h2[id]]:scroll-mt-6",
@@ -232,7 +208,7 @@ const proseClass = cn(
     <body id="top" class="bg-background text-foreground">
         <aside class={railClass} data-toc-rail aria-label="Post sections">
             <div
-                class="pointer-events-auto absolute inset-y-0 left-0 w-[1.8rem]"
+                class="pointer-events-auto absolute inset-y-0 left-0 w-7"
                 aria-hidden="true"
             ></div>
             <div class={railPanelClass}>
@@ -240,7 +216,7 @@ const proseClass = cn(
                     <ul class="m-0 list-none p-0">
                         {tocEntries.map((group) => (
                             <li
-                                class="group/tocgroup mt-[0.16rem] first:mt-0"
+                                class="group/tocgroup mt-1 first:mt-0"
                                 data-toc-group={group.heading.slug}
                                 data-has-children={
                                     group.children.length > 0
@@ -260,7 +236,7 @@ const proseClass = cn(
                                     data-toc-children={group.heading.slug}
                                 >
                                     {group.children.map((child) => (
-                                        <li class="mt-[0.08rem] first:mt-0">
+                                        <li class="mt-0.5 first:mt-0">
                                             <a
                                                 class={tocChildLinkClass}
                                                 href={`#${child.slug}`}
@@ -279,14 +255,14 @@ const proseClass = cn(
             </div>
         </aside>
 
-        <div class="mx-auto w-full max-w-[48rem] px-6 pb-12 pt-6">
+        <div class="mx-auto w-full max-w-4xl px-6 pb-12 pt-6">
             <main>
-                <div class="mx-auto mb-6 w-full max-w-[46rem]">
+                <div class="mx-auto mb-6 w-full max-w-3xl">
                     <Button
                         asChild
                         variant="ghost"
                         size="sm"
-                        className="h-auto rounded-full px-0 py-0 text-[0.88rem] font-normal text-muted-foreground shadow-none hover:bg-transparent hover:text-foreground"
+                        className="h-auto rounded-full px-0 py-0 text-sm font-normal text-muted-foreground shadow-none hover:bg-transparent hover:text-foreground"
                     >
                         <a href="/blog">Back</a>
                     </Button>
@@ -295,7 +271,7 @@ const proseClass = cn(
                 <article>
                     {
                         heroImage && (
-                            <figure class="mx-auto mb-6 w-full max-w-[46rem] overflow-hidden rounded-2xl border border-border bg-card">
+                            <figure class="mx-auto mb-6 w-full max-w-3xl overflow-hidden rounded-2xl border border-border bg-card">
                                 <Image
                                     width={1020}
                                     height={510}
@@ -306,37 +282,37 @@ const proseClass = cn(
                         )
                     }
 
-                    <header class="mx-auto mb-12 w-full max-w-[46rem] text-center">
-                        <p class="m-0 text-[0.9rem] text-muted-foreground">
+                    <header class="mx-auto mb-12 w-full max-w-3xl text-center">
+                        <p class="m-0 text-sm text-muted-foreground">
                             <FormattedDate date={pubDate} />
                         </p>
                         {
                             updatedDate && (
-                                <p class="mt-[0.32rem] text-[0.82rem] text-muted-foreground">
+                                <p class="mt-1 text-xs text-muted-foreground">
                                     Updated <FormattedDate date={updatedDate} />
                                 </p>
                             )
                         }
-                        <h1 class="mt-4 font-heading text-[clamp(2.1rem,1.55rem+1.55vw,3rem)] leading-[1.02] tracking-[-0.04em] text-balance">
+                        <h1 class="mt-4 font-heading text-4xl font-semibold leading-tight tracking-tight text-balance md:text-5xl">
                             {title}
                         </h1>
                         {
                             description && (
-                                <p class="mx-auto mt-4 max-w-[35rem] text-pretty text-base leading-[1.72] text-muted-foreground">
+                                <p class="mx-auto mt-4 max-w-2xl text-pretty text-base leading-8 text-muted-foreground">
                                     {description}
                                 </p>
                             )
                         }
-                        <Separator className="mx-auto mt-5 w-[min(15rem,34%)]" />
+                        <Separator className="mx-auto mt-5 w-40" />
                     </header>
 
-                    <div class={`mx-auto w-full max-w-[46rem] ${proseClass}`}>
+                    <div class={`mx-auto w-full max-w-3xl ${proseClass}`}>
                         <slot />
                     </div>
                 </article>
             </main>
 
-            <div class="mx-auto mt-[6.4rem] w-full max-w-[46rem] border-t border-border pt-6 text-center text-[0.82rem] text-[color:color-mix(in_oklab,var(--foreground)_42%,var(--background))]">
+            <div class="mx-auto mt-20 w-full max-w-3xl border-t border-border pt-6 text-center text-xs text-muted-foreground">
                 <Footer />
             </div>
         </div>

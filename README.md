@@ -11,7 +11,7 @@ workspace/
 ```
 
 `src/content/blog` is not committed. It is generated automatically before `bun run dev` and `bun run build`.
-Only files tracked by git in the blog repo are synced into the site repo; untracked drafts, scratch files, and repo metadata stay out of `src/content/blog`.
+By default, only files tracked by git in the blog repo are synced into the site repo; untracked drafts, scratch files, and repo metadata stay out of `src/content/blog`.
 
 ## How mounting works
 
@@ -35,6 +35,14 @@ bun run dev
 
 While `bun run dev` is running, the site now watches `~/workflow/blog` (or `BLOG_CONTENT_DIR`) and re-syncs `src/content/blog` automatically whenever the blog repo changes.
 
+If you want drafts and other untracked files to appear temporarily during local development, run:
+
+```bash
+bun run dev -- --show-untracked
+```
+
+That mode includes untracked blog files while the dev command is alive, then restores `src/content/blog` back to tracked-only content when the process exits normally.
+
 ## Helix / Nix / direnv
 
 - `flake.nix` now provides `bun`, `node`, and `nu`.
@@ -44,6 +52,7 @@ While `bun run dev` is running, the site now watches `~/workflow/blog` (or `BLOG
 - `bun run typecheck` runs `astro check`, which covers both `.astro` files and normal TypeScript files.
 - `bun run blog:sync` refreshes the generated `src/content/blog` mount from `~/workflow/blog` or `BLOG_CONTENT_DIR`.
 - `bun run blog:watch` keeps the generated mount in sync continuously while you work.
+- `bun run blog:sync -- --show-untracked` and `bun run blog:watch -- --show-untracked` temporarily include untracked files too.
 
 If you launch Helix from Nushell, make sure your Nushell config loads `direnv` first so the flake shell environment reaches `hx`.
 
@@ -53,6 +62,7 @@ This repo now installs a versioned `pre-commit` hook through `simple-git-hooks`.
 
 - Every site-repo commit re-syncs `src/content/blog` from the real blog source.
 - Before overwriting the generated mount, it writes a timestamped backup to `.blog-sync-backups/`.
+- If `src/content/blog` has staged files that are not tracked in `~/workflow/blog`, the commit is blocked.
 - `~/workflow/blog` is still the source of truth. `src/content/blog` stays generated and gitignored.
 
 ## Deploy pattern

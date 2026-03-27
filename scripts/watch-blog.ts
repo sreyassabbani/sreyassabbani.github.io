@@ -1,16 +1,19 @@
-import { watch, type FSWatcher } from "node:fs";
+import { type FSWatcher, watch } from "node:fs";
 import path from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";
 import {
-  ensureMountedBlog,
-  ignoredPathSegments,
-  pathExists,
-  resolveSourcePath,
+    ensureMountedBlog,
+    ignoredPathSegments,
+    parseMountBlogArgs,
+    pathExists,
+    resolveSourcePath,
 } from "./mount-blog";
 
 const root = process.cwd();
 const logPrefix = "[blog-watch]";
-const skipInitialSync = process.argv.includes("--skip-initial-sync");
+const args = process.argv.slice(2);
+const skipInitialSync = args.includes("--skip-initial-sync");
+const { includeUntracked } = parseMountBlogArgs(args);
 
 let watcher: FSWatcher | null = null;
 let watchedSourcePath: string | null = null;
@@ -20,130 +23,153 @@ let rerunRequested = false;
 let shuttingDown = false;
 
 function isIgnoredRelativePath(relativePath: string | null | undefined) {
-  if (!relativePath) return false;
+    if (!relativePath) return false;
 
-  return relativePath
-    .split(path.sep)
-    .some((segment) => ignoredPathSegments.has(segment));
+    return relativePath
+        .split(path.sep)
+        .some((segment) => ignoredPathSegments.has(segment));
 }
 
 function scheduleSync() {
-  if (syncTimer) {
-    clearTimeout(syncTimer);
-  }
+    if (syncTimer) {
+        clearTimeout(syncTimer);
+    }
 
-  syncTimer = setTimeout(() => {
-    syncTimer = null;
-    void syncMount();
-  }, 120);
+    syncTimer = setTimeout(() => {
+        syncTimer = null;
+        void syncMount();
+    }, 120);
 }
 
 async function syncMount() {
-  if (syncInFlight) {
-    rerunRequested = true;
-    return;
-  }
-
-  syncInFlight = true;
-
-  try {
-    await ensureMountedBlog({ logPrefix });
-
-    const nextSourcePath = await resolveSourcePath();
-    if (watchedSourcePath !== nextSourcePath && (await pathExists(nextSourcePath))) {
-      await restartWatcher(nextSourcePath);
+    if (syncInFlight) {
+        rerunRequested = true;
+        return;
     }
-  } catch (error) {
-    console.error(`${logPrefix} sync failed`, error);
-  } finally {
-    syncInFlight = false;
 
-    if (rerunRequested) {
-      rerunRequested = false;
-      scheduleSync();
+    syncInFlight = true;
+
+    try {
+        await ensureMountedBlog({ includeUntracked, logPrefix });
+
+        const nextSourcePath = await resolveSourcePath();
+        if (
+            watchedSourcePath !== nextSourcePath &&
+            (await pathExists(nextSourcePath))
+        ) {
+            await restartWatcher(nextSourcePath);
+        }
+    } catch (error) {
+        console.error(`${logPrefix} sync failed`, error);
+    } finally {
+        syncInFlight = false;
+
+        if (rerunRequested) {
+            rerunRequested = false;
+            scheduleSync();
+        }
     }
-  }
 }
 
 function closeWatcher() {
-  watcher?.close();
-  watcher = null;
-  watchedSourcePath = null;
+    watcher?.close();
+    watcher = null;
+    watchedSourcePath = null;
 }
 
 async function waitForSourcePath() {
-  while (!shuttingDown) {
-    const sourcePath = await resolveSourcePath();
-    if (await pathExists(sourcePath)) {
-      return sourcePath;
+    while (!shuttingDown) {
+        const sourcePath = await resolveSourcePath();
+        if (await pathExists(sourcePath)) {
+            return sourcePath;
+        }
+
+        console.warn(`${logPrefix} waiting for blog source at ${sourcePath}`);
+        await sleep(2000);
     }
 
-    console.warn(`${logPrefix} waiting for blog source at ${sourcePath}`);
-    await sleep(2000);
-  }
-
-  return null;
+    return null;
 }
 
 async function restartWatcher(sourcePath?: string) {
-  closeWatcher();
+    closeWatcher();
 
-  const nextSourcePath = sourcePath ?? (await waitForSourcePath());
-  if (!nextSourcePath || shuttingDown) {
-    return;
-  }
-
-  watchedSourcePath = nextSourcePath;
-
-  watcher = watch(
-    nextSourcePath,
-    { recursive: true },
-    (_eventType, filename) => {
-      const relativePath = typeof filename === "string" ? filename : null;
-
-      if (isIgnoredRelativePath(relativePath)) {
+    const nextSourcePath = sourcePath ?? (await waitForSourcePath());
+    if (!nextSourcePath || shuttingDown) {
         return;
-      }
-
-      scheduleSync();
-    },
-  );
-
-  watcher.on("error", async (error) => {
-    console.error(`${logPrefix} watcher error`, error);
-    if (!shuttingDown) {
-      await restartWatcher();
     }
-  });
 
-  console.log(
-    `${logPrefix} watching ${path.relative(root, nextSourcePath) || nextSourcePath}`,
-  );
+    watchedSourcePath = nextSourcePath;
+
+    watcher = watch(
+        nextSourcePath,
+        { recursive: true },
+        (_eventType, filename) => {
+            const relativePath = typeof filename === "string" ? filename : null;
+
+            if (isIgnoredRelativePath(relativePath)) {
+                return;
+            }
+
+            scheduleSync();
+        },
+    );
+
+    watcher.on("error", async (error) => {
+        console.error(`${logPrefix} watcher error`, error);
+        if (!shuttingDown) {
+            await restartWatcher();
+        }
+    });
+
+    console.log(
+        `${logPrefix} watching ${path.relative(root, nextSourcePath) || nextSourcePath}`,
+    );
 }
 
 function shutdown() {
-  shuttingDown = true;
+    shuttingDown = true;
 
-  if (syncTimer) {
-    clearTimeout(syncTimer);
-    syncTimer = null;
-  }
+    if (syncTimer) {
+        clearTimeout(syncTimer);
+        syncTimer = null;
+    }
 
-  closeWatcher();
+    closeWatcher();
+}
+
+async function shutdownAndExit() {
+    if (shuttingDown) {
+        return;
+    }
+
+    shutdown();
+
+    if (includeUntracked) {
+        try {
+            await ensureMountedBlog({ logPrefix: "[blog-watch:cleanup]" });
+        } catch (error) {
+            console.error(
+                "[blog-watch:cleanup] failed to restore tracked-only mount",
+                error,
+            );
+            process.exit(1);
+        }
+    }
+
+    process.exit(0);
 }
 
 process.on("SIGINT", () => {
-  shutdown();
-  process.exit(0);
+    void shutdownAndExit();
 });
 
 process.on("SIGTERM", () => {
-  shutdown();
-  process.exit(0);
+    void shutdownAndExit();
 });
 
 if (!skipInitialSync) {
-  await ensureMountedBlog({ logPrefix });
+    await ensureMountedBlog({ includeUntracked, logPrefix });
 }
 
 await restartWatcher();

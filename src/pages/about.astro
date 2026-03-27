@@ -27,29 +27,29 @@ const projectAreas = [
   description="More about Sreyas Sabbani and the kinds of projects he spends time on."
 >
   <section class="mx-auto w-full max-w-3xl">
-    <section class="flex min-h-[clamp(28rem,68vh,40rem)] flex-col items-center justify-center gap-6 pb-12 pt-8 text-center">
-      <figure class="flex flex-col items-center gap-4">
+    <section
+      class="flex min-h-[clamp(28rem,68vh,40rem)] flex-col items-center justify-center gap-6 pb-12 pt-8 text-center"
+    >
+      <figure class="w-full md:w-1/4 flex flex-col justify-center items-center">
         <img
           src={ProfileImage.src}
-          alt="Photo of Sreyas Sabbani"
-          class="size-36 rounded-full object-cover opacity-95 ring-1 ring-border/70 [filter:grayscale(100%)_sepia(40%)_hue-rotate(190deg)_saturate(180%)_brightness(0.85)] dark:[filter:grayscale(100%)_sepia(30%)_hue-rotate(180deg)_saturate(150%)_brightness(1.1)]"
+          alt="Photo of me"
+          class="size-28 rounded-full object-cover opacity-90 [filter:grayscale(100%)_sepia(40%)_hue-rotate(190deg)_saturate(180%)_brightness(0.85)] dark:[filter:grayscale(100%)_sepia(30%)_hue-rotate(180deg)_saturate(150%)_brightness(1.1)]"
         />
-        <figcaption class="text-sm text-muted-foreground">me</figcaption>
+        <figcaption
+          class="mt-2 text-center text-[color:var(--muted-foreground)]"
+        >
+          me
+        </figcaption>
       </figure>
 
       <div class="flex max-w-2xl flex-col items-center gap-4">
-        <p class="text-sm text-muted-foreground">About</p>
-        <h1 class="font-heading text-[clamp(2.35rem,1.7rem+2vw,4rem)] leading-[0.98] tracking-[-0.045em] text-foreground">
-          Sreyas Sabbani
-        </h1>
-        <p class="max-w-[38rem] text-balance text-[1.04rem] leading-8 text-muted-foreground">
-          I care about mathematics, physics, and computer science, mostly in
-          the form of learning carefully and making things that help ideas feel
-          less abstract.
-        </p>
-        <p class="max-w-[38rem] text-balance text-[1.04rem] leading-8 text-muted-foreground">
-          This site is where that process shows up: notes, experiments,
-          occasional insights, and sometimes jokes that I find funny.
+        <p
+          class="max-w-[38rem] text-balance text-muted-foreground"
+        >
+          I'm <strong class="text-primary">Sreyas Sabbani</strong>, and I care about mathematics, physics, and computer science, mostly in the
+          form of learning carefully and making things that help ideas feel less
+          abstract.
         </p>
       </div>
     </section>
@@ -58,7 +58,9 @@ const projectAreas = [
       <div class="max-w-2xl">
         <div class="space-y-3">
           <p class="text-sm text-muted-foreground">Projects</p>
-          <h2 class="font-heading text-[clamp(1.85rem,1.55rem+0.9vw,2.35rem)] leading-tight tracking-[-0.03em] text-foreground">
+          <h2
+            class="font-heading text-[clamp(1.85rem,1.55rem+0.9vw,2.35rem)] leading-tight tracking-[-0.03em] text-foreground"
+          >
             A few things I tend to spend time on
           </h2>
           <p class="max-w-[36rem] text-[1rem] leading-7 text-muted-foreground">
@@ -68,16 +70,18 @@ const projectAreas = [
         </div>
 
         <div class="mt-10 border-y border-border/75">
-          {projectAreas.map((area) => (
-            <article class="grid gap-3 border-b border-border/75 py-6 last:border-b-0 md:grid-cols-[minmax(0,13rem)_1fr] md:gap-8">
-              <h3 class="font-heading text-[1.06rem] leading-tight text-foreground">
-                {area.title}
-              </h3>
-              <p class="max-w-[34rem] text-[0.99rem] leading-7 text-muted-foreground">
-                {area.description}
-              </p>
-            </article>
-          ))}
+          {
+            projectAreas.map((area) => (
+              <article class="grid gap-3 border-b border-border/75 py-6 last:border-b-0 md:grid-cols-[minmax(0,13rem)_1fr] md:gap-8">
+                <h3 class="font-heading text-[1.06rem] leading-tight text-foreground">
+                  {area.title}
+                </h3>
+                <p class="max-w-[34rem] text-[0.99rem] leading-7 text-muted-foreground">
+                  {area.description}
+                </p>
+              </article>
+            ))
+          }
         </div>
       </div>
     </section>

@@ -162,8 +162,7 @@
     }
 
     body {
-        @apply min-h-screen bg-background text-foreground font-sans antialiased;
-        line-height: 1.6;
+        @apply min-h-screen bg-background text-foreground font-sans leading-7 antialiased;
     }
 
     h1,
@@ -172,10 +171,7 @@
     h4,
     h5,
     h6 {
-        font-family: var(--font-heading);
-        font-weight: 600;
-        line-height: 1.2;
-        margin: 0 0 0.5em;
+        @apply mb-2 font-heading font-semibold leading-tight;
     }
 
     code,
@@ -187,14 +183,6 @@
 }
 
 @layer components {
-    .blog-prose {
-        line-height: 1.72 !important;
-    }
-
-    .blog-prose p {
-        margin: 0 0 1rem !important;
-    }
-
     .blog-prose :not(pre) > code::before,
     .blog-prose :not(pre) > code::after {
         content: none !important;
@@ -275,19 +263,19 @@
     }
 
     .blog-prose blockquote > :first-child {
-        margin-top: 0;
+        @apply mt-0;
     }
 
     .blog-prose blockquote > :last-child {
-        margin-bottom: 0;
+        @apply mb-0;
     }
 
     .blog-prose blockquote p {
-        margin: 0;
+        @apply m-0;
     }
 
     .blog-prose blockquote p + p {
-        margin-top: 0.75rem;
+        @apply mt-3;
     }
 
     .blog-prose table {
@@ -356,38 +344,6 @@
     }
 
     .blog-prose kbd {
-        @apply pointer-events-none inline-flex h-5 w-fit min-w-5 select-none items-center justify-center gap-1 rounded-sm bg-muted px-1 font-sans text-xs font-medium text-muted-foreground align-middle opacity-100;
-        box-shadow: none;
-    }
-
-    .blog-prose ul {
-        list-style: disc;
-        list-style-position: outside;
-        margin-block: 0.7rem !important;
-        padding-inline-start: 1.5rem;
-    }
-
-    .blog-prose ol {
-        list-style: decimal;
-        list-style-position: outside;
-        margin-block: 0.7rem !important;
-        padding-inline-start: 1.5rem;
-    }
-
-    .blog-prose li {
-        display: list-item;
-        margin-block: 0.18rem !important;
-    }
-
-    .blog-prose li > p {
-        margin-block: 0 !important;
-    }
-
-    .blog-prose li + li {
-        margin-top: 0.18rem !important;
-    }
-
-    .blog-prose li::marker {
-        color: var(--muted-foreground);
+        @apply shadow-none;
     }
 }

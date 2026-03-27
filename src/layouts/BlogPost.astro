@@ -2,13 +2,13 @@
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import type { MarkdownHeading } from "astro";
-import BaseHead from "../components/BaseHead.astro";
-import CopyCodeButton from "../components/CopyCodeButton.astro";
-import Footer from "../components/Footer.astro";
-import FormattedDate from "../components/FormattedDate.astro";
-import { Button } from "../components/ui/button";
-import { Separator } from "../components/ui/separator";
-import { cn } from "../lib/utils";
+import BaseHead from "@/components/BaseHead.astro";
+import CopyCodeButton from "@/components/CopyCodeButton.astro";
+import Footer from "@/components/Footer.astro";
+import FormattedDate from "@/components/FormattedDate.astro";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 
 type Props = CollectionEntry<"blog">["data"] & {
     headings: MarkdownHeading[];
@@ -64,7 +64,7 @@ const railClass = cn(
     "min-[1100px]:block",
 );
 
-const railPanelClass = [
+const railPanelClass = cn(
     "pointer-events-none",
     "absolute",
     "left-0",
@@ -95,7 +95,7 @@ const railPanelClass = [
     "group-data-[open=true]/tocrail:duration-[340ms]",
 );
 
-const tocGroupLinkClass = [
+const tocGroupLinkClass = cn(
     "block",
     "rounded-[0.55rem]",
     "px-[0.35rem]",
@@ -112,7 +112,7 @@ const tocGroupLinkClass = [
     "data-[active=true]:text-foreground",
 );
 
-const tocChildListClass = [
+const tocChildListClass = cn(
     "ml-[0.55rem]",
     "mt-0",
     "max-h-0",
@@ -130,7 +130,7 @@ const tocChildListClass = [
     "group-data-[open=true]/tocgroup:opacity-100",
 );
 
-const tocChildLinkClass = [
+const tocChildLinkClass = cn(
     "block",
     "rounded-[0.55rem]",
     "px-[0.35rem]",
@@ -147,7 +147,7 @@ const tocChildLinkClass = [
     "data-[active=true]:text-foreground",
 );
 
-const proseClass = [
+const proseClass = cn(
     "blog-prose",
     "prose",
     "prose-neutral",

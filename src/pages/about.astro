@@ -1,7 +1,7 @@
 ---
-import { SITE_TITLE } from "../consts";
-import ProfilePortrait from "../components/ProfilePortrait.astro";
-import Layout from "../layouts/Layout.astro";
+import { SITE_TITLE } from "@/consts";
+import ProfilePortrait from "@/components/ProfilePortrait.astro";
+import Layout from "@/layouts/Layout.astro";
 
 const projectAreas = [
   {
@@ -32,21 +32,14 @@ const projectAreas = [
         size="lg"
         className="gap-3"
         imageClassName="ring-1 ring-border"
+        caption=""
       />
 
       <div class="max-w-2xl space-y-4">
-        <p class="text-sm text-muted-foreground">About</p>
-        <h1 class="font-heading text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
-          Sreyas Sabbani
-        </h1>
         <p class="text-base leading-8 text-muted-foreground">
-          I'm <strong class="text-primary">Sreyas Sabbani</strong>, and I care about mathematics, physics, and computer science, mostly in the
+          I'm <strong class="text-primary">Sreyas Sabbani</strong>, and I love mathematics, physics, and computer science, mostly in the
           form of learning carefully and making things that help ideas feel less
           abstract.
-        </p>
-        <p class="text-base leading-8 text-muted-foreground">
-          This site is where that process shows up: notes, experiments,
-          occasional insights, and the occasional joke.
         </p>
       </div>
     </section>

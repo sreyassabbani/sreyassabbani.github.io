@@ -363,20 +363,28 @@
     .blog-prose ul {
         list-style: disc;
         list-style-position: outside;
-        margin-block: 0.9rem !important;
+        margin-block: 0.7rem !important;
         padding-inline-start: 1.5rem;
     }
 
     .blog-prose ol {
         list-style: decimal;
         list-style-position: outside;
-        margin-block: 0.9rem !important;
+        margin-block: 0.7rem !important;
         padding-inline-start: 1.5rem;
     }
 
     .blog-prose li {
         display: list-item;
-        margin-block: 0.3rem !important;
+        margin-block: 0.18rem !important;
+    }
+
+    .blog-prose li > p {
+        margin-block: 0 !important;
+    }
+
+    .blog-prose li + li {
+        margin-top: 0.18rem !important;
     }
 
     .blog-prose li::marker {

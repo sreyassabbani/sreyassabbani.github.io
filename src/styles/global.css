@@ -189,7 +189,7 @@
     }
 
     .blog-prose :not(pre) > code {
-        @apply rounded-md border border-border/70 bg-muted/75 px-1.5 py-0.5 font-mono text-[0.88em] font-normal text-primary;
+        @apply rounded-md border border-border/70 bg-muted/75 px-1.5 py-0.5 font-mono text-[0.95em] font-normal text-primary;
         color: oklch(0.58 0.12 247.5) !important;
         font-weight: 400 !important;
     }
@@ -203,7 +203,7 @@
     }
 
     .blog-prose pre.astro-code {
-        @apply relative overflow-x-auto rounded-xl border px-4 py-3 font-mono text-[0.9rem] leading-normal;
+        @apply relative overflow-x-auto rounded-xl border px-4 py-3 font-mono text-base leading-normal;
         border-color: color-mix(in oklab, var(--border) 82%, transparent);
         background-color: var(--shiki-light-bg, var(--muted)) !important;
         white-space: pre !important;
@@ -344,7 +344,7 @@
     }
 
     .blog-prose kbd {
-        @apply inline-flex h-5 min-w-5 items-center justify-center rounded-sm bg-muted px-1 font-sans text-xs font-medium text-muted-foreground shadow-none;
+        @apply inline-flex h-6 min-w-6 items-center justify-center rounded-sm bg-muted px-1.5 font-sans text-sm font-medium text-muted-foreground shadow-none;
     }
 
     .blog-prose li > p {

@@ -7,76 +7,78 @@ const projectAreas = [
   {
     title: "Writing and Notes",
     description:
-      "Longer notes and posts on math, physics, and whatever else I am trying to understand properly.",
+      "Longer notes on math, physics, and adjacent ideas I want to understand well enough to explain clearly.",
   },
   {
     title: "Software Experiments",
     description:
-      "Small tools, website work, and programming detours that seem interesting enough to build.",
+      "Small tools, website work, and programming detours that feel interesting enough to make real.",
   },
   {
     title: "Learning in Public",
     description:
-      "A running record of things I am still figuring out, rather than a polished catalogue of finished work.",
+      "An ongoing record of questions, partial answers, and the useful things that happen while figuring them out.",
   },
 ];
 ---
 
 <Layout
   title={`${SITE_TITLE} — About`}
-  description="More about Sreyas Sabbani and the projects he is working on."
+  description="More about Sreyas Sabbani and the kinds of projects he spends time on."
 >
-  <section class="space-y-12">
-    <section class="border-b border-border pb-10">
-      <div class="flex flex-col gap-8 md:flex-row md:items-start">
-        <figure class="flex shrink-0 flex-col items-center gap-3 md:w-40">
-          <img
-            src={ProfileImage.src}
-            alt="Photo of Sreyas Sabbani"
-            class="size-28 rounded-full object-cover opacity-90 [filter:grayscale(100%)_sepia(40%)_hue-rotate(190deg)_saturate(180%)_brightness(0.85)] dark:[filter:grayscale(100%)_sepia(30%)_hue-rotate(180deg)_saturate(150%)_brightness(1.1)]"
-          />
-          <figcaption class="text-sm text-muted-foreground">me</figcaption>
-        </figure>
+  <section class="mx-auto w-full max-w-3xl">
+    <section class="flex min-h-[clamp(28rem,68vh,40rem)] flex-col items-center justify-center gap-6 pb-12 pt-8 text-center">
+      <figure class="flex flex-col items-center gap-4">
+        <img
+          src={ProfileImage.src}
+          alt="Photo of Sreyas Sabbani"
+          class="size-36 rounded-full object-cover opacity-95 ring-1 ring-border/70 [filter:grayscale(100%)_sepia(40%)_hue-rotate(190deg)_saturate(180%)_brightness(0.85)] dark:[filter:grayscale(100%)_sepia(30%)_hue-rotate(180deg)_saturate(150%)_brightness(1.1)]"
+        />
+        <figcaption class="text-sm text-muted-foreground">me</figcaption>
+      </figure>
 
-        <div class="flex-1 space-y-4">
-          <p class="text-sm text-muted-foreground">About</p>
-          <h1 class="font-heading text-[clamp(2rem,1.55rem+1.2vw,2.8rem)] leading-tight tracking-[-0.03em] text-foreground">
-            Sreyas Sabbani
-          </h1>
-          <p class="max-w-2xl text-[1.02rem] leading-8 text-muted-foreground">
-            I am a math, physics, and computer science enthusiast. Most of what
-            I enjoy doing comes down to learning carefully, making things, and
-            following ideas until they become concrete.
-          </p>
-          <p class="max-w-2xl text-[1.02rem] leading-8 text-muted-foreground">
-            This site is a place for that process: notes, experiments,
-            occasional insights, and sometimes jokes that I find funny.
-          </p>
-        </div>
+      <div class="flex max-w-2xl flex-col items-center gap-4">
+        <p class="text-sm text-muted-foreground">About</p>
+        <h1 class="font-heading text-[clamp(2.35rem,1.7rem+2vw,4rem)] leading-[0.98] tracking-[-0.045em] text-foreground">
+          Sreyas Sabbani
+        </h1>
+        <p class="max-w-[38rem] text-balance text-[1.04rem] leading-8 text-muted-foreground">
+          I care about mathematics, physics, and computer science, mostly in
+          the form of learning carefully and making things that help ideas feel
+          less abstract.
+        </p>
+        <p class="max-w-[38rem] text-balance text-[1.04rem] leading-8 text-muted-foreground">
+          This site is where that process shows up: notes, experiments,
+          occasional insights, and sometimes jokes that I find funny.
+        </p>
       </div>
     </section>
 
-    <section id="projects" class="space-y-5">
-      <div class="space-y-2">
-        <h2 class="font-heading text-[1.75rem] leading-tight tracking-[-0.025em] text-foreground">
-          Projects
-        </h2>
-        <p class="max-w-2xl text-[0.98rem] leading-7 text-muted-foreground">
-          Mostly small, ongoing things rather than a grand showcase.
-        </p>
-      </div>
+    <section id="projects" class="pb-8 pt-10">
+      <div class="max-w-2xl">
+        <div class="space-y-3">
+          <p class="text-sm text-muted-foreground">Projects</p>
+          <h2 class="font-heading text-[clamp(1.85rem,1.55rem+0.9vw,2.35rem)] leading-tight tracking-[-0.03em] text-foreground">
+            A few things I tend to spend time on
+          </h2>
+          <p class="max-w-[36rem] text-[1rem] leading-7 text-muted-foreground">
+            Mostly small, ongoing work rather than a polished catalogue of
+            launches.
+          </p>
+        </div>
 
-      <div class="grid gap-4">
-        {projectAreas.map((area) => (
-          <article class="rounded-2xl border border-border/80 bg-card/35 px-5 py-4">
-            <h3 class="font-heading text-[1.08rem] leading-tight text-foreground">
-              {area.title}
-            </h3>
-            <p class="mt-2 text-[0.97rem] leading-7 text-muted-foreground">
-              {area.description}
-            </p>
-          </article>
-        ))}
+        <div class="mt-10 border-y border-border/75">
+          {projectAreas.map((area) => (
+            <article class="grid gap-3 border-b border-border/75 py-6 last:border-b-0 md:grid-cols-[minmax(0,13rem)_1fr] md:gap-8">
+              <h3 class="font-heading text-[1.06rem] leading-tight text-foreground">
+                {area.title}
+              </h3>
+              <p class="max-w-[34rem] text-[0.99rem] leading-7 text-muted-foreground">
+                {area.description}
+              </p>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   </section>

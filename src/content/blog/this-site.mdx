@@ -1,0 +1,35 @@
+---
+title: "This Site"
+description: "How I built this site"
+pubDate: "Mar 27 2026"
+---
+
+
+This site went through far too many iterations. Here's the story. 
+
+import EllipsisBreak from "@/components/EllipsisBreak.astro";
+
+<EllipsisBreak />
+
+
+When I first started building this website, I wanted to experiment with **ReScript & Next.js** because (1) ReScript genuinely seemed promising, and (2) I wanted to have a little bit of fun while building this site.
+
+However, I ended up running into so much trouble trying to get the right wrappers to interface properly with Next.js, shiki for syntax highlighting, and I believe I decided things just couldn't work when I tried to integrate KaTeX with the proper ReScript interface. I had to use the JS escape hatch far too many times and in the end it just seemed too fragile. But maybe it was just me, since ReScript seems to be praised a lot for its potential.
+
+So here's the stack I ended up with.
+- Astro
+
+And that's exactly the beauty of it. It's so simple (almost).
+
+### Separate repository for blog MDX content
+
+I just felt that I needed to separate a [`sreyassabbani/blog`](https://github.com/sreyassabbani/blog) repo from the codebase. I can't really tell you exactly why, but it just feels right and it's exactly how I felt when I decided to implement this with my blog.
+
+So the most obvious solution from there would be a Git submodule. And using the submodule, I would simply symlink `~/workflow/blog` on my computer to `~/workflow/sreyas.is/src/content/blog` so I can get to it faster. [^1]
+
+The issue is...  Git submodules just feel geared for different teams and projects, and I say this mainly because of how you have to make two commits to update something within the submodule and also udpate the outer repo. 
+
+Much later, I thought about something I had recently learned: _pre-commit hooks_.
+
+[^1]: This was before I started using [zoxide](https://github.com/ajeetdsouza/zoxide), so it ended up sticking.
+

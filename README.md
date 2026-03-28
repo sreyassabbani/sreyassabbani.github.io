@@ -11,7 +11,7 @@ workspace/
 ```
 
 `src/content/blog` is not committed. It is generated automatically before `bun run dev` and `bun run build`.
-By default, only files tracked by git in the blog repo are synced into the site repo; untracked drafts, scratch files, and repo metadata stay out of `src/content/blog`.
+By default, only blog content files tracked by git in the blog repo are synced into the site repo; untracked drafts, scratch files, repo metadata, and the blog repo `README.md` / `LICENSE` stay out of `src/content/blog`.
 
 ## How mounting works
 

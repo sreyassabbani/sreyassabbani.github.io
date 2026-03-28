@@ -6,6 +6,7 @@ import path from "node:path";
 const root = process.cwd();
 export const mountPath = path.resolve(root, "src/content/blog");
 export const ignoredPathSegments = new Set([".git", ".github"]);
+export const ignoredSourceFiles = new Set(["LICENSE", "README.md"]);
 export const showUntrackedFlag = "--show-untracked";
 
 export async function pathExists(targetPath: string) {
@@ -44,10 +45,14 @@ async function directoryHasEntries(targetPath: string) {
 }
 
 function isIgnoredRelativePath(relativePath: string) {
-    return relativePath
-        .replaceAll("\\", "/")
-        .split("/")
-        .some((segment) => ignoredPathSegments.has(segment));
+    const normalizedRelativePath = relativePath.replaceAll("\\", "/");
+
+    return (
+        ignoredSourceFiles.has(normalizedRelativePath) ||
+        normalizedRelativePath
+            .split("/")
+            .some((segment) => ignoredPathSegments.has(segment))
+    );
 }
 
 export function listTrackedSourceFiles(sourcePath: string) {

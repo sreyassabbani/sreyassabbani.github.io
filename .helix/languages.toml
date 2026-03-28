@@ -9,6 +9,12 @@ tsdk = "./node_modules/typescript/lib"
 command = "bun"
 args = ["--bun", "./node_modules/.bin/typescript-language-server", "--stdio"]
 
+[language-server.typescript-language-server-local.config]
+hostInfo = "helix"
+
+[language-server.typescript-language-server-local.config.tsserver]
+path = "./node_modules/typescript/lib/tsserver.js"
+
 [[language]]
 name = "astro"
 roots = ["astro.config.ts", "astro.config.mjs", "package.json"]

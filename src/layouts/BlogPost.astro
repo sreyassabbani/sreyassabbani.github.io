@@ -3,86 +3,24 @@ import { Image } from "astro:assets";
 import type { MarkdownHeading } from "astro";
 import type { CollectionEntry } from "astro:content";
 import BaseHead from "@/components/BaseHead.astro";
+import BlogPostInlineToc from "@/components/BlogPostInlineToc.astro";
+import BlogPostRail from "@/components/BlogPostRail.astro";
 import CopyCodeButton from "@/components/CopyCodeButton.astro";
 import Footer from "@/components/Footer.astro";
 import FormattedDate from "@/components/FormattedDate.astro";
+import { getInlineTocGroups, getRailTocGroups } from "@/lib/blog-toc";
 
 type Props = CollectionEntry<"blog">["data"] & {
     headings: MarkdownHeading[];
 };
 
-type TocLink = {
-    slug: string;
-    text: string;
-};
-
-type TocGroup = TocLink & {
-    children: TocLink[];
-};
-
-type HeadingSlice = TocLink & {
-    depth: number;
-};
-
 const { title, description, pubDate, updatedDate, heroImage, headings } =
     Astro.props as Props;
 
-function sliceHeadings(
-    headings: MarkdownHeading[],
-    minDepth: number,
-    maxDepth: number,
-): HeadingSlice[] {
-    return headings
-        .filter(({ depth }) => depth >= minDepth && depth <= maxDepth)
-        .map(({ depth, slug, text }) => ({ depth, slug, text }));
-}
-
-function groupHeadings(headings: HeadingSlice[]): TocGroup[] {
-    if (headings.length === 0) {
-        return [];
-    }
-
-    const topLevelDepth = Math.min(...headings.map(({ depth }) => depth));
-    const childDepth = topLevelDepth + 1;
-    const groups: TocGroup[] = [];
-
-    for (const heading of headings) {
-        if (heading.depth === topLevelDepth || groups.length === 0) {
-            groups.push({
-                slug: heading.slug,
-                text: heading.text,
-                children: [],
-            });
-            continue;
-        }
-
-        if (heading.depth === childDepth) {
-            groups[groups.length - 1].children.push({
-                slug: heading.slug,
-                text: heading.text,
-            });
-        }
-    }
-
-    return groups;
-}
-
-const inlineTocGroups = groupHeadings(sliceHeadings(headings, 1, 2));
-const railHeadingSource =
-    inlineTocGroups.length > 0
-        ? sliceHeadings(headings, 1, 2)
-        : sliceHeadings(headings, 2, 3);
-const railTocGroups = groupHeadings(railHeadingSource);
-const railEntries =
-    railTocGroups.length > 0
-        ? railTocGroups
-        : [{ slug: "top", text: "Top", children: [] }];
+const inlineTocGroups = getInlineTocGroups(headings);
+const railTocGroups = getRailTocGroups(headings);
 
 const articleContainerClass = "mx-auto w-full max-w-3xl";
-const railLinkClass =
-    "block rounded-md px-1.5 py-0.5 text-xs leading-5 text-muted-foreground no-underline transition-colors duration-200 hover:bg-secondary/60 hover:text-foreground data-[active=true]:bg-secondary data-[active=true]:text-foreground";
-const railChildListClass =
-    "ml-2 mt-0 max-h-0 overflow-hidden border-l border-transparent pl-2 opacity-0 transition-all duration-300 ease-out group-data-[open=true]/rail:mt-1 group-data-[open=true]/rail:max-h-48 group-data-[open=true]/rail:border-border group-data-[open=true]/rail:opacity-100";
 const proseClass =
     "blog-prose prose prose-neutral dark:prose-invert max-w-none text-base leading-8 text-foreground prose-p:my-0 prose-p:mb-4 prose-headings:font-heading prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-foreground prose-h2:mt-10 prose-h2:mb-4 prose-h2:border-b prose-h2:border-border prose-h2:pb-2 prose-h2:text-3xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:text-2xl prose-h4:mt-6 prose-h4:mb-3 prose-h4:text-xl prose-a:text-primary prose-a:underline prose-a:underline-offset-4 [&_a:hover]:text-accent-foreground prose-strong:text-foreground prose-strong:font-semibold prose-ul:my-3 prose-ul:list-disc prose-ul:list-outside prose-ul:pl-6 prose-ol:my-3 prose-ol:list-decimal prose-ol:list-outside prose-ol:pl-6 prose-li:my-0.5 prose-li:marker:text-muted-foreground prose-hr:my-8 prose-hr:border-border [&_h1[id]]:scroll-mt-6 [&_h2[id]]:scroll-mt-6 [&_h3[id]]:scroll-mt-6 [&_h4[id]]:scroll-mt-6 [&_h5[id]]:scroll-mt-6 [&_h6[id]]:scroll-mt-6 [&_img]:my-6 [&_img]:rounded-xl";
 ---
@@ -93,59 +31,7 @@ const proseClass =
     </head>
 
     <body id="top" class="bg-background text-foreground">
-        <aside
-            class="group/tocrail fixed inset-y-0 left-0 z-20 hidden w-56 xl:block"
-            data-post-rail
-            aria-label="Post sections"
-        >
-            <div
-                class="pointer-events-auto absolute inset-y-0 left-0 w-7"
-                aria-hidden="true"
-            ></div>
-            <div class="pointer-events-none absolute left-0 top-1/2 max-h-[calc(100vh-2rem)] w-52 -translate-x-40 -translate-y-1/2 overflow-y-auto rounded-r-xl border-y border-r border-border bg-card/95 px-3 py-3 opacity-0 transition-all duration-300 ease-out group-hover/tocrail:pointer-events-auto group-hover/tocrail:translate-x-0 group-hover/tocrail:opacity-100 group-data-[open=true]/tocrail:pointer-events-auto group-data-[open=true]/tocrail:translate-x-0 group-data-[open=true]/tocrail:opacity-100">
-                <nav>
-                    <ul class="m-0 list-none p-0">
-                        {railEntries.map((group) => (
-                            <li
-                                class="group/rail mt-1 first:mt-0"
-                                data-rail-group={group.slug}
-                                data-has-children={
-                                    group.children.length > 0
-                                        ? "true"
-                                        : "false"
-                                }
-                            >
-                                <a
-                                    class={railLinkClass}
-                                    href={`#${group.slug}`}
-                                    data-rail-link={group.slug}
-                                >
-                                    {group.text}
-                                </a>
-                                {
-                                    group.children.length > 0 && (
-                                        <ul class={railChildListClass}>
-                                            {group.children.map((child) => (
-                                                <li class="mt-0.5 first:mt-0">
-                                                    <a
-                                                        class={railLinkClass}
-                                                        href={`#${child.slug}`}
-                                                        data-rail-link={child.slug}
-                                                        data-parent-slug={group.slug}
-                                                    >
-                                                        {child.text}
-                                                    </a>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )
-                                }
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
-            </div>
-        </aside>
+        <BlogPostRail groups={railTocGroups} />
 
         <div class="mx-auto w-full max-w-4xl px-6 pb-16 pt-6">
             <main class={articleContainerClass}>
@@ -194,47 +80,7 @@ const proseClass =
                         <div class="mx-auto mt-5 h-px w-40 bg-border"></div>
                     </header>
 
-                    {
-                        inlineTocGroups.length > 0 && (
-                            <nav
-                                aria-label="Page sections"
-                                class="mb-10 text-sm leading-7"
-                            >
-                                <ol class="list-decimal space-y-2 pl-5 text-muted-foreground marker:text-foreground/70">
-                                    {inlineTocGroups.map((group) => (
-                                        <li class="pl-1">
-                                            <a
-                                                href={`#${group.slug}`}
-                                                class="break-words text-foreground no-underline transition-colors duration-200 hover:text-primary"
-                                            >
-                                                {group.text}
-                                            </a>
-                                            {
-                                                group.children.length > 0 && (
-                                                    <ol class="mt-2 list-decimal space-y-1 pl-5 text-[0.95em] marker:text-muted-foreground/80">
-                                                        {group.children.map(
-                                                            (child) => (
-                                                                <li class="pl-1">
-                                                                    <a
-                                                                        href={`#${child.slug}`}
-                                                                        class="break-words text-muted-foreground no-underline transition-colors duration-200 hover:text-foreground"
-                                                                    >
-                                                                        {
-                                                                            child.text
-                                                                        }
-                                                                    </a>
-                                                                </li>
-                                                            ),
-                                                        )}
-                                                    </ol>
-                                                )
-                                            }
-                                        </li>
-                                    ))}
-                                </ol>
-                            </nav>
-                        )
-                    }
+                    <BlogPostInlineToc groups={inlineTocGroups} />
 
                     <div class={proseClass}>
                         <slot />
@@ -248,150 +94,5 @@ const proseClass =
         </div>
 
         <CopyCodeButton />
-
-        <script is:inline>
-            (() => {
-                let cleanup = () => {};
-
-                const initPostRail = () => {
-                    cleanup();
-
-                    const rail = document.querySelector("[data-post-rail]");
-                    if (!(rail instanceof HTMLElement)) {
-                        cleanup = () => {};
-                        return;
-                    }
-
-                    const links = Array.from(
-                        rail.querySelectorAll("[data-rail-link]"),
-                    ).filter((link) => link instanceof HTMLAnchorElement);
-                    const groups = Array.from(
-                        rail.querySelectorAll("[data-rail-group]"),
-                    ).filter((group) => group instanceof HTMLElement);
-                    const observedHeadings = links
-                        .map((link) => {
-                            const slug = link.dataset.railLink;
-                            if (!slug) return null;
-
-                            const element = document.getElementById(slug);
-                            if (!(element instanceof HTMLElement)) {
-                                return null;
-                            }
-
-                            return { slug, element };
-                        })
-                        .filter(Boolean);
-
-                    let activeSlug = observedHeadings[0]?.slug ?? "top";
-
-                    const setRailOpen = (open) => {
-                        rail.dataset.open = open ? "true" : "false";
-                    };
-
-                    const setOpenGroup = (slug) => {
-                        groups.forEach((group) => {
-                            group.dataset.open =
-                                slug &&
-                                group.dataset.railGroup === slug &&
-                                group.dataset.hasChildren === "true"
-                                    ? "true"
-                                    : "false";
-                        });
-                    };
-
-                    const syncExpandedGroup = (slug) => {
-                        const activeChildLink = rail.querySelector(
-                            `[data-parent-slug][data-rail-link="${slug}"]`,
-                        );
-
-                        if (activeChildLink instanceof HTMLElement) {
-                            setOpenGroup(activeChildLink.dataset.parentSlug);
-                            return;
-                        }
-
-                        setOpenGroup(null);
-                    };
-
-                    const setActiveSlug = (slug) => {
-                        activeSlug = slug;
-
-                        links.forEach((link) => {
-                            link.dataset.active =
-                                link.dataset.railLink === slug
-                                    ? "true"
-                                    : "false";
-                        });
-
-                        syncExpandedGroup(slug);
-                    };
-
-                    const onRailEnter = () => setRailOpen(true);
-                    const onRailLeave = () => {
-                        setRailOpen(false);
-                        syncExpandedGroup(activeSlug);
-                    };
-
-                    const removeGroupListeners = groups.map((group) => {
-                        const slug = group.dataset.railGroup;
-                        if (!slug || group.dataset.hasChildren !== "true") {
-                            return () => {};
-                        }
-
-                        const onEnter = () => {
-                            setRailOpen(true);
-                            setOpenGroup(slug);
-                        };
-
-                        group.addEventListener("mouseenter", onEnter);
-                        return () =>
-                            group.removeEventListener("mouseenter", onEnter);
-                    });
-
-                    rail.addEventListener("mouseenter", onRailEnter);
-                    rail.addEventListener("mouseleave", onRailLeave);
-
-                    const observer = new IntersectionObserver(
-                        (entries) => {
-                            const visibleEntries = entries
-                                .filter((entry) => entry.isIntersecting)
-                                .sort(
-                                    (a, b) =>
-                                        a.boundingClientRect.top -
-                                        b.boundingClientRect.top,
-                                );
-
-                            if (visibleEntries.length === 0) {
-                                return;
-                            }
-
-                            setActiveSlug(visibleEntries[0].target.id);
-                        },
-                        {
-                            rootMargin: "-18% 0px -68% 0px",
-                            threshold: [0, 1],
-                        },
-                    );
-
-                    observedHeadings.forEach(({ element }) =>
-                        observer.observe(element),
-                    );
-
-                    setActiveSlug(activeSlug);
-                    setRailOpen(false);
-
-                    cleanup = () => {
-                        observer.disconnect();
-                        rail.removeEventListener("mouseenter", onRailEnter);
-                        rail.removeEventListener("mouseleave", onRailLeave);
-                        removeGroupListeners.forEach((removeListener) =>
-                            removeListener(),
-                        );
-                    };
-                };
-
-                document.addEventListener("DOMContentLoaded", initPostRail);
-                document.addEventListener("astro:page-load", initPostRail);
-            })();
-        </script>
     </body>
 </html>

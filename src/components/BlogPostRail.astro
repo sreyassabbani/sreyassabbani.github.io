@@ -1,0 +1,208 @@
+---
+import type { TocGroup } from "@/lib/blog-toc";
+import { topFallbackTocGroup } from "@/lib/blog-toc";
+
+type Props = {
+    groups: TocGroup[];
+};
+
+const { groups } = Astro.props as Props;
+const railEntries = groups.length > 0 ? groups : [topFallbackTocGroup];
+
+const railLinkClass =
+    "block rounded-md px-1.5 py-0.5 text-xs leading-5 text-muted-foreground no-underline transition-colors duration-200 hover:bg-secondary/60 hover:text-foreground data-[active=true]:bg-secondary data-[active=true]:text-foreground";
+const railChildListClass =
+    "ml-2 mt-0 max-h-0 overflow-hidden border-l border-transparent pl-2 opacity-0 transition-all duration-300 ease-out group-data-[open=true]/rail:mt-1 group-data-[open=true]/rail:max-h-48 group-data-[open=true]/rail:border-border group-data-[open=true]/rail:opacity-100";
+---
+
+<aside
+    class="group/tocrail fixed inset-y-0 left-0 z-20 hidden w-56 xl:block"
+    data-post-rail
+    aria-label="Post sections"
+>
+    <div
+        class="pointer-events-auto absolute inset-y-0 left-0 w-7"
+        aria-hidden="true"
+    ></div>
+    <div class="pointer-events-none absolute left-0 top-1/2 max-h-[calc(100vh-2rem)] w-52 -translate-x-40 -translate-y-1/2 overflow-y-auto rounded-r-xl border-y border-r border-border bg-card/95 px-3 py-3 opacity-0 transition-all duration-300 ease-out group-hover/tocrail:pointer-events-auto group-hover/tocrail:translate-x-0 group-hover/tocrail:opacity-100 group-data-[open=true]/tocrail:pointer-events-auto group-data-[open=true]/tocrail:translate-x-0 group-data-[open=true]/tocrail:opacity-100">
+        <nav>
+            <ul class="m-0 list-none p-0">
+                {railEntries.map((group) => (
+                    <li
+                        class="group/rail mt-1 first:mt-0"
+                        data-rail-group={group.slug}
+                        data-has-children={
+                            group.children.length > 0 ? "true" : "false"
+                        }
+                    >
+                        <a
+                            class={railLinkClass}
+                            href={`#${group.slug}`}
+                            data-rail-link={group.slug}
+                        >
+                            {group.text}
+                        </a>
+                        {
+                            group.children.length > 0 && (
+                                <ul class={railChildListClass}>
+                                    {group.children.map((child) => (
+                                        <li class="mt-0.5 first:mt-0">
+                                            <a
+                                                class={railLinkClass}
+                                                href={`#${child.slug}`}
+                                                data-rail-link={child.slug}
+                                                data-parent-slug={group.slug}
+                                            >
+                                                {child.text}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )
+                        }
+                    </li>
+                ))}
+            </ul>
+        </nav>
+    </div>
+</aside>
+
+<script is:inline>
+    (() => {
+        let cleanup = () => {};
+
+        const initPostRail = () => {
+            cleanup();
+
+            const rail = document.querySelector("[data-post-rail]");
+            if (!(rail instanceof HTMLElement)) {
+                cleanup = () => {};
+                return;
+            }
+
+            const links = Array.from(rail.querySelectorAll("[data-rail-link]")).filter(
+                (link) => link instanceof HTMLAnchorElement,
+            );
+            const groups = Array.from(rail.querySelectorAll("[data-rail-group]")).filter(
+                (group) => group instanceof HTMLElement,
+            );
+            const observedHeadings = links
+                .map((link) => {
+                    const slug = link.dataset.railLink;
+                    if (!slug) return null;
+
+                    const element = document.getElementById(slug);
+                    if (!(element instanceof HTMLElement)) {
+                        return null;
+                    }
+
+                    return { slug, element };
+                })
+                .filter(Boolean);
+
+            let activeSlug = observedHeadings[0]?.slug ?? "top";
+
+            const setRailOpen = (open) => {
+                rail.dataset.open = open ? "true" : "false";
+            };
+
+            const setOpenGroup = (slug) => {
+                groups.forEach((group) => {
+                    group.dataset.open =
+                        slug &&
+                        group.dataset.railGroup === slug &&
+                        group.dataset.hasChildren === "true"
+                            ? "true"
+                            : "false";
+                });
+            };
+
+            const syncExpandedGroup = (slug) => {
+                const activeChildLink = rail.querySelector(
+                    `[data-parent-slug][data-rail-link="${slug}"]`,
+                );
+
+                if (activeChildLink instanceof HTMLElement) {
+                    setOpenGroup(activeChildLink.dataset.parentSlug);
+                    return;
+                }
+
+                setOpenGroup(null);
+            };
+
+            const setActiveSlug = (slug) => {
+                activeSlug = slug;
+
+                links.forEach((link) => {
+                    link.dataset.active =
+                        link.dataset.railLink === slug ? "true" : "false";
+                });
+
+                syncExpandedGroup(slug);
+            };
+
+            const onRailEnter = () => setRailOpen(true);
+            const onRailLeave = () => {
+                setRailOpen(false);
+                syncExpandedGroup(activeSlug);
+            };
+
+            const removeGroupListeners = groups.map((group) => {
+                const slug = group.dataset.railGroup;
+                if (!slug || group.dataset.hasChildren !== "true") {
+                    return () => {};
+                }
+
+                const onEnter = () => {
+                    setRailOpen(true);
+                    setOpenGroup(slug);
+                };
+
+                group.addEventListener("mouseenter", onEnter);
+                return () => group.removeEventListener("mouseenter", onEnter);
+            });
+
+            rail.addEventListener("mouseenter", onRailEnter);
+            rail.addEventListener("mouseleave", onRailLeave);
+
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    const visibleEntries = entries
+                        .filter((entry) => entry.isIntersecting)
+                        .sort(
+                            (a, b) =>
+                                a.boundingClientRect.top -
+                                b.boundingClientRect.top,
+                        );
+
+                    if (visibleEntries.length === 0) {
+                        return;
+                    }
+
+                    setActiveSlug(visibleEntries[0].target.id);
+                },
+                {
+                    rootMargin: "-18% 0px -68% 0px",
+                    threshold: [0, 1],
+                },
+            );
+
+            observedHeadings.forEach(({ element }) => observer.observe(element));
+
+            setActiveSlug(activeSlug);
+            setRailOpen(false);
+
+            cleanup = () => {
+                observer.disconnect();
+                rail.removeEventListener("mouseenter", onRailEnter);
+                rail.removeEventListener("mouseleave", onRailLeave);
+                removeGroupListeners.forEach((removeListener) =>
+                    removeListener(),
+                );
+            };
+        };
+
+        document.addEventListener("DOMContentLoaded", initPostRail);
+        document.addEventListener("astro:page-load", initPostRail);
+    })();
+</script>

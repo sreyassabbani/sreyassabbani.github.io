@@ -17,31 +17,34 @@ const isHome = variant === "home";
     <BaseHead title={title} description={description} />
   </head>
   <body
-    class="min-h-screen bg-background text-foreground"
+    class:list={[
+      "bg-background text-foreground overflow-x-hidden",
+      isHome ? "overflow-hidden md:min-h-screen md:overflow-y-auto" : "min-h-screen",
+    ]}
   >
     <div
       class:list={[
-        "flex",
-        isHome ? "items-center justify-center" : "justify-center",
+        "mx-auto flex w-full justify-center",
+        isHome ? "min-h-dvh md:min-h-screen" : "min-h-screen",
       ]}
     >
       <div
         class:list={[
-          "page-shell flex w-full max-w-2xl flex-col",
+          "page-shell flex w-full flex-col",
           isHome
-            ? "min-h-screen items-center justify-center gap-10 px-8 py-12 text-center md:px-12 lg:px-16 lg:py-16"
-            : "min-h-screen gap-6 px-6 py-6 md:px-8 md:py-8",
+            ? "h-dvh max-w-4xl px-4 pb-4 pt-3 sm:px-6 sm:pb-6 sm:pt-4 md:h-auto md:min-h-screen md:px-8 md:pb-8 md:pt-6"
+            : "min-h-screen max-w-3xl px-4 pb-8 pt-3 sm:px-6 sm:pb-10 sm:pt-4 md:px-8 md:pb-12 md:pt-6",
         ]}
       >
-        <div class:list={[isHome ? "w-full flex justify-center" : "w-full"]}>
+        <header class="sticky top-0 z-40 w-full bg-background/94 backdrop-blur-sm supports-[backdrop-filter]:bg-background/80">
           <Navigation />
-        </div>
+        </header>
         <main
           class:list={[
             "w-full",
             isHome
-              ? "mt-2 flex flex-col items-center justify-center gap-6 md:mt-4"
-              : "mt-2 flex-1",
+              ? "flex min-h-0 flex-1 flex-col pt-4 sm:pt-6 md:pt-8"
+              : "flex-1 pt-6 sm:pt-8",
           ]}
         >
           <slot />

@@ -9,17 +9,19 @@ import Layout from "../layouts/Layout.astro";
   description={SITE_DESCRIPTION}
   variant="home"
 >
-  <section class="flex flex-col gap-8 md:flex-row md:items-center">
-    <ProfilePortrait className="w-full md:w-1/4" />
-    <div class="w-full space-y-4 text-left md:w-3/4">
-      <h1 class="font-heading text-2xl font-semibold text-foreground">
+  <section class="flex h-full min-h-0 flex-col gap-6 md:flex-row md:items-center md:gap-10">
+    <div class="flex flex-1 items-center justify-center md:w-[30%] md:flex-none">
+      <ProfilePortrait size="lg" className="mx-auto" />
+    </div>
+    <div class="mt-auto w-full max-w-2xl space-y-4 pb-1 text-left md:mt-0 md:w-[70%] md:pb-0">
+      <h1 class="font-heading text-2xl font-semibold text-foreground sm:text-[1.95rem]">
         hi there!
       </h1>
-      <p class="text-muted-foreground">
+      <p class="text-[0.98rem] leading-7 text-muted-foreground sm:text-base sm:leading-8">
         I'm a math, physics, and CS enthusiast.
       </p>
 
-      <p class="text-muted-foreground">
+      <p class="text-[0.98rem] leading-7 text-muted-foreground sm:text-base sm:leading-8">
         I enjoy learning and tinkering with things; this website has daily
         struggles, occasional insights, and even some jokes I find funny 😄
       </p>

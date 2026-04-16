@@ -22,7 +22,7 @@ const railTocGroups = getRailTocGroups(headings);
 
 const articleContainerClass = "mx-auto w-full max-w-3xl";
 const proseClass =
-    "blog-prose prose prose-neutral dark:prose-invert max-w-none text-base leading-8 text-foreground prose-p:my-0 prose-p:mb-4 prose-headings:font-heading prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-foreground prose-h1:mt-20 prose-h1:mb-5 prose-h1:border-b prose-h1:border-border prose-h1:pb-3 prose-h1:text-4xl prose-h2:mt-14 prose-h2:mb-4 prose-h2:border-b prose-h2:border-border prose-h2:pb-2 prose-h2:text-3xl prose-h3:mt-10 prose-h3:mb-3 prose-h3:text-2xl prose-h4:mt-7 prose-h4:mb-3 prose-h4:text-xl prose-a:text-primary prose-a:underline prose-a:underline-offset-4 [&_a:hover]:text-accent-foreground prose-strong:text-foreground prose-strong:font-semibold prose-ul:my-3 prose-ul:list-disc prose-ul:list-outside prose-ul:pl-6 prose-ol:my-3 prose-ol:list-decimal prose-ol:list-outside prose-ol:pl-6 prose-li:my-0.5 prose-li:marker:text-muted-foreground prose-hr:my-8 prose-hr:border-border [&_h1[id]]:scroll-mt-6 [&_h2[id]]:scroll-mt-6 [&_h3[id]]:scroll-mt-6 [&_h4[id]]:scroll-mt-6 [&_h5[id]]:scroll-mt-6 [&_h6[id]]:scroll-mt-6 [&_img]:my-6 [&_img]:rounded-xl";
+    "blog-prose prose prose-neutral dark:prose-invert max-w-none text-[0.98rem] leading-7 text-foreground sm:text-base sm:leading-8 prose-p:my-0 prose-p:mb-4 prose-headings:font-heading prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-foreground prose-h1:mt-16 prose-h1:mb-5 prose-h1:border-b prose-h1:border-border prose-h1:pb-3 prose-h1:text-3xl sm:prose-h1:mt-20 sm:prose-h1:text-4xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:border-b prose-h2:border-border prose-h2:pb-2 prose-h2:text-2xl sm:prose-h2:mt-14 sm:prose-h2:text-3xl prose-h3:mt-9 prose-h3:mb-3 prose-h3:text-[1.45rem] sm:prose-h3:mt-10 sm:prose-h3:text-2xl prose-h4:mt-7 prose-h4:mb-3 prose-h4:text-lg sm:prose-h4:text-xl prose-a:text-primary prose-a:underline prose-a:underline-offset-4 [&_a]:break-words [&_a:hover]:text-accent-foreground prose-strong:text-foreground prose-strong:font-semibold prose-ul:my-3 prose-ul:list-disc prose-ul:list-outside prose-ul:pl-5 sm:prose-ul:pl-6 prose-ol:my-3 prose-ol:list-decimal prose-ol:list-outside prose-ol:pl-5 sm:prose-ol:pl-6 prose-li:my-0.5 prose-li:marker:text-muted-foreground prose-hr:my-8 prose-hr:border-border [&_h1[id]]:scroll-mt-24 [&_h2[id]]:scroll-mt-24 [&_h3[id]]:scroll-mt-24 [&_h4[id]]:scroll-mt-24 [&_h5[id]]:scroll-mt-24 [&_h6[id]]:scroll-mt-24 [&_img]:my-6 [&_img]:rounded-xl";
 ---
 
 <html lang="en">
@@ -30,10 +30,10 @@ const proseClass =
         <BaseHead title={title} description={description} />
     </head>
 
-    <body id="top" class="bg-background text-foreground">
+    <body id="top" class="min-h-screen overflow-x-hidden bg-background text-foreground">
         <BlogPostRail groups={railTocGroups} />
 
-        <div class="mx-auto w-full max-w-4xl px-6 pb-16 pt-6">
+        <div class="mx-auto w-full max-w-4xl px-4 pb-14 pt-4 sm:px-6 sm:pb-16 sm:pt-6">
             <main class={articleContainerClass}>
                 <a
                     href="/blog"
@@ -56,7 +56,7 @@ const proseClass =
                         )
                     }
 
-                    <header class="mb-12 text-center">
+                    <header class="mb-10 text-left sm:mb-12 sm:text-center">
                         <p class="m-0 text-sm text-muted-foreground">
                             <FormattedDate date={pubDate} />
                         </p>
@@ -67,17 +67,17 @@ const proseClass =
                                 </p>
                             )
                         }
-                        <h1 class="mt-4 text-balance font-heading text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
+                        <h1 class="mt-4 text-balance font-heading text-3xl font-semibold leading-tight tracking-tight sm:text-4xl md:text-5xl">
                             {title}
                         </h1>
                         {
                             description && (
-                                <p class="mx-auto mt-4 max-w-2xl text-pretty text-base leading-8 text-muted-foreground">
+                                <p class="mt-4 max-w-2xl text-pretty text-[0.98rem] leading-7 text-muted-foreground sm:mx-auto sm:text-base sm:leading-8">
                                     {description}
                                 </p>
                             )
                         }
-                        <div class="mx-auto mt-5 h-px w-40 bg-border"></div>
+                        <div class="mt-5 h-px w-32 bg-border sm:mx-auto sm:w-40"></div>
                     </header>
 
                     <BlogPostInlineToc groups={inlineTocGroups} />
@@ -88,7 +88,7 @@ const proseClass =
                 </article>
             </main>
 
-            <div class={`${articleContainerClass} mt-24 border-t border-border pt-6 text-center text-xs text-muted-foreground`}>
+            <div class={`${articleContainerClass} mt-[4.5rem] border-t border-border pt-6 text-center text-xs text-muted-foreground sm:mt-24`}>
                 <Footer />
             </div>
         </div>

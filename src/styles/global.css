@@ -163,6 +163,15 @@
 
     body {
         @apply min-h-screen bg-background text-foreground font-sans leading-7 antialiased;
+        overflow-x: hidden;
+    }
+
+    img,
+    svg,
+    video,
+    canvas {
+        display: block;
+        max-width: 100%;
     }
 
     h1,
@@ -203,7 +212,7 @@
     }
 
     .blog-prose pre.astro-code {
-        @apply relative overflow-x-auto rounded-xl border px-4 py-3 font-mono text-base leading-normal;
+        @apply relative overflow-x-auto rounded-xl border px-4 py-3 font-mono text-sm leading-normal sm:text-base;
         border-color: color-mix(in oklab, var(--border) 82%, transparent);
         background-color: var(--shiki-light-bg, var(--muted)) !important;
         white-space: pre !important;
@@ -252,8 +261,11 @@
         @apply my-5 rounded-r-lg px-3.5 py-2.5 text-[0.98em] text-muted-foreground;
         border-inline-start: 2px solid
             color-mix(in oklab, var(--primary) 42%, var(--border));
-        background:
-            color-mix(in oklab, var(--secondary) 68%, var(--background));
+        background: color-mix(
+            in oklab,
+            var(--secondary) 68%,
+            var(--background)
+        );
         quotes: none;
     }
 

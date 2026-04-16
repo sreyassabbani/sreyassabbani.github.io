@@ -2,39 +2,48 @@
 import ThemeToggle from "./ThemeToggle.astro";
 
 const navLinkClass =
-  "group relative flex items-center justify-center pb-2 text-foreground no-underline transition-colors duration-200 hover:text-primary";
+    "group relative flex items-center justify-center pb-1 text-sm font-medium text-foreground no-underline transition-colors duration-200 hover:text-primary";
 const navUnderlineClass =
-  "absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100";
+    "absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100";
 const socialLinkClass =
-  "flex items-center justify-center text-foreground transition-colors duration-200 hover:text-primary";
-const iconClass = "size-5 fill-current";
+    "flex size-8 items-center justify-center rounded-full text-foreground transition-colors duration-200 hover:bg-secondary hover:text-primary sm:size-9";
+const iconClass = "size-4 fill-current sm:size-[1.1rem]";
 ---
 
 <nav
-  class="relative flex h-14 w-full items-center justify-between border-b border-border px-2 pb-8 text-sm text-foreground"
+  class="flex w-full flex-col gap-3 border-b border-border pb-3 pt-2 text-sm text-foreground sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:pb-4"
 >
-  <a href="/" class="flex w-1/3 items-center no-underline hover:text-foreground">
-    <span class="ml-2 font-brand text-4xl font-semibold tracking-tight">
-      <span>sreyas</span><span class="text-primary">.is</span>
-    </span>
-  </a>
-
-  <div class="flex w-2/3 items-center justify-end gap-6">
-    <a href="/blog" class={navLinkClass}>
-      Blog
-      <span class={navUnderlineClass}></span>
+  <div class="flex items-center justify-between gap-3 sm:min-w-0">
+    <a
+      href="/"
+      class="flex min-w-0 flex-1 items-center no-underline hover:text-foreground sm:flex-none"
+    >
+      <span class="block font-brand text-[clamp(1.8rem,8vw,2.35rem)] leading-none font-semibold tracking-tight">
+        <span>sreyas</span><span class="text-primary">.is</span>
+      </span>
     </a>
-    <a href="/about" class={navLinkClass}>
-      More
-      <span class={navUnderlineClass}></span>
-    </a>
+    <ThemeToggle class="shrink-0 sm:hidden" />
+  </div>
 
-    <div class="flex items-center gap-4 px-3 py-2">
+  <div class="flex items-center justify-between gap-4 sm:ml-auto sm:justify-end sm:gap-5">
+    <div class="flex items-center gap-4 sm:gap-5">
+      <a href="/blog" class={navLinkClass}>
+        Blog
+        <span class={navUnderlineClass}></span>
+      </a>
+      <a href="/about" class={navLinkClass}>
+        More
+        <span class={navUnderlineClass}></span>
+      </a>
+    </div>
+
+    <div class="flex items-center gap-1 sm:gap-2">
       <a
         class={socialLinkClass}
         target="_blank"
         rel="noopener noreferrer"
         href="https://github.com/sreyassabbani"
+        aria-label="GitHub"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -53,6 +62,7 @@ const iconClass = "size-5 fill-current";
         target="_blank"
         rel="noopener noreferrer"
         href="https://www.linkedin.com/in/sreyassabbani"
+        aria-label="LinkedIn"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -71,10 +81,11 @@ const iconClass = "size-5 fill-current";
         target="_blank"
         rel="noopener noreferrer"
         href="mailto:sreyassabbani@gmail.com"
+        aria-label="Email"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="size-6 fill-current"
+          class="size-5 fill-current"
           width="24"
           height="24"
           viewBox="0 0 24 24"
@@ -85,7 +96,7 @@ const iconClass = "size-5 fill-current";
           ></path>
         </svg>
       </a>
+      <ThemeToggle class="hidden shrink-0 sm:inline-flex" />
     </div>
   </div>
-  <ThemeToggle class="absolute -bottom-4 -right-4 z-10 h-8 w-8" />
 </nav>

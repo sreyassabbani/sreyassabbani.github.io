@@ -4,21 +4,21 @@ import ProfilePortrait from "@/components/ProfilePortrait.astro";
 import Layout from "@/layouts/Layout.astro";
 
 const projectAreas = [
-  {
-    title: "Math",
-    description:
-      "Longer notes on math, physics, and adjacent ideas I want to understand well enough to explain clearly.",
-  },
-  {
-    title: "Software Experiments",
-    description:
-      "Small tools, website work, and programming detours that feel interesting enough to make real.",
-  },
-  {
-    title: "Writing and Notes",
-    description:
-      "Longer notes on math, physics, and adjacent ideas I want to understand well enough to explain clearly.",
-  },
+    {
+        title: "Math",
+        description:
+            "Longer notes on math, physics, and adjacent ideas I want to understand well enough to explain clearly.",
+    },
+    {
+        title: "Software Experiments",
+        description:
+            "Small tools, website work, and programming detours that feel interesting enough to make real.",
+    },
+    {
+        title: "Writing and Notes",
+        description:
+            "Longer notes on math, physics, and adjacent ideas I want to understand well enough to explain clearly.",
+    },
 ];
 ---
 
@@ -27,7 +27,7 @@ const projectAreas = [
   description="More about Sreyas Sabbani and the kinds of projects he spends time on."
 >
   <section class="mx-auto w-full max-w-3xl">
-    <section class="flex min-h-[32rem] flex-col items-center justify-center gap-8 py-12 text-center md:min-h-[36rem]">
+    <section class="flex min-h-[26rem] flex-col items-center justify-center gap-6 py-8 text-center sm:min-h-[30rem] sm:gap-8 sm:py-12 md:min-h-[34rem]">
       <ProfilePortrait
         size="lg"
         className="gap-3"
@@ -35,8 +35,8 @@ const projectAreas = [
         caption=""
       />
 
-      <div class="max-w-2xl space-y-4">
-        <p class="text-base leading-8 text-muted-foreground">
+      <div class="w-full max-w-2xl space-y-4 px-1">
+        <p class="text-[0.98rem] leading-7 text-muted-foreground sm:text-base sm:leading-8">
           I'm <strong class="text-primary">Sreyas Sabbani</strong>, and I love mathematics, physics, and computer science, mostly in the
           form of learning carefully and making things that help ideas feel less
           abstract. Okay, the rest of this will be more show, less tell, I promise.
@@ -44,11 +44,11 @@ const projectAreas = [
       </div>
     </section>
 
-    <section id="projects" class="max-w-2xl space-y-4 pb-8 pt-8">
+    <section id="projects" class="w-full space-y-4 pb-4 pt-4 sm:pb-8 sm:pt-8">
       <div class="max-w-2xl">
         <div class="space-y-3">
           <p class="text-sm text-muted-foreground">Projects</p>
-          <h2 class="font-heading text-3xl font-semibold tracking-tight text-foreground">
+          <h2 class="font-heading text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
             A few things I tend to spend time on
           </h2>
           <p class="text-muted-foreground">
@@ -60,7 +60,7 @@ const projectAreas = [
         <div class="mt-8 border-t border-border">
           {
             projectAreas.map((area) => (
-              <article class="grid gap-3 border-b border-border py-6 md:grid-cols-3 md:gap-6">
+              <article class="grid gap-2 border-b border-border py-5 sm:gap-3 md:grid-cols-3 md:gap-6 md:py-6">
                 <h3 class="font-heading text-lg font-semibold text-foreground">
                   {area.title}
                 </h3>

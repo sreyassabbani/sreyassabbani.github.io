@@ -36,7 +36,9 @@ const buttonClass = cn(
         class="size-4"
         aria-hidden="true"
     >
-        <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path>
+        <path
+            d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"
+        ></path>
     </svg>
     <svg
         data-theme-icon="sun"
@@ -105,17 +107,21 @@ const buttonClass = cn(
         const syncToggleUi = () => {
             const isDark = document.documentElement.classList.contains("dark");
 
-            document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
-                if (!(button instanceof HTMLButtonElement)) return;
+            document
+                .querySelectorAll("[data-theme-toggle]")
+                .forEach((button) => {
+                    if (!(button instanceof HTMLButtonElement)) return;
 
-                button.setAttribute("aria-pressed", String(isDark));
+                    button.setAttribute("aria-pressed", String(isDark));
 
-                const moon = button.querySelector('[data-theme-icon="moon"]');
-                const sun = button.querySelector('[data-theme-icon="sun"]');
+                    const moon = button.querySelector(
+                        '[data-theme-icon="moon"]',
+                    );
+                    const sun = button.querySelector('[data-theme-icon="sun"]');
 
-                moon?.classList.toggle("hidden", isDark);
-                sun?.classList.toggle("hidden", !isDark);
-            });
+                    moon?.classList.toggle("hidden", isDark);
+                    sun?.classList.toggle("hidden", !isDark);
+                });
         };
 
         const bindToggle = (button) => {
@@ -140,7 +146,9 @@ const buttonClass = cn(
                 applyTheme(savedTheme === "dark");
             }
 
-            document.querySelectorAll("[data-theme-toggle]").forEach(bindToggle);
+            document
+                .querySelectorAll("[data-theme-toggle]")
+                .forEach(bindToggle);
             syncToggleUi();
         };
 

@@ -20,22 +20,20 @@ const { groups } = Astro.props as Props;
                         >
                             {group.text}
                         </a>
-                        {
-                            group.children.length > 0 && (
-                                <ol class="mt-2 list-decimal space-y-1 pl-5 text-[0.95em] marker:text-muted-foreground/80">
-                                    {group.children.map((child) => (
-                                        <li class="pl-1">
-                                            <a
-                                                href={`#${child.slug}`}
-                                                class="break-words text-muted-foreground no-underline transition-colors duration-200 hover:text-foreground"
-                                            >
-                                                {child.text}
-                                            </a>
-                                        </li>
-                                    ))}
-                                </ol>
-                            )
-                        }
+                        {group.children.length > 0 && (
+                            <ol class="mt-2 list-decimal space-y-1 pl-5 text-[0.95em] marker:text-muted-foreground/80">
+                                {group.children.map((child) => (
+                                    <li class="pl-1">
+                                        <a
+                                            href={`#${child.slug}`}
+                                            class="break-words text-muted-foreground no-underline transition-colors duration-200 hover:text-foreground"
+                                        >
+                                            {child.text}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ol>
+                        )}
                     </li>
                 ))}
             </ol>

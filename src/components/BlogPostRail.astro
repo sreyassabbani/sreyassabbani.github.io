@@ -23,27 +23,30 @@ const railChildListClass =
     <div
         class="pointer-events-auto absolute inset-y-0 left-0 w-7"
         aria-hidden="true"
-    ></div>
-    <div class="pointer-events-none absolute left-0 top-1/2 max-h-[calc(100vh-2rem)] w-52 -translate-x-40 -translate-y-1/2 overflow-y-auto rounded-r-xl border-y border-r border-border bg-card/95 px-3 py-3 opacity-0 transition-all duration-300 ease-out group-hover/tocrail:pointer-events-auto group-hover/tocrail:translate-x-0 group-hover/tocrail:opacity-100 group-data-[open=true]/tocrail:pointer-events-auto group-data-[open=true]/tocrail:translate-x-0 group-data-[open=true]/tocrail:opacity-100">
+    >
+    </div>
+    <div
+        class="pointer-events-none absolute left-0 top-1/2 max-h-[calc(100vh-2rem)] w-52 -translate-x-40 -translate-y-1/2 overflow-y-auto rounded-r-xl border-y border-r border-border bg-card/95 px-3 py-3 opacity-0 transition-all duration-300 ease-out group-hover/tocrail:pointer-events-auto group-hover/tocrail:translate-x-0 group-hover/tocrail:opacity-100 group-data-[open=true]/tocrail:pointer-events-auto group-data-[open=true]/tocrail:translate-x-0 group-data-[open=true]/tocrail:opacity-100"
+    >
         <nav>
             <ul class="m-0 list-none p-0">
-                {railEntries.map((group) => (
-                    <li
-                        class="group/rail mt-1 first:mt-0"
-                        data-rail-group={group.slug}
-                        data-has-children={
-                            group.children.length > 0 ? "true" : "false"
-                        }
-                    >
-                        <a
-                            class={railLinkClass}
-                            href={`#${group.slug}`}
-                            data-rail-link={group.slug}
+                {
+                    railEntries.map((group) => (
+                        <li
+                            class="group/rail mt-1 first:mt-0"
+                            data-rail-group={group.slug}
+                            data-has-children={
+                                group.children.length > 0 ? "true" : "false"
+                            }
                         >
-                            {group.text}
-                        </a>
-                        {
-                            group.children.length > 0 && (
+                            <a
+                                class={railLinkClass}
+                                href={`#${group.slug}`}
+                                data-rail-link={group.slug}
+                            >
+                                {group.text}
+                            </a>
+                            {group.children.length > 0 && (
                                 <ul class={railChildListClass}>
                                     {group.children.map((child) => (
                                         <li class="mt-0.5 first:mt-0">
@@ -58,10 +61,10 @@ const railChildListClass =
                                         </li>
                                     ))}
                                 </ul>
-                            )
-                        }
-                    </li>
-                ))}
+                            )}
+                        </li>
+                    ))
+                }
             </ul>
         </nav>
     </div>
@@ -80,12 +83,12 @@ const railChildListClass =
                 return;
             }
 
-            const links = Array.from(rail.querySelectorAll("[data-rail-link]")).filter(
-                (link) => link instanceof HTMLAnchorElement,
-            );
-            const groups = Array.from(rail.querySelectorAll("[data-rail-group]")).filter(
-                (group) => group instanceof HTMLElement,
-            );
+            const links = Array.from(
+                rail.querySelectorAll("[data-rail-link]"),
+            ).filter((link) => link instanceof HTMLAnchorElement);
+            const groups = Array.from(
+                rail.querySelectorAll("[data-rail-group]"),
+            ).filter((group) => group instanceof HTMLElement);
             const observedHeadings = links
                 .map((link) => {
                     const slug = link.dataset.railLink;
@@ -187,7 +190,9 @@ const railChildListClass =
                 },
             );
 
-            observedHeadings.forEach(({ element }) => observer.observe(element));
+            observedHeadings.forEach(({ element }) =>
+                observer.observe(element),
+            );
 
             setActiveSlug(activeSlug);
             setRailOpen(false);

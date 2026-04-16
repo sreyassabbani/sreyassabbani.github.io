@@ -27,27 +27,27 @@ const { title, description, image = FallbackImage } = Astro.props;
 <link rel="icon" type="image/png" href="/favicon.png" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
-  rel="alternate"
-  type="application/rss+xml"
-  title={SITE_TITLE}
-  href={new URL("rss.xml", Astro.site)}
+    rel="alternate"
+    type="application/rss+xml"
+    title={SITE_TITLE}
+    href={new URL("rss.xml", Astro.site)}
 />
 <meta name="generator" content={Astro.generator} />
 
 <!-- Font preloads -->
 <link
-  rel="preload"
-  href="/fonts/atkinson-regular.woff"
-  as="font"
-  type="font/woff"
-  crossorigin
+    rel="preload"
+    href="/fonts/atkinson-regular.woff"
+    as="font"
+    type="font/woff"
+    crossorigin
 />
 <link
-  rel="preload"
-  href="/fonts/atkinson-bold.woff"
-  as="font"
-  type="font/woff"
-  crossorigin
+    rel="preload"
+    href="/fonts/atkinson-bold.woff"
+    as="font"
+    type="font/woff"
+    crossorigin
 />
 
 <!-- Canonical URL -->
@@ -75,33 +75,34 @@ const { title, description, image = FallbackImage } = Astro.props;
 
 <!-- Inline theme initialization to prevent flash -->
 <script is:inline>
-  (function () {
-    const applyTheme = (isDark) => {
-      const root = document.documentElement;
-      root.classList.toggle("dark", isDark);
-      root.style.colorScheme = isDark ? "dark" : "light";
+    (function () {
+        const applyTheme = (isDark) => {
+            const root = document.documentElement;
+            root.classList.toggle("dark", isDark);
+            root.style.colorScheme = isDark ? "dark" : "light";
 
-      const themeColorMeta = document.querySelector(
-        'meta[name="theme-color"]',
-      );
+            const themeColorMeta = document.querySelector(
+                'meta[name="theme-color"]',
+            );
 
-      if (themeColorMeta instanceof HTMLMetaElement) {
-        themeColorMeta.content = isDark ? "#232634" : "#eff1f5";
-      }
-    };
+            if (themeColorMeta instanceof HTMLMetaElement) {
+                themeColorMeta.content = isDark ? "#232634" : "#eff1f5";
+            }
+        };
 
-    const getStoredTheme = () => {
-      try {
-        return localStorage.getItem("theme");
-      } catch {
-        return null;
-      }
-    };
+        const getStoredTheme = () => {
+            try {
+                return localStorage.getItem("theme");
+            } catch {
+                return null;
+            }
+        };
 
-    const saved = getStoredTheme();
-    const prefersDark =
-      window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
-    const isDark = saved === "dark" || (saved === null && prefersDark);
-    applyTheme(isDark);
-  })();
+        const saved = getStoredTheme();
+        const prefersDark =
+            window.matchMedia?.("(prefers-color-scheme: dark)").matches ??
+            false;
+        const isDark = saved === "dark" || (saved === null && prefersDark);
+        applyTheme(isDark);
+    })();
 </script>

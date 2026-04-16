@@ -3,14 +3,14 @@ import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/utils";
 
 interface Props {
-    className?: string;
+    class?: string;
 }
 
-const { className = "" } = Astro.props;
+const { class: className = "" } = Astro.props;
 
 const buttonClass = cn(
     buttonVariants({ variant: "outline", size: "icon-sm" }),
-    "rounded-full bg-card text-foreground shadow-none transition-colors duration-200 hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+    "rounded-full bg-background dark:bg-background dark:hover:bg-secondary text-foreground shadow-none transition-colors duration-200 hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
     className,
 );
 ---

@@ -10,20 +10,20 @@ const posts = (await getCollection("blog")).sort(
 ---
 
 <Layout title={`${SITE_TITLE} — Blog`} description={SITE_DESCRIPTION}>
-  <section class="mt-2 sm:mt-4">
-    <ul class="divide-y divide-border/80">
+  <section class="mt-4 sm:mt-6">
+    <ul class="space-y-4 sm:space-y-5">
       {
         posts.map((post) => (
-          <li class="py-4 sm:py-5">
+          <li>
             <a
               href={`/blog/${post.id}/`}
-              class="group grid gap-1.5 no-underline sm:grid-cols-[minmax(0,8.75rem)_1fr] sm:items-start sm:gap-4"
+              class="group inline-flex flex-col gap-1 no-underline"
             >
-              <p class="font-mono text-xs tracking-[0.01em] text-primary sm:pt-1">
-                <FormattedDate date={post.data.pubDate} />
-              </p>
-              <h2 class="font-heading text-lg leading-7 font-semibold text-foreground transition-colors duration-200 group-hover:text-primary sm:text-[1.35rem]">
-                <span class="underline decoration-dashed underline-offset-4 transition-[text-decoration-style] duration-200 group-hover:decoration-solid">
+              <h2 class="font-heading text-lg leading-7 font-semibold text-foreground transition-colors duration-200 group-hover:text-primary sm:text-base sm:leading-normal">
+                <span class="block font-mono text-xs text-primary sm:inline sm:text-inherit">
+                  <FormattedDate date={post.data.pubDate} />
+                </span>
+                <span class="underline decoration-dashed underline-offset-4 transition-[text-decoration-style] duration-200 group-hover:decoration-solid sm:ml-2">
                   {post.data.title}
                 </span>
               </h2>

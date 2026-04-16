@@ -36,15 +36,15 @@ const isHome = variant === "home";
             : "min-h-screen max-w-3xl px-4 pb-8 pt-3 sm:px-6 sm:pb-10 sm:pt-4 md:px-8 md:pb-12 md:pt-6",
         ]}
       >
-        <header class="sticky top-0 z-40 w-full bg-background/94 backdrop-blur-sm supports-[backdrop-filter]:bg-background/80">
+        <header class="sticky top-0 z-40 w-full bg-background/94 backdrop-blur-sm supports-[backdrop-filter]:bg-background/80 md:static md:bg-transparent md:backdrop-blur-none md:supports-[backdrop-filter]:bg-transparent">
           <Navigation />
         </header>
         <main
           class:list={[
             "w-full",
             isHome
-              ? "flex min-h-0 flex-1 flex-col pt-4 sm:pt-6 md:pt-8"
-              : "flex-1 pt-6 sm:pt-8",
+              ? "flex min-h-0 flex-1 flex-col pt-4 sm:pt-6 md:pt-4"
+              : "flex-1 pt-6 sm:pt-8 md:pt-2",
           ]}
         >
           <slot />

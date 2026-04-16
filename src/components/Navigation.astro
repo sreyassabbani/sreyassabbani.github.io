@@ -2,31 +2,31 @@
 import ThemeToggle from "./ThemeToggle.astro";
 
 const navLinkClass =
-    "group relative flex items-center justify-center pb-1 text-sm font-medium text-foreground no-underline transition-colors duration-200 hover:text-primary";
+    "group relative flex items-center justify-center pb-1 text-sm text-foreground no-underline transition-colors duration-200 hover:text-primary md:pb-2";
 const navUnderlineClass =
     "absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100";
 const socialLinkClass =
-    "flex size-8 items-center justify-center rounded-full text-foreground transition-colors duration-200 hover:bg-secondary hover:text-primary sm:size-9";
-const iconClass = "size-4 fill-current sm:size-[1.1rem]";
+    "flex size-8 items-center justify-center rounded-full text-foreground transition-colors duration-200 hover:bg-secondary hover:text-primary md:size-auto md:rounded-none md:hover:bg-transparent";
+const iconClass = "size-4 fill-current md:size-5";
 ---
 
 <nav
-  class="flex w-full flex-col gap-3 border-b border-border pb-3 pt-2 text-sm text-foreground sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:pb-4"
+  class="relative flex w-full flex-col gap-3 border-b border-border pb-3 pt-2 text-sm text-foreground md:h-14 md:flex-row md:items-center md:justify-between md:gap-0 md:px-2 md:pb-8 md:pt-0"
 >
-  <div class="flex items-center justify-between gap-3 sm:min-w-0">
+  <div class="flex items-center justify-between gap-3 md:w-1/3 md:min-w-0 md:justify-start">
     <a
       href="/"
-      class="flex min-w-0 flex-1 items-center no-underline hover:text-foreground sm:flex-none"
+      class="flex min-w-0 flex-1 items-center no-underline hover:text-foreground md:flex-none"
     >
       <span class="block font-brand text-[clamp(1.8rem,8vw,2.35rem)] leading-none font-semibold tracking-tight">
         <span>sreyas</span><span class="text-primary">.is</span>
       </span>
     </a>
-    <ThemeToggle class="shrink-0 sm:hidden" />
+    <ThemeToggle class="shrink-0 md:hidden" />
   </div>
 
-  <div class="flex items-center justify-between gap-4 sm:ml-auto sm:justify-end sm:gap-5">
-    <div class="flex items-center gap-4 sm:gap-5">
+  <div class="flex items-center justify-between gap-4 md:w-2/3 md:min-w-0 md:justify-end md:gap-4 lg:gap-6">
+    <div class="flex items-center gap-4 md:gap-4 lg:gap-6">
       <a href="/blog" class={navLinkClass}>
         Blog
         <span class={navUnderlineClass}></span>
@@ -37,7 +37,7 @@ const iconClass = "size-4 fill-current sm:size-[1.1rem]";
       </a>
     </div>
 
-    <div class="flex items-center gap-1 sm:gap-2">
+    <div class="flex items-center gap-1 md:gap-4 md:px-3 md:py-2">
       <a
         class={socialLinkClass}
         target="_blank"
@@ -85,7 +85,7 @@ const iconClass = "size-4 fill-current sm:size-[1.1rem]";
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="size-5 fill-current"
+          class="size-5 fill-current md:size-6"
           width="24"
           height="24"
           viewBox="0 0 24 24"
@@ -96,7 +96,7 @@ const iconClass = "size-4 fill-current sm:size-[1.1rem]";
           ></path>
         </svg>
       </a>
-      <ThemeToggle class="hidden shrink-0 sm:inline-flex" />
     </div>
   </div>
+  <ThemeToggle class="absolute -bottom-4 -right-4 z-10 hidden h-8 w-8 md:inline-flex" />
 </nav>

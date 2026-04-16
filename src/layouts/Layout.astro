@@ -25,14 +25,14 @@ const isHome = variant === "home";
     <div
       class:list={[
         "mx-auto flex w-full justify-center",
-        isHome ? "min-h-dvh md:min-h-screen" : "min-h-screen",
+        isHome ? "min-h-dvh md:min-h-screen md:items-center" : "min-h-screen",
       ]}
     >
       <div
         class:list={[
           "page-shell flex w-full flex-col",
           isHome
-            ? "h-dvh max-w-4xl px-4 pb-4 pt-3 sm:px-6 sm:pb-6 sm:pt-4 md:h-auto md:min-h-screen md:px-8 md:pb-8 md:pt-6"
+            ? "h-dvh max-w-4xl px-4 pb-4 pt-3 sm:px-6 sm:pb-6 sm:pt-4 md:min-h-screen md:items-center md:justify-center md:gap-10 md:px-12 md:py-12 lg:px-16 lg:py-16"
             : "min-h-screen max-w-3xl px-4 pb-8 pt-3 sm:px-6 sm:pb-10 sm:pt-4 md:px-8 md:pb-12 md:pt-6",
         ]}
       >
@@ -43,7 +43,7 @@ const isHome = variant === "home";
           class:list={[
             "w-full",
             isHome
-              ? "flex min-h-0 flex-1 flex-col pt-4 sm:pt-6 md:pt-4"
+              ? "flex min-h-0 flex-1 flex-col pt-4 sm:pt-6 md:mt-4 md:flex-none md:items-center md:justify-center md:gap-6 md:pt-0"
               : "flex-1 pt-6 sm:pt-8 md:pt-2",
           ]}
         >

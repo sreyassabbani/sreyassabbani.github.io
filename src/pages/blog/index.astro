@@ -20,7 +20,7 @@ const posts = (await getCollection("blog")).sort(
               class="group inline-flex flex-col gap-1 no-underline"
             >
               <h2 class="font-heading text-lg leading-7 font-semibold text-foreground transition-colors duration-200 group-hover:text-primary sm:text-base sm:leading-normal">
-                <span class="block font-mono text-xs text-primary sm:inline sm:text-inherit">
+                <span class="block font-mono text-xs text-primary sm:inline">
                   <FormattedDate date={post.data.pubDate} />
                 </span>
                 <span class="underline decoration-dashed underline-offset-4 transition-[text-decoration-style] duration-200 group-hover:decoration-solid sm:ml-2">

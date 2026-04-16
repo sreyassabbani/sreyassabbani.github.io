@@ -1,0 +1,81 @@
+---
+interface Props {
+    title: string;
+    initiallyOpen?: boolean;
+}
+
+const { title, initiallyOpen = false } = Astro.props;
+const panelId = `blog-closure-${Math.random().toString(36).slice(2, 10)}`;
+---
+
+<div
+    class="blog-closure"
+    data-blog-closure
+    data-open={initiallyOpen ? "true" : "false"}
+>
+    <button
+        type="button"
+        class="blog-closure__toggle"
+        aria-controls={panelId}
+        aria-expanded={initiallyOpen ? "true" : "false"}
+        data-blog-closure-button
+    >
+        <span class="blog-closure__title">{title}</span>
+        <span class="blog-closure__status" data-blog-closure-status>
+            {initiallyOpen ? "hide" : "show"}
+        </span>
+    </button>
+
+    <div
+        id={panelId}
+        class="blog-closure__panel"
+        data-blog-closure-panel
+        aria-hidden={initiallyOpen ? "false" : "true"}
+        inert={initiallyOpen ? undefined : true}
+    >
+        <div class="blog-closure__content">
+            <slot />
+        </div>
+    </div>
+</div>
+
+<script>
+    function initBlogClosures() {
+        const closures = document.querySelectorAll("[data-blog-closure]");
+
+        closures.forEach((closure) => {
+            if (!(closure instanceof HTMLElement)) return;
+            if (closure.dataset.closureBound === "true") return;
+
+            const button = closure.querySelector("[data-blog-closure-button]");
+            const panel = closure.querySelector("[data-blog-closure-panel]");
+            const status = closure.querySelector("[data-blog-closure-status]");
+
+            if (
+                !(button instanceof HTMLButtonElement) ||
+                !(panel instanceof HTMLElement) ||
+                !(status instanceof HTMLElement)
+            ) {
+                return;
+            }
+
+            const sync = (open: boolean) => {
+                closure.dataset.open = open ? "true" : "false";
+                button.setAttribute("aria-expanded", open ? "true" : "false");
+                panel.setAttribute("aria-hidden", open ? "false" : "true");
+                panel.inert = !open;
+                status.textContent = open ? "hide" : "show";
+            };
+
+            button.addEventListener("click", () => {
+                sync(closure.dataset.open !== "true");
+            });
+
+            closure.dataset.closureBound = "true";
+            sync(closure.dataset.open === "true");
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", initBlogClosures);
+    document.addEventListener("astro:page-load", initBlogClosures);
+</script>

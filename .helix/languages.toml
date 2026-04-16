@@ -19,23 +19,44 @@ path = "./node_modules/typescript/lib/tsserver.js"
 name = "astro"
 roots = ["astro.config.ts", "astro.config.mjs", "package.json"]
 language-servers = ["astro-ls-local"]
+formatter = { command = "sh", args = ["-lc", "root=$(git rev-parse --show-toplevel) && exec direnv exec \"$root\" \"$root\"/node_modules/.bin/prettier --plugin prettier-plugin-astro --stdin-filepath \"$1\"", "sh", "%{buffer_name}"] }
 
 [[language]]
 name = "typescript"
 roots = ["tsconfig.json", "package.json"]
 language-servers = ["typescript-language-server-local"]
+formatter = { command = "sh", args = ["-lc", "root=$(git rev-parse --show-toplevel) && exec direnv exec \"$root\" \"$root\"/node_modules/.bin/biome format --stdin-file-path \"$1\" --write", "sh", "%{buffer_name}"] }
 
 [[language]]
 name = "tsx"
 roots = ["tsconfig.json", "package.json"]
 language-servers = ["typescript-language-server-local"]
+formatter = { command = "sh", args = ["-lc", "root=$(git rev-parse --show-toplevel) && exec direnv exec \"$root\" \"$root\"/node_modules/.bin/biome format --stdin-file-path \"$1\" --write", "sh", "%{buffer_name}"] }
 
 [[language]]
 name = "javascript"
 roots = ["package.json"]
 language-servers = ["typescript-language-server-local"]
+formatter = { command = "sh", args = ["-lc", "root=$(git rev-parse --show-toplevel) && exec direnv exec \"$root\" \"$root\"/node_modules/.bin/biome format --stdin-file-path \"$1\" --write", "sh", "%{buffer_name}"] }
 
 [[language]]
 name = "jsx"
 roots = ["package.json"]
 language-servers = ["typescript-language-server-local"]
+formatter = { command = "sh", args = ["-lc", "root=$(git rev-parse --show-toplevel) && exec direnv exec \"$root\" \"$root\"/node_modules/.bin/biome format --stdin-file-path \"$1\" --write", "sh", "%{buffer_name}"] }
+
+[[language]]
+name = "html"
+formatter = { command = "sh", args = ["-lc", "root=$(git rev-parse --show-toplevel) && exec direnv exec \"$root\" \"$root\"/node_modules/.bin/prettier --stdin-filepath \"$1\"", "sh", "%{buffer_name}"] }
+
+[[language]]
+name = "css"
+formatter = { command = "sh", args = ["-lc", "root=$(git rev-parse --show-toplevel) && exec direnv exec \"$root\" \"$root\"/node_modules/.bin/prettier --stdin-filepath \"$1\"", "sh", "%{buffer_name}"] }
+
+[[language]]
+name = "json"
+formatter = { command = "sh", args = ["-lc", "root=$(git rev-parse --show-toplevel) && exec direnv exec \"$root\" \"$root\"/node_modules/.bin/biome format --stdin-file-path \"$1\" --write", "sh", "%{buffer_name}"] }
+
+[[language]]
+name = "jsonc"
+formatter = { command = "sh", args = ["-lc", "root=$(git rev-parse --show-toplevel) && exec direnv exec \"$root\" \"$root\"/node_modules/.bin/biome format --stdin-file-path \"$1\" --write", "sh", "%{buffer_name}"] }

@@ -4,11 +4,15 @@ import type { APIRoute } from "astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 
 export const GET: APIRoute = async ({ site }) => {
+    if (!site) {
+        throw new Error("Astro site config is required to generate RSS.");
+    }
+
     const posts = await getCollection("blog");
     return rss({
         title: SITE_TITLE,
         description: SITE_DESCRIPTION,
-        site: site!,
+        site,
         items: posts.map((post) => ({
             ...post.data,
             link: `/blog/${post.id}/`,

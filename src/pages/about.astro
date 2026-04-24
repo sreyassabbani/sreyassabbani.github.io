@@ -2,19 +2,6 @@
 import { SITE_TITLE } from "@/consts";
 import ProfilePortrait from "@/components/ProfilePortrait.astro";
 import Layout from "@/layouts/Layout.astro";
-
-const projectAreas = [
-    {
-        title: "Math",
-        description:
-            "Longer notes on math, physics, and adjacent ideas I want to understand well enough to explain clearly.",
-    },
-    {
-        title: "Software Experiments",
-        description:
-            "Small tools, website work, and programming detours that feel interesting enough to make real.",
-    },
-];
 ---
 
 <Layout
@@ -61,21 +48,6 @@ const projectAreas = [
                         Mostly small, ongoing work.
                     </p>
                 </div>
-
-                <!-- <div class="mt-8 border-t border-border"> -->
-                    <!-- { -->
-                        <!-- projectAreas.map((area) => ( -->
-                            <!-- <article class="grid gap-2 border-b border-border py-5 sm:gap-3 md:grid-cols-3 md:gap-6 md:py-6"> -->
-                                <!-- <h3 class="font-heading text-lg font-semibold text-foreground"> -->
-                                    <!-- {area.title} -->
-                                <!-- </h3> -->
-                                <!-- <p class="text-muted-foreground md:col-span-2"> -->
-                                    <!-- {area.description} -->
-                                <!-- </p> -->
-                            <!-- </article> -->
-                        <!-- )) -->
-                    <!-- } -->
-                <!-- </div> -->
             </div>
         </section>
     </section>
